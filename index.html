@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pauta Mensal — Laslo × Estouro</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E8690A;
+    --orange-light: #FDE9D9;
+    --orange-dark: #B84F06;
+    --bg: #F7F5F2;
+    --surface: #FFFFFF;
+    --surface2: #F2EFE9;
+    --border: #E0DAD1;
+    --text: #1A1714;
+    --text2: #6B6460;
+    --text3: #A09A95;
+    --green: #1B7A4A;
+    --green-bg: #E8F5EE;
+    --blue: #1A5FA8;
+    --blue-bg: #E6F0FA;
+    --red: #C0392B;
+    --red-bg: #FDEEEC;
+    --amber: #A05C0A;
+    --amber-bg: #FEF3E2;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--orange);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(232,105,10,0.18);
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .header-logo { display: flex; align-items: center; gap: 10px; }
+  .header-logo .dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 600; color: #fff;
+  }
+  .header-logo h1 { font-size: 15px; font-weight: 600; color: #fff; }
+  .header-logo p { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 1px; }
+  .header-meta { font-size: 12px; color: rgba(255,255,255,0.8); text-align: right; }
+  .header-meta strong { color: #fff; display: block; font-size: 13px; }
+
+  /* ── MAIN ── */
+  .main { max-width: 860px; margin: 0 auto; padding: 24px 24px 80px; }
+
+  /* ── MONTH SELECTOR ── */
+  .month-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .month-bar label { font-size: 12px; font-weight: 500; color: var(--text2); white-space: nowrap; }
+  .month-bar select { flex: 1; max-width: 220px; }
+  .month-bar .reunion-num {
+    margin-left: auto;
+    background: var(--orange-light);
+    color: var(--orange-dark);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 20px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: var(--orange);
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .section-header .num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: #fff; flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 13px; font-weight: 600; color: #fff; }
+  .section-header .sub { font-size: 11px; color: rgba(255,255,255,0.75); margin-left: auto; white-space: nowrap; }
+  .section-body {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    overflow: hidden;
+  }
+
+  /* ── SUBSECTION ── */
+  .sub-section { border-bottom: 1px solid var(--border); }
+  .sub-section:last-child { border-bottom: none; }
+  .sub-title {
+    padding: 10px 20px;
+    background: var(--surface2);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; }
+  .tbl thead th {
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+  .tbl tbody tr { border-bottom: 1px solid var(--border); }
+  .tbl tbody tr:last-child { border-bottom: none; }
+  .tbl tbody tr:hover { background: #FDFCFB; }
+  .tbl td { padding: 7px 14px; vertical-align: middle; }
+  .week-row td {
+    padding: 6px 14px;
+    background: var(--surface2);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--orange-dark);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── FORM ELEMENTS ── */
+  input[type=text], select, textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  input[type=text]:focus, select:focus, textarea:focus {
+    background: var(--orange-light);
+    outline: 1px solid var(--orange);
+  }
+  select { cursor: pointer; }
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    width: 100%;
+  }
+  textarea:focus { background: var(--surface); outline: 1px solid var(--orange); }
+
+  /* ── STATUS BADGES ── */
+  .s-pend  { color: var(--text2);  background: var(--surface2); }
+  .s-wip   { color: var(--blue);   background: var(--blue-bg); }
+  .s-ok    { color: var(--green);  background: var(--green-bg); }
+  .s-late  { color: var(--red);    background: var(--red-bg); }
+
+  select.status {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 6px;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+  .kpi-cell {
+    background: var(--surface);
+    padding: 12px 16px;
+  }
+  .kpi-cell label { font-size: 11px; color: var(--text2); font-weight: 500; display: block; margin-bottom: 4px; }
+  .kpi-cell input {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'DM Mono', monospace;
+    color: var(--text);
+    padding: 0;
+    width: 100%;
+  }
+  .kpi-cell input::placeholder { font-size: 16px; color: var(--text3); }
+
+  /* ── NOTES ── */
+  .notes-area { padding: 16px 20px; }
+
+  /* ── ADD ROW ── */
+  .add-row-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    font-size: 12px;
+    color: var(--orange);
+    cursor: pointer;
+    border-top: 1px dashed var(--border);
+    background: none;
+    border-left: none; border-right: none; border-bottom: none;
+    width: 100%;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+  .add-row-btn:hover { background: var(--orange-light); }
+
+  /* ── SAVE BAR ── */
+  .save-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 200;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+  }
+  .save-info { font-size: 12px; color: var(--text2); }
+  .save-info strong { color: var(--text); }
+  .btn-save {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 9px 22px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn-save:hover { background: var(--orange-dark); }
+  .btn-save:active { transform: scale(0.97); }
+  .btn-save:disabled { background: var(--text3); cursor: not-allowed; }
+  .msg { font-size: 12px; font-weight: 500; }
+  .msg.ok { color: var(--green); }
+  .msg.err { color: var(--red); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; top: 70px; right: 20px;
+    background: var(--text); color: #fff;
+    padding: 10px 18px; border-radius: var(--radius-sm);
+    font-size: 13px; z-index: 999;
+    opacity: 0; transform: translateY(-8px);
+    transition: all 0.25s; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.green { background: var(--green); }
+  .toast.red { background: var(--red); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .main { padding: 16px 12px 80px; }
+    .tbl thead { display: none; }
+    .tbl td { display: block; padding: 4px 12px; }
+    .week-row td { display: block; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .header-meta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="dot">L</div>
+      <div>
+        <h1>Pauta de Reunião Mensal</h1>
+        <p>Laslo Indústria × Estouro Marketing</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <strong>Toda 3ª feira às 15h00</strong>
+      Reunião online
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Month selector -->
+  <div class="month-bar">
+    <label>Mês de referência</label>
+    <select id="month-sel" onchange="loadMonth()">
+      <option value="Jan 2026">Janeiro 2026</option>
+      <option value="Fev 2026">Fevereiro 2026</option>
+      <option value="Mar 2026">Março 2026</option>
+      <option value="Abr 2026">Abril 2026</option>
+      <option value="Mai 2026">Maio 2026</option>
+      <option value="Jun 2026">Junho 2026</option>
+      <option value="Jul 2026">Julho 2026</option>
+      <option value="Ago 2026">Agosto 2026</option>
+      <option value="Set 2026">Setembro 2026</option>
+      <option value="Out 2026">Outubro 2026</option>
+      <option value="Nov 2026">Novembro 2026</option>
+      <option value="Dez 2026">Dezembro 2026</option>
+    </select>
+    <div class="reunion-num" id="reunion-num">Reunião #1</div>
+  </div>
+
+  <!-- BLOCO 1 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">1</div>
+      <h2>Revisão do Mês</h2>
+      <span class="sub">≈ 15 min</span>
+    </div>
+    <div class="section-body">
+
+      <!-- 1A Posts -->
+      <div class="sub-section">
+        <div class="sub-title">1A. Posts do mês</div>
+        <table class="tbl">
+          <thead><tr>
+            <th style="width:50%">Tema / Conteúdo</th>
+            <th style="width:15%">Semana</th>
+            <th style="width:15%">ADS?</th>
+            <th style="width:20%">Status</th>
+          </tr></thead>
+          <tbody id="posts-body"></tbody>
+        </table>
+      </div>
+
+      <!-- 1B ADS -->
+      <div class="sub-section">
+        <div class="sub-title">1B. Campanhas de ADS</div>
+        <table class="tbl">
+          <thead><tr>
+            <th style="width:40%">Campanha</th>
+            <th style="width:20%">Plataforma</th>
+            <th style="width:20%">Investido (R$)</th>
+            <th style="width:20%">Status</th>
+          </tr></thead>
+          <tbody id="ads-body"></tbody>
+        </table>
+        <button class="add-row-btn" onclick="addAds()">+ Adicionar campanha</button>
+      </div>
+
+      <!-- 1C AAR -->
+      <div class="sub-section">
+        <div class="sub-title">1C. Ações estratégicas (AAR)</div>
+        <table class="tbl">
+          <thead><tr>
+            <th style="width:70%">Ação</th>
+            <th style="width:30%">Status</th>
+          </tr></thead>
+          <tbody id="aar-body"></tbody>
+        </table>
+      </div>
+
+      <!-- 1D Datas -->
+      <div class="sub-section">
+        <div class="sub-title">1D. Datas comemorativas</div>
+        <table class="tbl">
+          <thead><tr>
+            <th style="width:20%">Data</th>
+            <th style="width:50%">Evento</th>
+            <th style="width:30%">Status arte</th>
+          </tr></thead>
+          <tbody id="dates-body"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BLOCO 2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">2</div>
+      <h2>Performance do Mês Anterior</h2>
+      <span class="sub">≈ 10 min</span>
+    </div>
+    <div class="section-body">
+      <div class="sub-section">
+        <div class="sub-title">2A. KPIs</div>
+        <div class="kpi-grid" id="kpi-grid"></div>
+      </div>
+      <div class="sub-section">
+        <div class="sub-title">2B. Site & E-commerce</div>
+        <div class="kpi-grid" id="ecom-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 3 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">3</div>
+      <h2>Planejamento do Próximo Mês</h2>
+      <span class="sub">≈ 10 min</span>
+    </div>
+    <div class="section-body">
+
+      <div class="sub-section">
+        <div class="sub-title">3A. Posts planejados</div>
+        <table class="tbl">
+          <thead><tr>
+            <th style="width:50%">Tema / Conteúdo</th>
+            <th style="width:15%">Semana</th>
+            <th style="width:15%">ADS?</th>
+            <th style="width:20%">Status</th>
+          </tr></thead>
+          <tbody id="next-posts-body"></tbody>
+        </table>
+      </div>
+
+      <div class="sub-section">
+        <div class="sub-title">3B. Briefings / Artes pendentes</div>
+        <table class="tbl">
+          <thead><tr>
+            <th style="width:40%">Material</th>
+            <th style="width:20%">Formato</th>
+            <th style="width:20%">Prazo</th>
+            <th style="width:20%">Status</th>
+          </tr></thead>
+          <tbody id="briefings-body"></tbody>
+        </table>
+        <button class="add-row-btn" onclick="addBriefing()">+ Adicionar briefing</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Observações -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">4</div>
+      <h2>Observações Gerais / Pauta Livre</h2>
+    </div>
+    <div class="section-body">
+      <div class="notes-area">
+        <textarea id="notes" placeholder="Anote aqui os pontos discutidos, decisões e encaminhamentos..."></textarea>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- Save Bar -->
+<div class="save-bar">
+  <div class="save-info">
+    <strong id="save-month-label">Janeiro 2026</strong> — preencha e salve ao final da reunião
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="msg" id="save-msg"></span>
+    <button class="btn-save" id="btn-save" onclick="saveToSheets()">Salvar reunião</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIGURAÇÃO — substitua pela sua URL do Google Apps Script
+// ══════════════════════════════════════════
+const SHEET_URL = 'SUA_URL_AQUI'; // Cole aqui a URL do Apps Script após configurar
+
+// ══════════════════════════════════════════
+// DADOS PRÉ-CARREGADOS
+// ══════════════════════════════════════════
+const POSTS_DATA = {
+  'Jan 2026': [['S1','DNA VET: Retorno | Clube Laslo: TCI','Sim'],['S1','','Não'],['S2','Insumos: Descartáveis | Clube Laslo: Transformando compras em benefícios','Sim'],['S2','','Não'],['S3','Insumos: O perigo de descartáveis genéricos | Repost à escolher','Não'],['S3','','Sim'],['S4','Conceito: Por que o DNA da Laslo é 100% VET? | Bomba TCI: Protocolos VET','Sim'],['S4','','Sim']],
+  'Fev 2026': [['S1','Clube Laslo: Vantagens exclusivas para clínicas','Não'],['S1','Insumos: Seringas Serisam de 20ml e 60ml','Sim'],['S2','Produtos: Todas as Bombas','Sim'],['S2','Bomba TCI: Diferença entre TIVA e TCI','Sim'],['S3','Dia Mundial do Gato (17/02): Precisão para felinos','Não'],['S3','Repost à escolher','Sim'],['S4','Antecipação: Dia Internacional da Mulher VET','Não'],['S4','','Sim']],
+  'Mar 2026': [['S1','Insumos: Equipos fotoprotetores e cristal','Sim'],['S1','Mulher VET: Homenagem ao Dia da Mulher (08/03)','Não'],['S2','Repost à escolher','Não'],['S2','Dia Nacional dos Animais (14/03): Respeito à vida','Sim'],['S3','Bomba TCI: A tecnologia que seu Pet merece','Sim'],['S3','Clube Laslo','Não'],['S4','Antecipação: Prevenção à Crueldade Animal','Não'],['S4','','Sim']],
+  'Abr 2026': [['S1','Abril Laranja — Prevenção contra Crueldade Animal','Não'],['S1','Insumos: Por que a precisão depende do equipo?','Sim'],['S2','Bomba TCI: Demonstração prática','Sim'],['S2','Clube Laslo: Depoimento Dr. Renato','Não'],['S3','Antecipação: Faltam 20 dias para PET VET','Sim'],['S3','Repost à escolher','Não'],['S4','Evento: Presença Laslo na Feira PET VET','Sim'],['S4','Insumos: Lastovet','Sim']],
+  'Mai 2026': [['S1','Dia das Mães — Pet Moms e a segurança animal','Não'],['S1','Dia do Zootecnista (13/05): Homenagem','Não'],['S2','Bomba TCI: Tecnologia alvo-controle em cirurgias','Sim'],['S2','Insumos: Diferencial das Seringas Serisam','Sim'],['S3','Dia Nacional da Adoção (25/05): Apoio à causa','Não'],['S3','Clube Laslo: Como aderir ao programa de fidelidade','Não'],['S4','Conceito: De ouvidos ao seu Pet — Segurança Laslo','Sim'],['S4','','Não']],
+  'Jun 2026': [['S1','Bombas: Todas','Não'],['S1','Insumos: Segurança garantida pela fábrica','Sim'],['S2','Antecipação: Faltam 20 dias para Evento CBAV','Sim'],['S2','Bomba TCI: O futuro da anestesia veterinária','Sim'],['S3','Clube Laslo: Promoção relâmpago de insumos','Sim'],['S3','Repost à escolher','Não'],['S4','Insumos: Seringas e Equipos','Sim'],['S4','','Não']],
+  'Jul 2026': [['S1','Evento: Divulgação e Cobertura CBAV','Sim'],['S1','Dia do Vira-lata (31/07): Respeito à raça','Não'],['S2','Bomba TCI: Versatilidade em infusão de seringa','Sim'],['S2','Clube Laslo: Benefícios','Não'],['S3','Insumos: Reposição de estoque para clínicas','Não'],['S3','','Sim'],['S4','Antecipação: Faltam 20 dias para Animal Health','Sim'],['S4','Conceito: O DNA que entende o veterinário','Não']],
+  'Ago 2026': [['S1','Dia Mundial do Gato (08/08): Tecnologia felina','Não'],['S1','Dia dos Pais — Pet Dads: Cuidando de quem ama','Não'],['S2','Dia Mundial do Cachorro (26/08): Segurança Laslo','Não'],['S2','Evento: Cobertura Animal Health','Sim'],['S3','Insumos: Por que usar seringas de precisão?','Sim'],['S3','Bomba TCI: Redução de riscos cirúrgicos','Sim'],['S4','Antecipação: Dia do Médico Veterinário (Setembro)','Sim'],['S4','','Sim']],
+  'Set 2026': [['S1','Dia do Médico Veterinário (09/09): Nossa homenagem','Sim'],['S1','Dia do Cliente (15/09): Foco Clube Laslo','Não'],['S2','Insumos: Descartáveis','Sim'],['S2','Bomba TCI: Alvo-controle para procedimentos longos','Sim'],['S3','Clube Laslo: Parcerias com grandes distribuidores','Não'],['S3','Conceito: Confiança se constrói com qualidade','Não'],['S4','Bomba TCI: Precisão que o seu Pet merece','Sim'],['S4','Cobertura CBAV','Não']],
+  'Out 2026': [['S1','Dia do Vendedor (01/10): Homenagem ao time','Não'],['S1','Dia Mundial dos Animais (04/10): Proteção','Não'],['S2','Dia do Anestesista (16/10) — Bomba TCI','Sim'],['S2','Dia do Balconista (30/10): Parceiros comerciais','Não'],['S3','Antecipação: Faltam 20 dias para Feira PetNor','Sim'],['S3','Insumos: Não aceite equipamentos sem registro','Sim'],['S4','Antecipação: Prepare-se para a BLACK FRIDAY','Sim'],['S4','Bomba TCI: Upgrade técnico para sua clínica','Sim']],
+  'Nov 2026': [['S1','Evento: Cobertura Feira PetNor','Sim'],['S1','Insumos: O diferencial da precisão Laslo','Não'],['S2','Black Friday: Foco em resultados e ROI','Sim'],['S2','Cobertura PETNOR','Sim'],['S3','CAMPANHA: SEMANA BLACK FRIDAY LASLO','Sim'],['S3','Clube Laslo: Pontuação em dobro na Black','Sim'],['S4','Resultados: O sucesso da Black Friday Laslo','Não'],['S4','Insumos: Reposição de estoque pós-Black','Sim']],
+  'Dez 2026': [['S1','Natal: Mensagem institucional Laslo','Não'],['S1','Clube Laslo: Premiação final do ano','Não'],['S2','Insumos: Garantindo o cuidado nas festas','Sim'],['S2','','Não'],['S3','Metas 2026: O nosso DNA continuará sendo VET','Não'],['S3','Natal: Mensagem institucional Laslo','Sim'],['S4','Boas Festas: Encerramento do ano estratégico','Não'],['S4','Conceito: A Empresa que respeita o seu Pet','Não']],
+};
+const DATES_DATA = {
+  'Jan 2026': [['01 Jan','Ano Novo'],['Jan','20 Anos Laslo — aniversário']],
+  'Fev 2026': [['17 Fev','Dia Mundial do Gato'],['08 Mar','Antecipação Dia da Mulher VET']],
+  'Mar 2026': [['08 Mar','Dia Internacional da Mulher'],['14 Mar','Dia Nacional dos Animais']],
+  'Abr 2026': [['Abr','Abril Laranja — Prevenção Crueldade Animal'],['Abr','Feira PET VET']],
+  'Mai 2026': [['Sem 2','Dia das Mães'],['13 Mai','Dia do Zootecnista'],['25 Mai','Dia Nacional da Adoção']],
+  'Jun 2026': [['Jun','Evento CBAV']],
+  'Jul 2026': [['31 Jul','Dia do Vira-lata'],['Jul','Animal Health']],
+  'Ago 2026': [['08 Ago','Dia Mundial do Gato'],['Sem 2','Dia dos Pais — Pet Dads'],['26 Ago','Dia Mundial do Cachorro']],
+  'Set 2026': [['09 Set','Dia do Médico Veterinário'],['15 Set','Dia do Cliente']],
+  'Out 2026': [['01 Out','Dia do Vendedor'],['04 Out','Dia Mundial dos Animais'],['16 Out','Dia do Anestesista'],['30 Out','Dia do Balconista'],['Out','Feira PetNor']],
+  'Nov 2026': [['Nov','CAMPANHA BLACK FRIDAY'],['Nov','Feira PETNOR']],
+  'Dez 2026': [['25 Dez','Natal']],
+};
+const AAR_ITEMS = ['Reestruturação do E-commerce','Reestruturação do Site','Canal YouTube / Vídeos de Produtos','Clube Laslo — Programa de Fidelidade','Base de dados de clientes p/ MKT','Criação Assinaturas Laslo 2026','Alinhamento com distribuidores'];
+const KPI_ITEMS = ['Alcance orgânico','Engajamento total','Novos seguidores','Cliques no site','Investimento ADS (R$)','ROI dos ADS (%)','Leads gerados','Taxa de conversão (%)','CAC (R$)'];
+const ECOM_ITEMS = ['Visitas ao site','Pedidos no e-commerce','Ticket médio (R$)','Atualizações realizadas','Pendências / Correções'];
+const STATUS_OPTS = [['⬜ Pendente','s-pend'],['🔄 Em andamento','s-wip'],['✅ Feito','s-ok'],['⚠️ Atrasado','s-late']];
+const ADS_OPTS = ['Sim','Não','—'];
+const MONTHS = ['Jan 2026','Fev 2026','Mar 2026','Abr 2026','Mai 2026','Jun 2026','Jul 2026','Ago 2026','Set 2026','Out 2026','Nov 2026','Dez 2026'];
+
+function statusSel(id, val) {
+  const s = document.createElement('select');
+  s.className = 'status';
+  s.id = id;
+  STATUS_OPTS.forEach(([label, cls]) => {
+    const o = document.createElement('option');
+    o.value = label; o.textContent = label;
+    s.appendChild(o);
+  });
+  s.value = val || '⬜ Pendente';
+  s.onchange = () => updateStatusClass(s);
+  const td = document.createElement('td');
+  td.appendChild(s);
+  updateStatusClass(s);
+  return td;
+}
+
+function updateStatusClass(sel) {
+  sel.className = 'status';
+  const map = {'⬜ Pendente':'s-pend','🔄 Em andamento':'s-wip','✅ Feito':'s-ok','⚠️ Atrasado':'s-late'};
+  sel.classList.add(map[sel.value] || 's-pend');
+}
+
+function adsSel(id, val) {
+  const s = document.createElement('select');
+  s.id = id; s.style.fontSize = '12px';
+  ADS_OPTS.forEach(o => { const opt = document.createElement('option'); opt.value = o; opt.textContent = o; s.appendChild(opt); });
+  s.value = val || 'Não';
+  const td = document.createElement('td');
+  td.appendChild(s);
+  return td;
+}
+
+function inputTd(id, val, placeholder) {
+  const inp = document.createElement('input');
+  inp.type = 'text'; inp.id = id; inp.value = val || ''; inp.placeholder = placeholder || '';
+  const td = document.createElement('td');
+  td.appendChild(inp);
+  return td;
+}
+
+function weekTd(label) {
+  const tr = document.createElement('tr');
+  tr.className = 'week-row';
+  const td = document.createElement('td');
+  td.colSpan = 4; td.textContent = '📅 ' + label;
+  tr.appendChild(td);
+  return tr;
+}
+
+// ── RENDER POSTS ──
+function renderPosts(month, tbodyId, prefix) {
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = '';
+  const data = POSTS_DATA[month] || [];
+  const weeks = ['Semana 1','Semana 2','Semana 3','Semana 4'];
+  let lastWeek = '';
+  data.forEach((row, i) => {
+    const [week, tema, ads] = row;
+    const weekLabel = week === 'S1' ? weeks[0] : week === 'S2' ? weeks[1] : week === 'S3' ? weeks[2] : weeks[3];
+    if (weekLabel !== lastWeek) { tbody.appendChild(weekTd(weekLabel)); lastWeek = weekLabel; }
+    const tr = document.createElement('tr');
+    tr.appendChild(inputTd(`${prefix}_tema_${i}`, tema, 'Tema do post...'));
+    const wkTd = document.createElement('td');
+    wkTd.style.fontSize = '11px'; wkTd.style.color = 'var(--text3)'; wkTd.textContent = week;
+    tr.appendChild(wkTd);
+    tr.appendChild(adsSel(`${prefix}_ads_${i}`, ads));
+    tr.appendChild(statusSel(`${prefix}_st_${i}`, '⬜ Pendente'));
+    tbody.appendChild(tr);
+  });
+  // empty extra rows
+  if (data.length === 0) {
+    weeks.forEach((wk, wi) => {
+      tbody.appendChild(weekTd(wk));
+      [0,1].forEach(pi => {
+        const i = wi*2 + pi;
+        const tr = document.createElement('tr');
+        tr.appendChild(inputTd(`${prefix}_tema_${i}`, '', 'Tema do post...'));
+        const wkTd = document.createElement('td'); wkTd.style.fontSize='11px'; wkTd.style.color='var(--text3)'; wkTd.textContent=`S${wi+1}`;
+        tr.appendChild(wkTd);
+        tr.appendChild(adsSel(`${prefix}_ads_${i}`, 'Não'));
+        tr.appendChild(statusSel(`${prefix}_st_${i}`, '⬜ Pendente'));
+        tbody.appendChild(tr);
+      });
+    });
+  }
+}
+
+// ── RENDER AAR ──
+function renderAAR() {
+  const tbody = document.getElementById('aar-body');
+  tbody.innerHTML = '';
+  AAR_ITEMS.forEach((item, i) => {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td'); td.textContent = item;
+    tr.appendChild(td);
+    tr.appendChild(statusSel(`aar_st_${i}`, '⬜ Pendente'));
+    tbody.appendChild(tr);
+  });
+}
+
+// ── RENDER DATES ──
+function renderDates(month) {
+  const tbody = document.getElementById('dates-body');
+  tbody.innerHTML = '';
+  const data = DATES_DATA[month] || [];
+  data.forEach(([dt, label], i) => {
+    const tr = document.createElement('tr');
+    const td1 = document.createElement('td');
+    const badge = document.createElement('span');
+    badge.style.cssText='background:var(--orange-light);color:var(--orange-dark);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:DM Mono,monospace';
+    badge.textContent = dt; td1.appendChild(badge);
+    const td2 = document.createElement('td'); td2.textContent = label;
+    tr.appendChild(td1); tr.appendChild(td2);
+    tr.appendChild(statusSel(`date_st_${i}`, 'Pendente arte'));
+    tbody.appendChild(tr);
+  });
+  if (!data.length) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td'); td.colSpan = 3; td.style.color = 'var(--text3)'; td.style.padding = '12px 14px'; td.textContent = 'Nenhuma data especial mapeada para este mês.';
+    tr.appendChild(td); tbody.appendChild(tr);
+  }
+}
+
+// ── RENDER ADS ──
+let adsRows = [{ camp: '', plat: 'Meta Ads', val: '', st: '⬜ Pendente' }];
+function renderAds() {
+  const tbody = document.getElementById('ads-body');
+  tbody.innerHTML = '';
+  adsRows.forEach((row, i) => {
+    const tr = document.createElement('tr');
+    tr.appendChild(inputTd(`ads_camp_${i}`, row.camp, 'Nome da campanha...'));
+    const platTd = document.createElement('td');
+    const plat = document.createElement('select'); plat.id = `ads_plat_${i}`; plat.style.fontSize='12px';
+    ['Meta Ads','Google Ads','Ambas'].forEach(o => { const opt = document.createElement('option'); opt.value=o; opt.textContent=o; plat.appendChild(opt); });
+    plat.value = row.plat; platTd.appendChild(plat); tr.appendChild(platTd);
+    tr.appendChild(inputTd(`ads_val_${i}`, row.val, 'R$ 0,00'));
+    tr.appendChild(statusSel(`ads_st_${i}`, row.st));
+    tbody.appendChild(tr);
+  });
+}
+function addAds() {
+  adsRows.push({ camp: '', plat: 'Meta Ads', val: '', st: '⬜ Pendente' });
+  renderAds();
+}
+
+// ── RENDER BRIEFINGS ──
+let briefRows = [{ mat: '', fmt: 'Feed', prazo: '', st: '⬜ Pendente' }];
+function renderBriefings() {
+  const tbody = document.getElementById('briefings-body');
+  tbody.innerHTML = '';
+  briefRows.forEach((row, i) => {
+    const tr = document.createElement('tr');
+    tr.appendChild(inputTd(`brf_mat_${i}`, row.mat, 'Material / Arte...'));
+    const fmtTd = document.createElement('td');
+    const fmt = document.createElement('select'); fmt.id = `brf_fmt_${i}`; fmt.style.fontSize='12px';
+    ['Feed','Stories','Banner','E-mail','WhatsApp','Outro'].forEach(o => { const opt = document.createElement('option'); opt.value=o; opt.textContent=o; fmt.appendChild(opt); });
+    fmt.value = row.fmt; fmtTd.appendChild(fmt); tr.appendChild(fmtTd);
+    tr.appendChild(inputTd(`brf_prazo_${i}`, row.prazo, 'dd/mm'));
+    tr.appendChild(statusSel(`brf_st_${i}`, row.st));
+    tbody.appendChild(tr);
+  });
+}
+function addBriefing() {
+  briefRows.push({ mat: '', fmt: 'Feed', prazo: '', st: '⬜ Pendente' });
+  renderBriefings();
+}
+
+// ── RENDER KPIs ──
+function renderKPIs() {
+  ['kpi-grid', 'ecom-grid'].forEach(id => document.getElementById(id).innerHTML = '');
+  KPI_ITEMS.forEach((label, i) => {
+    const cell = document.createElement('div'); cell.className = 'kpi-cell';
+    const lbl = document.createElement('label'); lbl.textContent = label;
+    const inp = document.createElement('input'); inp.type = 'text'; inp.id = `kpi_${i}`; inp.placeholder = '—';
+    cell.appendChild(lbl); cell.appendChild(inp);
+    document.getElementById('kpi-grid').appendChild(cell);
+  });
+  ECOM_ITEMS.forEach((label, i) => {
+    const cell = document.createElement('div'); cell.className = 'kpi-cell';
+    const lbl = document.createElement('label'); lbl.textContent = label;
+    const inp = document.createElement('input'); inp.type = 'text'; inp.id = `ecom_${i}`; inp.placeholder = '—';
+    cell.appendChild(lbl); cell.appendChild(inp);
+    document.getElementById('ecom-grid').appendChild(cell);
+  });
+}
+
+// ── LOAD MONTH ──
+function loadMonth() {
+  const month = document.getElementById('month-sel').value;
+  const idx = MONTHS.indexOf(month);
+  document.getElementById('reunion-num').textContent = 'Reunião #' + (idx + 1);
+  document.getElementById('save-month-label').textContent = document.getElementById('month-sel').selectedOptions[0].text;
+  adsRows = [{ camp: '', plat: 'Meta Ads', val: '', st: '⬜ Pendente' }];
+  briefRows = [{ mat: '', fmt: 'Feed', prazo: '', st: '⬜ Pendente' }];
+  renderPosts(month, 'posts-body', 'p');
+  renderPosts(MONTHS[(idx + 1) % 12], 'next-posts-body', 'np');
+  renderAAR();
+  renderDates(month);
+  renderAds();
+  renderBriefings();
+  renderKPIs();
+  document.getElementById('notes').value = '';
+  document.getElementById('save-msg').textContent = '';
+}
+
+// ── COLLECT DATA ──
+function collectData() {
+  const month = document.getElementById('month-sel').value;
+  const posts = [];
+  document.querySelectorAll('[id^="p_tema_"]').forEach((el, i) => {
+    posts.push({ tema: el.value, ads: document.getElementById(`p_ads_${i}`)?.value, status: document.getElementById(`p_st_${i}`)?.value });
+  });
+  const nextPosts = [];
+  document.querySelectorAll('[id^="np_tema_"]').forEach((el, i) => {
+    nextPosts.push({ tema: el.value, ads: document.getElementById(`np_ads_${i}`)?.value, status: document.getElementById(`np_st_${i}`)?.value });
+  });
+  const aar = AAR_ITEMS.map((item, i) => ({ acao: item, status: document.getElementById(`aar_st_${i}`)?.value }));
+  const kpis = KPI_ITEMS.map((label, i) => ({ label, valor: document.getElementById(`kpi_${i}`)?.value }));
+  const ecom = ECOM_ITEMS.map((label, i) => ({ label, valor: document.getElementById(`ecom_${i}`)?.value }));
+  const ads = adsRows.map((_, i) => ({ campanha: document.getElementById(`ads_camp_${i}`)?.value, plataforma: document.getElementById(`ads_plat_${i}`)?.value, valor: document.getElementById(`ads_val_${i}`)?.value, status: document.getElementById(`ads_st_${i}`)?.value }));
+  const briefings = briefRows.map((_, i) => ({ material: document.getElementById(`brf_mat_${i}`)?.value, formato: document.getElementById(`brf_fmt_${i}`)?.value, prazo: document.getElementById(`brf_prazo_${i}`)?.value, status: document.getElementById(`brf_st_${i}`)?.value }));
+  return { mes: month, data_reuniao: new Date().toLocaleDateString('pt-BR'), posts: JSON.stringify(posts), next_posts: JSON.stringify(nextPosts), aar: JSON.stringify(aar), kpis: JSON.stringify(kpis), ecom: JSON.stringify(ecom), ads: JSON.stringify(ads), briefings: JSON.stringify(briefings), notas: document.getElementById('notes').value };
+}
+
+// ── SAVE TO SHEETS ──
+async function saveToSheets() {
+  if (SHEET_URL === 'SUA_URL_AQUI') {
+    showToast('Configure a URL do Google Sheets primeiro!', 'red');
+    return;
+  }
+  const btn = document.getElementById('btn-save');
+  const msg = document.getElementById('save-msg');
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  try {
+    const data = collectData();
+    const formData = new FormData();
+    Object.entries(data).forEach(([k, v]) => formData.append(k, v));
+    await fetch(SHEET_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+    msg.textContent = '✓ Salvo com sucesso!';
+    msg.className = 'msg ok';
+    showToast('Reunião salva no Google Sheets!', 'green');
+  } catch (e) {
+    msg.textContent = '✗ Erro ao salvar';
+    msg.className = 'msg err';
+    showToast('Erro ao salvar. Verifique a URL.', 'red');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Salvar reunião';
+  }
+}
+
+function showToast(text, type) {
+  const t = document.getElementById('toast');
+  t.textContent = text; t.className = 'toast ' + (type || '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Init
+loadMonth();
+</script>
+</body>
+</html>
