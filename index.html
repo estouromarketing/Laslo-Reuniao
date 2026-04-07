@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Pauta Mensal Laslo - Abril 2026</title>
+    <style>
+        /* CSS MOBILE-FIRST */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 100%;
+            min-height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+        
+        .logo-estouro {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        
+        .logo-estouro img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 3px;
+        }
+        
+        .header-content {
+            flex: 1;
+        }
+        
+        header h1 {
+            font-size: 16px;
+            margin-bottom: 2px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        header p {
+            font-size: 11px;
+            opacity: 0.95;
+            line-height: 1.2;
+        }
+        
+        /* MENU HAMBURGER */
+        .menu-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:active {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        /* LOGO LASLO */
+        .header-bottom {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .logo-laslo {
+            height: 32px;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .logo-laslo img {
+            height: 100%;
+            object-fit: contain;
+            max-width: 150px;
+        }
+        
+        /* TABS */
+        .tabs {
+            display: none;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            overflow-y: auto;
+            position: absolute;
+            top: 110px;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            flex-direction: column;
+            max-height: calc(100vh - 110px);
+        }
+        
+        .tabs.active {
+            display: flex;
+        }
+        
+        .tab-button {
+            padding: 12px 16px;
+            border: none;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            text-align: left;
+        }
+        
+        .tab-button.active {
+            background: #f0f4ff;
+            color: #667eea;
+            border-left-color: #667eea;
+        }
+        
+        .tab-button:active {
+            background: #f0f4ff;
+        }
+        
+        /* CONTENT */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 60px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section {
+            margin-bottom: 24px;
+        }
+        
+        .section h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #1e40af;
+            line-height: 1.5;
+        }
+        
+        /* KPI CARDS */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .kpi-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 14px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .kpi-card.positive {
+            border-left-color: #10b981;
+        }
+        
+        .kpi-card.negative {
+            border-left-color: #ef4444;
+        }
+        
+        .kpi-label {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        
+        .kpi-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .kpi-change {
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        .kpi-change.positive {
+            color: #10b981;
+        }
+        
+        .kpi-change.negative {
+            color: #ef4444;
+        }
+        
+        /* POST CARDS */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .post-card {
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            padding: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .post-card:active {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        
+        .post-week {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 16px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .post-number {
+            display: inline-block;
+            background: #f0f4ff;
+            color: #667eea;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .post-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            margin-top: 6px;
+        }
+        
+        .post-subtitle {
+            margin-bottom: 8px;
+            font-size: 11px;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .post-copy {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #555;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .post-hashtags {
+            font-size: 11px;
+            color: #667eea;
+            font-weight: 500;
+            word-break: break-word;
+        }
+        
+        /* COMPARISON TABLE */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 12px;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .comparison-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            position: sticky;
+            top: 0;
+        }
+        
+        /* MONTH TABS */
+        .month-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        
+        .month-tab {
+            padding: 8px 12px;
+            background: #f0f4ff;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .month-tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .month-content {
+            display: none;
+        }
+        
+        .month-content.active {
+            display: block;
+        }
+        
+        /* FORMULÁRIO */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* BUTTONS */
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background: #e9ecef;
+            color: #333;
+        }
+        
+        .btn-secondary:active {
+            background: #dee2e6;
+        }
+        
+        /* SUCCESS MESSAGE */
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            display: none;
+            font-size: 13px;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: #f8f9fa;
+            padding: 16px;
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+            border-top: 1px solid #e9ecef;
+            position: sticky;
+            bottom: 0;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        /* HIDDEN */
+        .hidden-iframe {
+            display: none;
+        }
+        
+        /* RESPONSIVO - TABLET (640px+) */
+        @media (min-width: 640px) {
+            header h1 {
+                font-size: 20px;
+            }
+            
+            header p {
+                font-size: 13px;
+            }
+            
+            .header-top {
+                gap: 12px;
+            }
+            
+            .logo-estouro {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .logo-laslo {
+                height: 40px;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .posts-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .button-group {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .tab-button {
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+        }
+        
+        /* RESPONSIVO - DESKTOP (1024px+) */
+        @media (min-width: 1024px) {
+            .container {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+            }
+            
+            header {
+                grid-column: 1 / -1;
+                padding: 20px 30px;
+            }
+            
+            .header-top {
+                margin-bottom: 12px;
+            }
+            
+            header h1 {
+                font-size: 26px;
+            }
+            
+            header p {
+                font-size: 14px;
+            }
+            
+            .logo-estouro {
+                width: 56px;
+                height: 56px;
+            }
+            
+            .logo-laslo {
+                height: 48px;
+            }
+            
+            .logo-laslo img {
+                max-width: 220px;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .tabs {
+                display: flex !important;
+                position: static;
+                flex-direction: column;
+                background: #f8f9fa;
+                border-right: 1px solid #e9ecef;
+                border-bottom: none;
+                max-height: none;
+                padding: 16px 0;
+                grid-row: 2;
+                grid-column: 1;
+            }
+            
+            .tab-button {
+                border-left: 4px solid transparent;
+                padding: 14px 20px;
+            }
+            
+            .tab-button.active {
+                border-left-color: #667eea;
+                background: white;
+            }
+            
+            .content {
+                grid-column: 2;
+                grid-row: 2;
+                padding: 30px;
+                padding-bottom: 30px;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .posts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            footer {
+                grid-column: 1 / -1;
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <div class="logo-estouro">
+                    <img src="assets/logo-estouro.png" alt="Estouro Marketing Digital">
+                </div>
+                <div class="header-content">
+                    <h1>📊 Pauta Mensal</h1>
+                    <p>Gestão de Conteúdo e KPIs • Abril 2026</p>
+                </div>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            </div>
+            <div class="header-bottom">
+                <div class="logo-laslo">
+                    <img src="assets/logo-laslo.jpg" alt="Laslo - O nosso DNA é Vet">
+                </div>
+            </div>
+        </header>
+        
+        <div class="tabs" id="tabsMenu">
+            <button class="tab-button active" onclick="openTab(event, 'posts')">📅 Posts</button>
+            <button class="tab-button" onclick="openTab(event, 'kpis')">📈 KPIs</button>
+            <button class="tab-button" onclick="openTab(event, 'comparativo')">📊 Comparativo</button>
+            <button class="tab-button" onclick="openTab(event, 'historico')">📋 Histórico</button>
+            <button class="tab-button" onclick="openTab(event, 'formulario')">✏️ Novo KPI</button>
+        </div>
+        
+        <div class="content">
+            <!-- ABA 1: POSTS -->
+            <div id="posts" class="tab-content active">
+                <div class="section">
+                    <h2>📅 Calendário de Posts - Abril 2026</h2>
+                    <div class="info-box">
+                        📌 <strong>6 posts planejados</strong> | Semanas 2, 3 e 4 | Temas: TCI, Insumos, Comodato, PET VET
+                    </div>
+                    
+                    <div class="posts-grid">
+                        <!-- S2 - POST 3 -->
+                        <div class="post-card">
+                            <div>
+                                <span class="post-week">S2</span>
+                                <span class="post-number">POST 3</span>
+                            </div>
+                            <div class="post-title">Bomba TCI Laslo</div>
+                            <div class="post-subtitle">Mais controle, mais segurança em cada procedimento</div>
+                            <div class="post-copy">A Bomba de Infusão TCI da Laslo foi desenvolvida para a medicina veterinária — com tecnologia que garante precisão no controle de anestesia durante todo o procedimento.
+
+Segurança para o médico. Conforto para o paciente. Tranquilidade para o tutor.
+
+O nosso DNA é Vet.</div>
+                            <div class="post-hashtags">#LasloVet #BombaTCI #AnestesiaVet</div>
+                        </div>
+                        
+                        <!-- S2 - POST 4 -->
+                        <div class="post-card">
+                            <div>
+                                <span class="post-week">S2</span>
+                                <span class="post-number">POST 4</span>
+                            </div>
+                            <div class="post-title">Insumos Laslo</div>
+                            <div class="post-subtitle">Da infusão à anestesia — tudo que sua clínica precisa</div>
+                            <div class="post-copy">A Laslo desenvolveu uma linha completa de insumos veterinários pensada para cada etapa do atendimento.
+
+Equipos, kits cirúrgicos, insumos de anestesia e muito mais — tudo com padrão ANVISA e rastreabilidade garantida.
+
+Porque o cuidado com cada vida começa pelos insumos certos.</div>
+                            <div class="post-hashtags">#LasloVet #InsumoVet #LinhaCompleta</div>
+                        </div>
+                        
+                        <!-- S3 - POST 5 -->
+                        <div class="post-card">
+                            <div>
+                                <span class="post-week">S3</span>
+                                <span class="post-number">POST 5</span>
+                            </div>
+                            <div class="post-title">Comodato Bomba TCI</div>
+                            <div class="post-subtitle">Sem custo de aquisição</div>
+                            <div class="post-copy">Programa de comodato Laslo — sua clínica usa a Bomba TCI pagando apenas pelos insumos.
+
+Sem investimento inicial. Com todo o suporte técnico Laslo.
+
+Fale com nosso time e saiba como aderir.</div>
+                            <div class="post-hashtags">#LasloVet #BombaTCI #ComodatoVet</div>
+                        </div>
+                        
+                        <!-- S3 - POST 6 -->
+                        <div class="post-card">
+                            <div>
+                                <span class="post-week">S3</span>
+                                <span class="post-number">POST 6</span>
+                            </div>
+                            <div class="post-title">Antecipação: PET VET</div>
+                            <div class="post-subtitle">Faltam 20 dias para a maior feira veterinária!</div>
+                            <div class="post-copy">A Laslo estará lá — com novidades, demonstrações e muito conteúdo para você.
+
+Anota na agenda e vem nos visitar!</div>
+                            <div class="post-hashtags">#PETVET #LasloVet #FeiraPetVet</div>
+                        </div>
+                        
+                        <!-- S4 - POST 7 -->
+                        <div class="post-card">
+                            <div>
+                                <span class="post-week">S4</span>
+                                <span class="post-number">POST 7</span>
+                            </div>
+                            <div class="post-title">Presença PET VET</div>
+                            <div class="post-subtitle">Estamos na Feira PET VET!</div>
+                            <div class="post-copy">Hoje começa a Feira PET VET e a Laslo está aqui!
+
+Passe no nosso estande, conheça nossa linha completa e fale com nossa equipe.
+
+Te esperamos!</div>
+                            <div class="post-hashtags">#PETVET2026 #LasloVet #FeiraPetVet</div>
+                        </div>
+                        
+                        <!-- S4 - POST 8 -->
+                        <div class="post-card">
+                            <div>
+                                <span class="post-week">S4</span>
+                                <span class="post-number">POST 8</span>
+                            </div>
+                            <div class="post-title">Insumos: Lastovet</div>
+                            <div class="post-subtitle">Qualidade que não abre mão</div>
+                            <div class="post-copy">O Lastovet foi criado para atender os mais altos padrões da medicina veterinária.
+
+Precisão, segurança e procedência — do começo ao fim do procedimento.
+
+Conheça a linha completa.</div>
+                            <div class="post-hashtags">#Lastovet #LasloVet #InsumoVet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ABA 2: KPIs -->
+            <div id="kpis" class="tab-content">
+                <div class="section">
+                    <h2>📊 KPIs - Escolha o Mês</h2>
+                    <div class="month-tabs">
+                        <button class="month-tab active" onclick="showMonth(event, 'mar2026')">Março</button>
+                        <button class="month-tab" onclick="showMonth(event, 'fev2026')">Fevereiro</button>
+                    </div>
+                    
+                    <!-- MARÇO 2026 -->
+                    <div id="mar2026" class="month-content active">
+                        <div class="info-box">
+                            ℹ️ <strong>Março 2026:</strong> 01/03 - 31/03 | vs Fevereiro
+                        </div>
+                        
+                        <h3 style="margin-top: 16px; margin-bottom: 12px; color: #667eea; font-size: 15px;">Engajamento & Audiência</h3>
+                        <div class="kpi-grid">
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Alcance Total</div>
+                                <div class="kpi-value">7.259</div>
+                                <div class="kpi-change positive">↑ 33,83%</div>
+                            </div>
+                            <div class="kpi-card negative">
+                                <div class="kpi-label">Engajamento</div>
+                                <div class="kpi-value">194</div>
+                                <div class="kpi-change negative">↓ 58,99%</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Seguidores</div>
+                                <div class="kpi-value">2.397</div>
+                                <div class="kpi-change positive">↑ 1,27%</div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin-top: 16px; margin-bottom: 12px; color: #667eea; font-size: 15px;">Visualizações</h3>
+                        <div class="kpi-grid">
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Vis. Totais</div>
+                                <div class="kpi-value">16.019</div>
+                                <div class="kpi-change positive">↑ 20,93%</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Alcance Pago</div>
+                                <div class="kpi-value">4.764</div>
+                                <div class="kpi-change positive">↑ 46,58%</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Alcance Orgânico</div>
+                                <div class="kpi-value">427</div>
+                                <div class="kpi-change positive">↑ 37,74%</div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin-top: 16px; margin-bottom: 12px; color: #667eea; font-size: 15px;">Performance</h3>
+                        <div class="kpi-grid">
+                            <div class="kpi-card neutral">
+                                <div class="kpi-label">Postagens</div>
+                                <div class="kpi-value">10</div>
+                                <div class="kpi-change neutral">↓ 16,67%</div>
+                            </div>
+                            <div class="kpi-card negative">
+                                <div class="kpi-label">Interações Posts</div>
+                                <div class="kpi-value">47</div>
+                                <div class="kpi-change negative">↓ 22,95%</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Stories</div>
+                                <div class="kpi-value">6</div>
+                                <div class="kpi-change positive">↑ 100% ⭐</div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin-top: 16px; margin-bottom: 12px; color: #667eea; font-size: 15px;">Reels & Ads</h3>
+                        <div class="kpi-grid">
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Reels Interações</div>
+                                <div class="kpi-value">23</div>
+                                <div class="kpi-change positive">↑ 666% ⭐</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Investimento</div>
+                                <div class="kpi-value">R$ 305,88</div>
+                                <div class="kpi-change positive">↑ 16,4%</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">CTR</div>
+                                <div class="kpi-value">0,53%</div>
+                                <div class="kpi-change positive">↑ 76,86%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FEVEREIRO 2026 -->
+                    <div id="fev2026" class="month-content">
+                        <div class="info-box">
+                            ℹ️ <strong>Fevereiro 2026:</strong> 01/02 - 28/02 | vs Janeiro
+                        </div>
+                        
+                        <h3 style="margin-top: 16px; margin-bottom: 12px; color: #667eea; font-size: 15px;">Principais KPIs</h3>
+                        <div class="kpi-grid">
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Alcance Total</div>
+                                <div class="kpi-value">5.424</div>
+                                <div class="kpi-change positive">↑ 401,29%</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Engajamento</div>
+                                <div class="kpi-value">529</div>
+                                <div class="kpi-change positive">↑ 689,55% ⭐</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Vis. Totais</div>
+                                <div class="kpi-value">13.246</div>
+                                <div class="kpi-change positive">↑ 228,52%</div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin-top: 16px; margin-bottom: 12px; color: #667eea; font-size: 15px;">Crescimento</h3>
+                        <div class="kpi-grid">
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Alcance Pago</div>
+                                <div class="kpi-value">3.250</div>
+                                <div class="kpi-change positive">↑ 324.900% ⭐</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Seguidores</div>
+                                <div class="kpi-value">2.367</div>
+                                <div class="kpi-change positive">Estável</div>
+                            </div>
+                            <div class="kpi-card positive">
+                                <div class="kpi-label">Investimento</div>
+                                <div class="kpi-value">R$ 262,79</div>
+                                <div class="kpi-change positive">Inicial</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ABA 3: COMPARATIVO -->
+            <div id="comparativo" class="tab-content">
+                <div class="section">
+                    <h2>📊 Comparativo</h2>
+                    <div class="info-box">
+                        📌 <strong>Fevereiro vs Março 2026</strong> | Análise de tendências
+                    </div>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Fev</th>
+                                <th>Mar</th>
+                                <th>Var</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Alcance</strong></td>
+                                <td>5.424</td>
+                                <td>7.259</td>
+                                <td>↑ +34%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Engajamento</strong></td>
+                                <td>473</td>
+                                <td>194</td>
+                                <td>↓ -59%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Stories</strong></td>
+                                <td>3</td>
+                                <td>6</td>
+                                <td>↑ +100%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reels</strong></td>
+                                <td>3</td>
+                                <td>23</td>
+                                <td>↑ +667%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Investimento</strong></td>
+                                <td>R$262</td>
+                                <td>R$306</td>
+                                <td>↑ +16%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div style="background: #f0f4ff; padding: 12px; border-radius: 6px; margin-top: 16px; font-size: 12px; line-height: 1.6;">
+                        <h3 style="color: #667eea; margin-bottom: 10px; font-size: 14px;">📈 Insights:</h3>
+                        <ul style="margin-left: 16px; color: #333;">
+                            <li>✅ Alcance cresceu 33,83%</li>
+                            <li>✅ Stories +100% (estratégia funcionando)</li>
+                            <li>✅ Reels +666% (destaque do mês ⭐)</li>
+                            <li>⚠️ Engajamento caiu 58,99%</li>
+                            <li>⚠️ Revisar qualidade de conteúdo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ABA 4: HISTÓRICO -->
+            <div id="historico" class="tab-content">
+                <div class="section">
+                    <h2>📋 Histórico de KPIs</h2>
+                    <div class="info-box">
+                        📌 <strong>Acompanhamento histórico mensal</strong> | Todos os meses salvos
+                    </div>
+                    
+                    <div style="background: #f0f4ff; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 12px;">
+                        <h3 style="color: #667eea; margin-bottom: 8px;">✅ Meses Registrados:</h3>
+                        <ul style="margin-left: 16px; line-height: 1.6; color: #333;">
+                            <li><strong>Janeiro 2026</strong> — Período inicial</li>
+                            <li><strong>Fevereiro 2026</strong> — Primeira estratégia de ADS</li>
+                            <li><strong>Março 2026</strong> — Crescimento de alcance</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fff3cd; padding: 12px; border-radius: 6px; font-size: 12px;">
+                        <h3 style="color: #856404; margin-bottom: 8px;">⏳ Próximos Passos:</h3>
+                        <ol style="margin-left: 16px; line-height: 1.6; color: #333;">
+                            <li>Envie novo relatório PDF</li>
+                            <li>Acesse aba <strong>"✏️ Novo KPI"</strong></li>
+                            <li>Preencha o formulário</li>
+                            <li>Clique em "📤 Enviar"</li>
+                            <li>Mês adicionado automaticamente!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ABA 5: FORMULÁRIO -->
+            <div id="formulario" class="tab-content">
+                <div class="section">
+                    <h2>✏️ Novo KPI</h2>
+                    <div class="info-box">
+                        📌 Preencha este formulário quando receber o novo relatório mensal
+                    </div>
+                    
+                    <div id="successMessage" class="success-message">
+                        ✅ Enviado! Seu mês foi adicionado ao histórico.
+                    </div>
+                    
+                    <form id="kpiForm" onsubmit="handleFormSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Mês/Ano *</label>
+                                <input type="month" id="referenceMonth" name="referenceMonth" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Responsável *</label>
+                                <input type="text" id="responsible" name="responsible" placeholder="Seu nome" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Alcance Total</label>
+                                <input type="number" id="alcance_total" name="alcance_total" placeholder="7259">
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Engajamento</label>
+                                <input type="number" id="engajamento" name="engajamento" placeholder="194">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Seguidores</label>
+                                <input type="number" id="seguidores" name="seguidores" placeholder="2397">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Visualizações</label>
+                                <input type="number" id="visualizacoes_totais" name="visualizacoes_totais" placeholder="16019">
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Investimento (R$)</label>
+                                <input type="number" id="investimento_total" name="investimento_total" placeholder="305.88" step="0.01">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Impressões</label>
+                                <input type="number" id="impressoes" name="impressoes" placeholder="19733">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Conversas</label>
+                                <input type="number" id="conversas_iniciadas" name="conversas_iniciadas" placeholder="30">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Observações</label>
+                            <textarea id="notas" name="notas" placeholder="Insights do mês, mudanças, destaques..."></textarea>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button type="submit" class="btn-primary">📤 Enviar</button>
+                            <button type="reset" class="btn-secondary">🔄 Limpar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Estouro Marketing © 2026 | <a href="https://github.com/estouromarketing/Laslo-Reuniao">GitHub</a></p>
+    </footer>
+    
+    <iframe name="hiddenFrame" class="hidden-iframe"></iframe>
+    
+    <script>
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFK_YG-qC6kAPs2LdqG0GCRI4iXh9AuwcR49K_WZsKgAzL-9Orq-TSUbvriavY2wCb/exec";
+        
+        function toggleMenu() {
+            const menu = document.getElementById('tabsMenu');
+            menu.classList.toggle('active');
+        }
+        
+        function openTab(evt, tabName) {
+            document.getElementById('tabsMenu').classList.remove('active');
+            
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+        
+        function showMonth(evt, monthId) {
+            document.querySelectorAll('.month-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.month-tab').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(monthId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+        
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(document.getElementById('kpiForm'));
+            const data = Object.fromEntries(formData);
+            
+            const payload = {
+                action: 'insertKPI',
+                data: data
+            };
+            
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = APPS_SCRIPT_URL;
+            form.target = 'hiddenFrame';
+            
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'data';
+            input.value = JSON.stringify(payload);
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+            
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('kpiForm').reset();
+                
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000);
+            }, 1000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const currentMonth = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
+            document.getElementById('referenceMonth').value = currentMonth;
+        });
+    </script>
+</body>
+</html>
