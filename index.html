@@ -1079,10 +1079,37 @@ function showToast(text, type) {
 // ANÁLISE DE KPIs
 // ══════════════════════════════════════════
 
-const KPI_ANALYTICS_MONTHS = ['Dez 2025','Jan 2026','Fev 2026','Mar 2026','Abr 2026','Mai 2026','Jun 2026','Jul 2026','Ago 2026','Set 2026','Out 2026','Nov 2026','Dez 2026'];
+const KPI_ANALYTICS_MONTHS = ['Nov 2025','Dez 2025','Jan 2026','Fev 2026','Mar 2026','Abr 2026','Mai 2026','Jun 2026','Jul 2026','Ago 2026','Set 2026','Out 2026','Nov 2026','Dez 2026'];
 
 // Estrutura: { 'Mês': { categoria: { 'Métrica': valor_numerico } } }
 const KPI_ANALYTICS_DATA = {
+  'Nov 2025': {
+    instagram: {
+      'Alcance total (org+pago)': 4257, 'Alcance orgânico': 285, 'Alcance pago': 2855,
+      'Engajamento total': 202, 'Novos seguidores': 0, 'Seguidores totais': 2329,
+      'Visitas do perfil': 230, 'Visualizações totais': 18273,
+      'Postagens feed': 12, 'Curtidas em postagens': 62, 'Comentários em postagens': 0,
+      'Salvamentos': 0, 'Compartilhamentos': 14, 'Interações totais': 124,
+      'Interações nas postagens': 90, 'Alcance das postagens': 324,
+      'Número de Reels': 1, 'Alcance dos Reels': 169, 'Interações nos Reels': 14,
+      'Curtidas nos Reels': 12, 'Comentários nos Reels': 1, 'Salvamentos nos Reels': 1, 'Compartilhamentos nos Reels': 0,
+      'Número de Stories': 9, 'Visualizações dos Stories': 816, 'Interações com Stories': 24,
+    },
+    metaads: {
+      'Valor gasto (R$)': 211.00, 'Impressões': 8391, 'Alcance': 3378,
+      'Cliques totais': 144, 'Cliques no link': 88, 'Conversas iniciadas': 22,
+      'CTR (%)': 1.05, 'CPC médio (R$)': 1.47, 'CPM médio (R$)': 25.15, 'Frequência': 2.48,
+    },
+    gmn: {
+      'Total de ações': 65, 'Cliques no website': 7, 'Visualizações totais': 213,
+      'Ligações': 1, 'Visualizações de pesquisa': 179,
+      'Solicitações de rotas': 57, 'Visualizações no Maps': 34, 'Pesquisas "laslo"': null,
+    },
+    linkedin: {
+      'Seguidores totais': 181, 'Novos seguidores': 0, 'Alcance': 245,
+      'Impressões': 441, 'Engajamento': 27, 'Reações': 20, 'Cliques': 6, 'Postagens': 4,
+    },
+  },
   'Dez 2025': {
     instagram: {
       'Alcance total (org+pago)': 2161, 'Alcance orgânico': 303, 'Alcance pago': 672,
