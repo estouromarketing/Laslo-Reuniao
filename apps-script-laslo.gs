@@ -168,7 +168,7 @@ function testar() {
 //   2) Selecionar migrarPivot → executa → cria aba Consolidado
 // ══════════════════════════════════════════════════════════
 
-var KPI_MESES = ['Set 2025','Out 2025','Nov 2025','Dez 2025','Jan 2026','Fev 2026'];
+var KPI_MESES = ['Set 2025','Out 2025','Nov 2025','Dez 2025','Jan 2026','Fev 2026','Mar 2026'];
 var KPI_CATS = ['instagram','metaads','gmn','linkedin'];
 var KPI_CAT_LABELS = {instagram:'Instagram',metaads:'Meta Ads',gmn:'Google Meu Negocio',linkedin:'LinkedIn'};
 
@@ -208,6 +208,12 @@ var KPI_DATA = {
     metaads: {'Valor gasto':262.79,'Impressoes':87746,'Alcance':4445,'Cliques totais':657,'Cliques link':264,'Conversas iniciadas':40,'CTR':0.30,'CPC':0.40,'CPM':2.99,'Frequencia':19.74},
     gmn: {'Total acoes':47,'Cliques website':16,'Visualizacoes':189,'Ligacoes':2,'Views pesquisa':146,'Rotas':29,'Views Maps':43,'Pesquisas laslo':87},
     linkedin: {'Seguidores totais':205,'Novos seguidores':3,'Alcance':299,'Impressoes':523,'Engajamento':65,'Reacoes':54,'Cliques':12,'Postagens':4}
+  },
+  'Mar 2026': {
+    instagram: {'Alcance total':7259,'Alcance organico':427,'Alcance pago':4764,'Engajamento total':194,'Novos seguidores':37,'Seguidores totais':2397,'Visitas perfil':160,'Visualizacoes totais':16019,'Postagens feed':4,'Curtidas':32,'Comentarios':0,'Salvamentos':1,'Compartilhamentos':6,'Interacoes totais':93,'Interacoes postagens':47,'Alcance postagens':212,'Num Reels':0,'Alcance Reels':64,'Interacoes Reels':23,'Curtidas Reels':16,'Comentarios Reels':0,'Salvamentos Reels':3,'Compartilhamentos Reels':2,'Num Stories':6,'Views Stories':373,'Interacoes Stories':16},
+    metaads: {'Valor gasto':305.88,'Impressoes':19733,'Alcance':6299,'Cliques totais':200,'Cliques link':105,'Conversas iniciadas':30,'CTR':0.53,'CPC':2.91,'CPM':15.50,'Frequencia':3.13},
+    gmn: {'Total acoes':59,'Cliques website':17,'Visualizacoes':212,'Ligacoes':0,'Views pesquisa':176,'Rotas':42,'Views Maps':36,'Pesquisas laslo':null},
+    linkedin: {'Seguidores totais':208,'Novos seguidores':7,'Alcance':223,'Impressoes':378,'Engajamento':44,'Reacoes':38,'Cliques':5,'Postagens':2}
   }
 };
 
