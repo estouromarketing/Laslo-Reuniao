@@ -1079,19 +1079,47 @@ function showToast(text, type) {
 // ANÁLISE DE KPIs
 // ══════════════════════════════════════════
 
-const KPI_ANALYTICS_MONTHS = ['Jan 2026','Fev 2026','Mar 2026','Abr 2026','Mai 2026','Jun 2026','Jul 2026','Ago 2026','Set 2026','Out 2026','Nov 2026','Dez 2026'];
+const KPI_ANALYTICS_MONTHS = ['Dez 2025','Jan 2026','Fev 2026','Mar 2026','Abr 2026','Mai 2026','Jun 2026','Jul 2026','Ago 2026','Set 2026','Out 2026','Nov 2026','Dez 2026'];
 
 // Estrutura: { 'Mês': { categoria: { 'Métrica': valor_numerico } } }
 const KPI_ANALYTICS_DATA = {
+  'Dez 2025': {
+    instagram: {
+      'Alcance total (org+pago)': 2161, 'Alcance orgânico': 303, 'Alcance pago': 672,
+      'Engajamento total': 59, 'Novos seguidores': 10, 'Seguidores totais': null,
+      'Visitas do perfil': 166, 'Visualizações totais': 6444,
+      'Postagens feed': 4, 'Curtidas em postagens': 25, 'Comentários em postagens': 0,
+      'Salvamentos': 1, 'Compartilhamentos': 17, 'Interações totais': 75,
+      'Interações nas postagens': 61, 'Alcance das postagens': 187,
+      'Número de Reels': 1, 'Alcance dos Reels': 87, 'Interações nos Reels': 5,
+      'Curtidas nos Reels': 4, 'Comentários nos Reels': 0, 'Salvamentos nos Reels': 0, 'Compartilhamentos nos Reels': 0,
+      'Número de Stories': 0, 'Visualizações dos Stories': 0, 'Interações com Stories': 0,
+    },
+    metaads: {
+      'Valor gasto (R$)': 65.16, 'Impressões': 2513, 'Alcance': 1573,
+      'Cliques totais': 44, 'Cliques no link': 23, 'Conversas iniciadas': 5,
+      'CTR (%)': 0.92, 'CPC médio (R$)': 2.83, 'CPM médio (R$)': 25.93, 'Frequência': 1.6,
+    },
+    gmn: {
+      'Total de ações': 70, 'Cliques no website': 6, 'Visualizações totais': 187,
+      'Ligações': 2, 'Visualizações de pesquisa': 142,
+      'Solicitações de rotas': 62, 'Visualizações no Maps': 45,
+    },
+    linkedin: {
+      'Seguidores totais': null, 'Novos seguidores': 10, 'Alcance': 119,
+      'Impressões': 246, 'Engajamento': 30, 'Reações': 23, 'Cliques': 7, 'Postagens': 2,
+    },
+  },
   'Jan 2026': {
     instagram: {
       'Alcance total (org+pago)': 1082, 'Alcance orgânico': 739, 'Alcance pago': 1,
-      'Engajamento total': 67, 'Novos seguidores': 9, 'Seguidores totais': null,
+      'Engajamento total': 181, 'Novos seguidores': 9, 'Seguidores totais': null,
       'Visitas do perfil': 87, 'Visualizações totais': 4032,
       'Postagens feed': 8, 'Curtidas em postagens': 47, 'Comentários em postagens': 1,
       'Salvamentos': 1, 'Compartilhamentos': 3, 'Interações totais': 139,
       'Interações nas postagens': 55, 'Alcance das postagens': 343,
       'Número de Reels': 1, 'Alcance dos Reels': 495, 'Interações nos Reels': 79,
+      'Curtidas nos Reels': 52, 'Comentários nos Reels': 4, 'Salvamentos nos Reels': 3, 'Compartilhamentos nos Reels': 9,
       'Número de Stories': 0, 'Visualizações dos Stories': 0, 'Interações com Stories': 0,
     },
     metaads: {
@@ -1102,10 +1130,10 @@ const KPI_ANALYTICS_DATA = {
     gmn: {
       'Total de ações': 50, 'Cliques no website': 12, 'Visualizações totais': 198,
       'Ligações': 2, 'Visualizações de pesquisa': 177,
-      'Solicitações de rotas': 36, 'Visualizações no Maps': 21,
+      'Solicitações de rotas': 36, 'Visualizações no Maps': 21, 'Pesquisas "laslo"': 98,
     },
     linkedin: {
-      'Seguidores totais': null, 'Novos seguidores': 9, 'Alcance': 331,
+      'Seguidores totais': 200, 'Novos seguidores': 9, 'Alcance': 331,
       'Impressões': 596, 'Engajamento': 64, 'Reações': 48, 'Cliques': 19, 'Postagens': 7,
     },
   },
@@ -1118,6 +1146,7 @@ const KPI_ANALYTICS_DATA = {
       'Salvamentos': 3, 'Compartilhamentos': 4, 'Interações totais': 82,
       'Interações nas postagens': 61, 'Alcance das postagens': 342,
       'Número de Reels': 0, 'Alcance dos Reels': 72, 'Interações nos Reels': 3,
+      'Curtidas nos Reels': 0, 'Comentários nos Reels': 0, 'Salvamentos nos Reels': 0, 'Compartilhamentos nos Reels': 0,
       'Número de Stories': 3, 'Visualizações dos Stories': 241, 'Interações com Stories': 10,
     },
     metaads: {
@@ -1128,7 +1157,7 @@ const KPI_ANALYTICS_DATA = {
     gmn: {
       'Total de ações': 47, 'Cliques no website': 16, 'Visualizações totais': 189,
       'Ligações': 2, 'Visualizações de pesquisa': 146,
-      'Solicitações de rotas': 29, 'Visualizações no Maps': 43,
+      'Solicitações de rotas': 29, 'Visualizações no Maps': 43, 'Pesquisas "laslo"': 87,
     },
     linkedin: {
       'Seguidores totais': 205, 'Novos seguidores': 3, 'Alcance': 299,
