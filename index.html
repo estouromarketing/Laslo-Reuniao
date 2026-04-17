@@ -712,6 +712,84 @@ const KPI_HISTORICO = {
     'Engajamento LinkedIn':           ['65',     '64',     '+2%'],
   }
 };
+
+// Mapeamento: label do formulário → campo no KPI_ANALYTICS_DATA
+const KPI_FIELD_MAP = {
+  'Alcance total (org. + pago)':   { cat: 'instagram', field: 'Alcance total (org+pago)' },
+  'Alcance orgânico':              { cat: 'instagram', field: 'Alcance orgânico' },
+  'Engajamento total':             { cat: 'instagram', field: 'Engajamento total' },
+  'Novos seguidores':              { cat: 'instagram', field: 'Novos seguidores' },
+  'Visualizações totais':          { cat: 'instagram', field: 'Visualizações totais' },
+  'Visitas ao perfil (Instagram)': { cat: 'instagram', field: 'Visitas do perfil' },
+  'Interações totais':             { cat: 'instagram', field: 'Interações totais' },
+  'Invest. ADS — Meta (R$)':       { cat: 'metaads',   field: 'Valor gasto (R$)' },
+  'Impressões ADS':                { cat: 'metaads',   field: 'Impressões' },
+  'Alcance ADS':                   { cat: 'metaads',   field: 'Alcance' },
+  'Cliques ADS':                   { cat: 'metaads',   field: 'Cliques totais' },
+  'Conversas iniciadas (ADS)':     { cat: 'metaads',   field: 'Conversas iniciadas' },
+  'CPC médio (R$)':                { cat: 'metaads',   field: 'CPC médio (R$)' },
+  'CPM médio (R$)':                { cat: 'metaads',   field: 'CPM médio (R$)' },
+  'CTR (%)':                       { cat: 'metaads',   field: 'CTR (%)' },
+  'Seguidores LinkedIn':           { cat: 'linkedin',  field: 'Seguidores totais' },
+  'Alcance LinkedIn':              { cat: 'linkedin',  field: 'Alcance' },
+  'Impressões LinkedIn':           { cat: 'linkedin',  field: 'Impressões' },
+  'Engajamento LinkedIn':          { cat: 'linkedin',  field: 'Engajamento' },
+};
+const ECOM_FIELD_MAP = {
+  'Visualizações Google Meu Negócio': { cat: 'gmn', field: 'Visualizações totais' },
+  'Cliques no site (GMN)':            { cat: 'gmn', field: 'Cliques no website' },
+  'Ligações (GMN)':                   { cat: 'gmn', field: 'Ligações' },
+  'Solicitações de rotas (GMN)':      { cat: 'gmn', field: 'Solicitações de rotas' },
+  'Buscas pela palavra "laslo"':      { cat: 'gmn', field: 'Pesquisas "laslo"' },
+};
+
+function fmtKpiVal(v, label) {
+  if (v === null || v === undefined) return '—';
+  if (label.includes('Invest.') || (label.includes('R$') && !label.includes('CTR') && !label.includes('%'))) {
+    return 'R$ ' + Number(v).toFixed(2).replace('.', ',');
+  }
+  if (label.includes('CTR')) return String(v).replace('.', ',') + '%';
+  if (typeof v === 'number' && v >= 1000) return v.toLocaleString('pt-BR');
+  return String(v);
+}
+
+function calcKpiVar(curr, prev) {
+  if (curr == null || prev == null || prev === 0) return '—';
+  const pct = Math.round(((curr - prev) / Math.abs(prev)) * 100);
+  return (pct >= 0 ? '+' : '') + pct + '%';
+}
+
+function buildHistorico(month) {
+  if (KPI_HISTORICO[month]) return KPI_HISTORICO[month];
+  const idx = KPI_ANALYTICS_MONTHS.indexOf(month);
+  if (idx <= 0) return {};
+  const prevMonth = KPI_ANALYTICS_MONTHS[idx - 1];
+  const prev2Month = idx >= 2 ? KPI_ANALYTICS_MONTHS[idx - 2] : null;
+  const prevData = KPI_ANALYTICS_DATA[prevMonth];
+  const prev2Data = prev2Month ? KPI_ANALYTICS_DATA[prev2Month] : null;
+  if (!prevData) return {};
+  const hist = {};
+  Object.entries(KPI_FIELD_MAP).forEach(([label, {cat, field}]) => {
+    const curr = prevData[cat]?.[field];
+    const prev = prev2Data?.[cat]?.[field];
+    hist[label] = [
+      fmtKpiVal(curr, label),
+      prev != null ? fmtKpiVal(prev, label) : '—',
+      curr != null && prev != null ? calcKpiVar(curr, prev) : '—'
+    ];
+  });
+  Object.entries(ECOM_FIELD_MAP).forEach(([label, {cat, field}]) => {
+    const curr = prevData[cat]?.[field];
+    const prev = prev2Data?.[cat]?.[field];
+    hist[label] = [
+      curr != null ? String(curr) : '—',
+      prev != null ? String(prev) : '—',
+      curr != null && prev != null ? calcKpiVar(curr, prev) : '—'
+    ];
+  });
+  return hist;
+}
+
 const STATUS_OPTS = [['⬜ Pendente','s-pend'],['🔄 Em andamento','s-wip'],['✅ Feito','s-ok'],['⚠️ Atrasado','s-late'],['❌ Cancelado','s-late']];
 const ADS_OPTS = ['Sim','Não','—'];
 const MONTHS = ['Jan 2026','Fev 2026','Mar 2026','Abr 2026','Mai 2026','Jun 2026','Jul 2026','Ago 2026','Set 2026','Out 2026','Nov 2026','Dez 2026'];
@@ -887,7 +965,7 @@ function addBriefing() {
 // ── RENDER KPIs ──
 function renderKPIs() {
   const month = document.getElementById('month-sel').value;
-  const hist = KPI_HISTORICO[month] || {};
+  const hist = buildHistorico(month);
   ['kpi-grid', 'ecom-grid'].forEach(id => document.getElementById(id).innerHTML = '');
 
   KPI_ITEMS.forEach((label, i) => {
