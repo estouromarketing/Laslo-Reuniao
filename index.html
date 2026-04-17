@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pauta Mensal — Laslo × Estouro</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root {
     --orange: #E8690A;
@@ -298,6 +299,93 @@
   .toast.green { background: var(--green); }
   .toast.red { background: var(--red); }
 
+  /* ── TABS ── */
+  .tab-nav {
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 116px;
+    z-index: 90;
+  }
+  .tab-nav-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+  }
+  .tab-btn {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    border: none;
+    background: none;
+    color: var(--text2);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 600; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── ANÁLISE ── */
+  .analise-wrap { max-width: 860px; margin: 0 auto; padding: 24px 24px 80px; }
+  .analise-filters {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .analise-filters label { font-size: 12px; font-weight: 500; color: var(--text2); white-space: nowrap; }
+  .analise-filters select { flex: 1; min-width: 160px; max-width: 260px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 10px; background: var(--surface); }
+  .chart-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .chart-box h3 { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .chart-canvas-wrap { position: relative; height: 260px; }
+  .analise-table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: auto;
+  }
+  .analise-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .analise-table thead th {
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+  }
+  .analise-table tbody td { padding: 7px 14px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .analise-table tbody tr:last-child td { border-bottom: none; }
+  .analise-table tbody tr:hover td { background: #FDFCFB; }
+  .analise-table .cat-header td { background: var(--orange-light); color: var(--orange-dark); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .var-pos { color: var(--green); font-size: 11px; font-weight: 500; }
+  .var-neg { color: var(--red); font-size: 11px; font-weight: 500; }
+  .var-neu { color: var(--text3); font-size: 11px; }
+  .num-cell { font-family: 'DM Mono', monospace; font-size: 12px; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
     .main { padding: 16px 12px 80px; }
@@ -330,6 +418,14 @@
   </div>
 </div>
 
+<div class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('pauta')">Pauta da Reunião</button>
+    <button class="tab-btn" onclick="switchTab('analise')">Análise de KPIs</button>
+  </div>
+</div>
+
+<div id="tab-pauta" class="tab-panel active">
 <div class="main">
 
   <!-- Month selector -->
@@ -490,6 +586,41 @@
   </div>
 
 </div><!-- /main -->
+</div><!-- /tab-pauta -->
+
+<!-- ══ ANÁLISE DE KPIs ══ -->
+<div id="tab-analise" class="tab-panel">
+  <div class="analise-wrap">
+
+    <div class="analise-filters">
+      <label>Categoria</label>
+      <select id="af-cat" onchange="renderAnalise()">
+        <option value="all">Todas</option>
+        <option value="instagram">Instagram</option>
+        <option value="metaads">Meta Ads</option>
+        <option value="gmn">Google Meu Negócio</option>
+        <option value="linkedin">LinkedIn</option>
+      </select>
+      <label>Métrica no gráfico</label>
+      <select id="af-metric" onchange="renderChart()"></select>
+    </div>
+
+    <div class="chart-box">
+      <h3 id="chart-title">Evolução mensal</h3>
+      <div class="chart-canvas-wrap">
+        <canvas id="kpi-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="analise-table-wrap">
+      <table class="analise-table">
+        <thead id="analise-thead"></thead>
+        <tbody id="analise-tbody"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div><!-- /tab-analise -->
 
 <!-- Save Bar -->
 <div class="save-bar">
@@ -942,6 +1073,210 @@ function showToast(text, type) {
   t.textContent = text; t.className = 'toast ' + (type || '');
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ══════════════════════════════════════════
+// ANÁLISE DE KPIs
+// ══════════════════════════════════════════
+
+const KPI_ANALYTICS_MONTHS = ['Jan 2026','Fev 2026','Mar 2026','Abr 2026','Mai 2026','Jun 2026','Jul 2026','Ago 2026','Set 2026','Out 2026','Nov 2026','Dez 2026'];
+
+// Estrutura: { 'Mês': { categoria: { 'Métrica': valor_numerico } } }
+const KPI_ANALYTICS_DATA = {
+  'Jan 2026': {
+    instagram: {
+      'Alcance total (org+pago)': 1082, 'Alcance orgânico': 739, 'Alcance pago': 1,
+      'Engajamento total': 67, 'Novos seguidores': 9, 'Seguidores totais': null,
+      'Visitas do perfil': 87, 'Visualizações totais': 4032,
+      'Postagens feed': 8, 'Curtidas em postagens': 47, 'Comentários em postagens': 1,
+      'Salvamentos': 1, 'Compartilhamentos': 3, 'Interações totais': 139,
+      'Interações nas postagens': 55, 'Alcance das postagens': 343,
+      'Número de Reels': 1, 'Alcance dos Reels': 495, 'Interações nos Reels': 79,
+      'Número de Stories': 0, 'Visualizações dos Stories': 0, 'Interações com Stories': 0,
+    },
+    metaads: {
+      'Valor gasto (R$)': 0, 'Impressões': 0, 'Alcance': 0,
+      'Cliques totais': 0, 'Cliques no link': 0, 'Conversas iniciadas': 0,
+      'CTR (%)': null, 'CPC médio (R$)': null, 'CPM médio (R$)': null, 'Frequência': null,
+    },
+    gmn: {
+      'Total de ações': 50, 'Cliques no website': 12, 'Visualizações totais': 198,
+      'Ligações': 2, 'Visualizações de pesquisa': 177,
+      'Solicitações de rotas': 36, 'Visualizações no Maps': 21,
+    },
+    linkedin: {
+      'Seguidores totais': null, 'Novos seguidores': 9, 'Alcance': 331,
+      'Impressões': 596, 'Engajamento': 64, 'Reações': 48, 'Cliques': 19, 'Postagens': 7,
+    },
+  },
+  'Fev 2026': {
+    instagram: {
+      'Alcance total (org+pago)': 5424, 'Alcance orgânico': 310, 'Alcance pago': 3250,
+      'Engajamento total': 529, 'Novos seguidores': 4, 'Seguidores totais': 2367,
+      'Visitas do perfil': 107, 'Visualizações totais': 13246,
+      'Postagens feed': 4, 'Curtidas em postagens': 45, 'Comentários em postagens': 4,
+      'Salvamentos': 3, 'Compartilhamentos': 4, 'Interações totais': 82,
+      'Interações nas postagens': 61, 'Alcance das postagens': 342,
+      'Número de Reels': 0, 'Alcance dos Reels': 72, 'Interações nos Reels': 3,
+      'Número de Stories': 3, 'Visualizações dos Stories': 241, 'Interações com Stories': 10,
+    },
+    metaads: {
+      'Valor gasto (R$)': 262.79, 'Impressões': 87746, 'Alcance': 4445,
+      'Cliques totais': 657, 'Cliques no link': 264, 'Conversas iniciadas': 40,
+      'CTR (%)': 0.3, 'CPC médio (R$)': 0.40, 'CPM médio (R$)': 2.99, 'Frequência': 19.74,
+    },
+    gmn: {
+      'Total de ações': 47, 'Cliques no website': 16, 'Visualizações totais': 189,
+      'Ligações': 2, 'Visualizações de pesquisa': 146,
+      'Solicitações de rotas': 29, 'Visualizações no Maps': 43,
+    },
+    linkedin: {
+      'Seguidores totais': 205, 'Novos seguidores': 3, 'Alcance': 299,
+      'Impressões': 523, 'Engajamento': 65, 'Reações': 54, 'Cliques': 12, 'Postagens': 4,
+    },
+  },
+};
+
+const CAT_LABELS = { instagram: 'Instagram', metaads: 'Meta Ads', gmn: 'Google Meu Negócio', linkedin: 'LinkedIn' };
+const CAT_COLORS = { instagram: '#E8690A', metaads: '#1A5FA8', gmn: '#1B7A4A', linkedin: '#0077B5' };
+let kpiChart = null;
+
+function getActiveCats() {
+  const v = document.getElementById('af-cat').value;
+  return v === 'all' ? ['instagram','metaads','gmn','linkedin'] : [v];
+}
+
+function getAllMetrics() {
+  const cats = getActiveCats();
+  const metrics = [];
+  cats.forEach(cat => {
+    const sample = KPI_ANALYTICS_DATA['Jan 2026']?.[cat] || KPI_ANALYTICS_DATA['Fev 2026']?.[cat] || {};
+    Object.keys(sample).forEach(m => { if (!metrics.includes(m)) metrics.push(m); });
+  });
+  return metrics;
+}
+
+function populateMetricSelect() {
+  const sel = document.getElementById('af-metric');
+  const prev = sel.value;
+  sel.innerHTML = '';
+  getAllMetrics().forEach(m => {
+    const o = document.createElement('option');
+    o.value = m; o.textContent = m;
+    sel.appendChild(o);
+  });
+  if (prev && [...sel.options].some(o => o.value === prev)) sel.value = prev;
+}
+
+function renderChart() {
+  const metric = document.getElementById('af-metric').value;
+  if (!metric) return;
+  document.getElementById('chart-title').textContent = metric;
+
+  const cats = getActiveCats();
+  const datasets = [];
+  const hasData = month => {
+    return cats.some(cat => KPI_ANALYTICS_DATA[month]?.[cat]?.[metric] != null);
+  };
+  const activeMonths = KPI_ANALYTICS_MONTHS.filter(hasData);
+
+  cats.forEach(cat => {
+    const color = CAT_COLORS[cat];
+    const data = activeMonths.map(m => KPI_ANALYTICS_DATA[m]?.[cat]?.[metric] ?? null);
+    if (data.some(v => v != null)) {
+      datasets.push({
+        label: CAT_LABELS[cat],
+        data,
+        borderColor: color,
+        backgroundColor: color + '22',
+        tension: 0.3,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        fill: cats.length === 1,
+        spanGaps: true,
+      });
+    }
+  });
+
+  if (kpiChart) kpiChart.destroy();
+  kpiChart = new Chart(document.getElementById('kpi-chart'), {
+    type: 'line',
+    data: { labels: activeMonths, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: datasets.length > 1, position: 'top', labels: { font: { family: 'DM Sans', size: 12 }, boxWidth: 12 } }, tooltip: { titleFont: { family: 'DM Sans' }, bodyFont: { family: 'DM Sans' } } },
+      scales: {
+        x: { grid: { color: '#E0DAD1' }, ticks: { font: { family: 'DM Sans', size: 11 } } },
+        y: { grid: { color: '#E0DAD1' }, ticks: { font: { family: 'DM Mono', size: 11 } }, beginAtZero: true },
+      },
+    },
+  });
+}
+
+function fmtNum(v) {
+  if (v == null) return '<span class="var-neu">—</span>';
+  return '<span class="num-cell">' + (Number.isInteger(v) ? v.toLocaleString('pt-BR') : v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })) + '</span>';
+}
+
+function fmtVar(cur, prev) {
+  if (cur == null || prev == null || prev === 0) return '<span class="var-neu">—</span>';
+  const pct = ((cur - prev) / prev * 100).toFixed(1);
+  const cls = pct > 0 ? 'var-pos' : pct < 0 ? 'var-neg' : 'var-neu';
+  const sign = pct > 0 ? '+' : '';
+  return `<span class="${cls}">${sign}${pct}%</span>`;
+}
+
+function renderAnaliseTable() {
+  const cats = getActiveCats();
+  const dataMonths = KPI_ANALYTICS_MONTHS.filter(m => KPI_ANALYTICS_DATA[m]);
+
+  // Header
+  const thead = document.getElementById('analise-thead');
+  thead.innerHTML = '<tr><th>Métrica</th>' + dataMonths.map(m => `<th>${m}</th>`).join('') + '</tr>';
+
+  // Body
+  const tbody = document.getElementById('analise-tbody');
+  tbody.innerHTML = '';
+  cats.forEach(cat => {
+    // category separator row
+    const sep = document.createElement('tr');
+    sep.className = 'cat-header';
+    const td = document.createElement('td');
+    td.colSpan = dataMonths.length + 1;
+    td.textContent = CAT_LABELS[cat];
+    sep.appendChild(td);
+    tbody.appendChild(sep);
+
+    const sample = {};
+    dataMonths.forEach(m => { Object.assign(sample, KPI_ANALYTICS_DATA[m]?.[cat] || {}); });
+
+    Object.keys(sample).forEach(metric => {
+      const tr = document.createElement('tr');
+      let html = `<td>${metric}</td>`;
+      dataMonths.forEach((m, i) => {
+        const cur = KPI_ANALYTICS_DATA[m]?.[cat]?.[metric] ?? null;
+        const prev = i > 0 ? (KPI_ANALYTICS_DATA[dataMonths[i-1]]?.[cat]?.[metric] ?? null) : null;
+        html += `<td>${fmtNum(cur)} ${i > 0 ? fmtVar(cur, prev) : ''}</td>`;
+      });
+      tr.innerHTML = html;
+      tbody.appendChild(tr);
+    });
+  });
+}
+
+function renderAnalise() {
+  populateMetricSelect();
+  renderChart();
+  renderAnaliseTable();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => { if (b.textContent.toLowerCase().includes(tab === 'pauta' ? 'pauta' : 'análise')) b.classList.add('active'); });
+  if (tab === 'analise') renderAnalise();
 }
 
 // Init — abre no mês atual automaticamente
