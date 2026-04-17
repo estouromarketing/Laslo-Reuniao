@@ -325,6 +325,7 @@
     <div class="header-meta">
       <strong>Toda 3ª feira às 15h00</strong>
       Reunião online
+      <span id="last-save-info" style="display:block;font-size:11px;color:#6B6460;margin-top:3px;"></span>
     </div>
   </div>
 </div>
@@ -840,6 +841,7 @@ function loadMonth() {
   renderKPIs();
   document.getElementById('notes').value = '';
   document.getElementById('save-msg').textContent = '';
+  displayLastSave(month);
 }
 
 // ── COLLECT DATA ──
@@ -908,6 +910,11 @@ function saveToSheets() {
 
     // Aguarda 2s e confirma sucesso (no-cors não retorna resposta legível)
     setTimeout(() => {
+      const month = document.getElementById('month-sel').value;
+      const now = new Date();
+      const ts = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      localStorage.setItem('laslo_save_' + month, ts);
+      displayLastSave(month);
       msg.textContent = '✓ Salvo com sucesso!';
       msg.className = 'msg ok';
       showToast('Reunião salva no Google Sheets!', 'green');
@@ -922,6 +929,12 @@ function saveToSheets() {
     btn.disabled = false;
     btn.textContent = 'Salvar reunião';
   }
+}
+
+function displayLastSave(month) {
+  const ts = localStorage.getItem('laslo_save_' + month);
+  const el = document.getElementById('last-save-info');
+  el.textContent = ts ? 'Última atualização: ' + ts : '';
 }
 
 function showToast(text, type) {
