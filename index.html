@@ -419,13 +419,96 @@
   .num-cell { font-family: 'DM Mono', monospace; font-size: 12px; }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    .main { padding: 16px 12px 80px; }
-    .tbl thead { display: none; }
-    .tbl td { display: block; padding: 4px 12px; }
-    .week-row td { display: block; }
-    .kpi-grid { grid-template-columns: 1fr 1fr; }
+  /* ── RESPONSIVE 768px (tablet / celular landscape) ── */
+  @media (max-width: 768px) {
+    /* Header */
+    .header-inner { padding: 10px 16px; gap: 8px; }
     .header-meta { display: none; }
+    .header-logo img { height: 28px !important; }
+
+    /* Tab nav ajusta sticky pois o header ficou menor */
+    .tab-nav { top: 68px; }
+
+    /* Layout geral */
+    .main { padding: 12px 12px 90px; }
+    .analise-wrap { padding: 12px 12px 90px; }
+
+    /* Month bar */
+    .month-bar { flex-wrap: wrap; padding: 10px 14px; gap: 8px; }
+    .month-bar select { max-width: none; flex: 1 1 140px; }
+    .month-bar .reunion-num { margin-left: 0; }
+
+    /* Tabs */
+    .tab-nav-inner { padding: 0 12px; }
+    .tab-btn { padding: 10px 14px; font-size: 12px; }
+
+    /* Tabelas — scroll horizontal em vez de quebrar em bloco */
+    .sub-section { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tbl { min-width: 520px; border-collapse: collapse; }
+    .tbl thead { display: table-header-group; }
+    .tbl td { display: table-cell; padding: 6px 10px; }
+    .week-row td { display: table-cell; }
+
+    /* KPI input grid */
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .kpi-cell { padding: 10px 12px; }
+    .kpi-cell label { font-size: 10px; }
+
+    /* Análise — filtros empilham */
+    .analise-filters { flex-wrap: wrap; gap: 8px; }
+    .analise-filters select { min-width: 0; flex: 1 1 160px; }
+    .chart-canvas-wrap { height: 200px; }
+
+    /* Análise — tabela compacta */
+    .analise-table { font-size: 11px; }
+    .analise-table thead th,
+    .analise-table tbody td { padding: 5px 10px; }
+    .analise-table .metric-cell { min-width: 140px; font-size: 11px; }
+
+    /* Save bar */
+    .save-bar { padding: 10px 16px; gap: 8px; }
+    .save-info { font-size: 11px; }
+  }
+
+  /* ── RESPONSIVE 480px (celular portrait) ── */
+  @media (max-width: 480px) {
+    /* Header — só logos */
+    .header-center { display: none; }
+    .header-inner { padding: 8px 12px; }
+
+    /* Tab nav ajusta sticky */
+    .tab-nav { top: 52px; }
+
+    /* Layout */
+    .main { padding: 10px 10px 90px; }
+    .analise-wrap { padding: 10px 10px 90px; }
+
+    /* Month bar compacto */
+    .month-bar { padding: 10px 12px; }
+
+    /* Seções */
+    .section-header { padding: 10px 14px; }
+    .sub-title { font-size: 11px; padding: 7px 14px; }
+
+    /* Tabelas ainda mais compactas */
+    .tbl { min-width: 460px; }
+    .tbl thead th,
+    .tbl td { padding: 5px 8px; font-size: 11px; }
+    .tbl input[type=text], .tbl select { font-size: 11px; }
+
+    /* KPI grid coluna única */
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Análise */
+    .analise-table { font-size: 10px; }
+    .analise-table thead th,
+    .analise-table tbody td { padding: 4px 8px; }
+    .analise-table .metric-cell { min-width: 120px; }
+
+    /* Save bar — esconde info secundária */
+    #last-save-info { display: none; }
+    .save-bar { justify-content: flex-end; }
+    .btn-save { padding: 9px 18px; font-size: 13px; }
   }
 </style>
 </head>
