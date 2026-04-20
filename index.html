@@ -433,6 +433,31 @@
   .var-neu { color: var(--text3); font-size: 11px; }
   .num-cell { font-family: 'DM Mono', monospace; font-size: 12px; }
 
+  /* ── ABA COPIES ── */
+  .copies-wrap { max-width: 860px; margin: 0 auto; padding: 24px 24px 100px; }
+  .copies-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+  .copies-reload-btn { font-size: 12px; padding: 6px 14px; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); cursor: pointer; color: var(--text2); font-family: 'DM Sans', sans-serif; }
+  .copies-reload-btn:hover { background: var(--surface2); }
+  .copy-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; }
+  .copy-card-head { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .copy-card-semana { font-size: 11px; font-weight: 600; color: var(--orange-dark); background: var(--orange-light); padding: 2px 8px; border-radius: 20px; font-family: 'DM Mono', monospace; white-space: nowrap; }
+  .copy-card-titulo { font-size: 13px; font-weight: 500; color: var(--text); flex: 1; }
+  .copy-card-ads { font-size: 10px; color: var(--blue); background: var(--blue-bg); padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
+  .copy-card-body { padding: 14px 16px; }
+  .copy-card-body textarea { width: 100%; min-height: 120px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; line-height: 1.6; font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--bg); resize: vertical; outline: none; }
+  .copy-card-body textarea:focus { border-color: var(--orange); }
+  .copy-card-actions { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .btn-aprovar { background: var(--green); color: #fff; border: none; border-radius: var(--radius-sm); padding: 7px 18px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .15s; }
+  .btn-aprovar:hover { opacity: .85; }
+  .btn-aprovar:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-reprovar { background: transparent; color: var(--red); border: 1px solid var(--red); border-radius: var(--radius-sm); padding: 7px 18px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .15s; }
+  .btn-reprovar:hover { background: var(--red-bg); }
+  .copy-card.aprovado { border-color: var(--green); }
+  .copy-card.aprovado .copy-card-head { background: var(--green-bg); }
+  .copy-status-tag { font-size: 11px; font-weight: 600; margin-left: auto; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+  .copy-status-tag.gerada { background: var(--amber-bg); color: var(--amber); }
+  .copy-status-tag.aprovada { background: var(--green-bg); color: var(--green); }
+
   /* ── RESPONSIVE ── */
   /* ── RESPONSIVE 768px (tablet / celular landscape) ── */
   @media (max-width: 768px) {
@@ -552,6 +577,7 @@
   <div class="tab-nav-inner">
     <button class="tab-btn active" onclick="switchTab('pauta')">Pauta da Reunião</button>
     <button class="tab-btn" onclick="switchTab('analise')">Análise de KPIs</button>
+    <button class="tab-btn" onclick="switchTab('copies')">✦ Copies <span id="copies-badge" style="display:none;background:var(--orange);color:#fff;border-radius:20px;font-size:10px;padding:1px 6px;margin-left:4px;font-weight:700"></span></button>
   </div>
 </div>
 
@@ -755,6 +781,26 @@
 
   </div>
 </div><!-- /tab-analise -->
+
+<!-- TAB COPIES -->
+<div id="tab-copies" class="tab-panel">
+  <div class="copies-wrap">
+    <div class="copies-header">
+      <div>
+        <h2 style="font-size:15px;font-weight:600;color:var(--text)">Aprovação de Copies</h2>
+        <p style="font-size:12px;color:var(--text3);margin-top:2px">Revise, edite e aprove cada copy antes de gerar a arte</p>
+      </div>
+      <button class="copies-reload-btn" onclick="loadCopies()">↻ Atualizar</button>
+    </div>
+    <div id="copies-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--text3)">
+      <div style="font-size:32px;margin-bottom:12px">✦</div>
+      <p style="font-size:14px">Nenhuma copy aguardando aprovação para este mês.</p>
+      <p style="font-size:12px;margin-top:6px">Clique em <strong>"Gerar Copy IA"</strong> na aba Pauta para iniciar.</p>
+    </div>
+    <div id="copies-loading" style="display:none;text-align:center;padding:60px 20px;color:var(--text3);font-size:13px">Carregando copies...</div>
+    <div id="copies-list"></div>
+  </div>
+</div><!-- /tab-copies -->
 
 <!-- Save Bar -->
 <div class="save-bar">
@@ -1791,12 +1837,112 @@ function renderAnalise() {
   setTimeout(syncScrollMirror, 0);
 }
 
+// ── ABA COPIES ──
+async function loadCopies() {
+  const month = document.getElementById('month-sel').value;
+  const { start, end } = monthToDateRange(month);
+  const list = document.getElementById('copies-list');
+  const empty = document.getElementById('copies-empty');
+  const loading = document.getElementById('copies-loading');
+
+  list.innerHTML = ''; empty.style.display = 'none'; loading.style.display = 'block';
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=in.(copy_gerada,copy_aprovada)&order=semana.asc`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+    );
+    const posts = await res.json();
+    loading.style.display = 'none';
+
+    // badge na aba
+    const pendentes = posts.filter(p => p.status === 'copy_gerada').length;
+    const badge = document.getElementById('copies-badge');
+    if (pendentes > 0) { badge.style.display = 'inline'; badge.textContent = pendentes; }
+    else { badge.style.display = 'none'; }
+
+    if (!posts.length) { empty.style.display = 'block'; return; }
+
+    posts.forEach(post => {
+      const aprovado = post.status === 'copy_aprovada';
+      const semLabel = 'Semana ' + post.semana;
+      const card = document.createElement('div');
+      card.className = 'copy-card' + (aprovado ? ' aprovado' : '');
+      card.id = 'card-' + post.id;
+      card.innerHTML = `
+        <div class="copy-card-head">
+          <span class="copy-card-semana">${semLabel}</span>
+          <span class="copy-card-titulo">${post.titulo}</span>
+          ${post.ads ? '<span class="copy-card-ads">ADS</span>' : ''}
+          <span class="copy-status-tag ${aprovado ? 'aprovada' : 'gerada'}">${aprovado ? '✓ Aprovada' : '⏳ Aguardando'}</span>
+        </div>
+        <div class="copy-card-body">
+          <textarea id="copy-text-${post.id}">${post.conteudo || ''}</textarea>
+        </div>
+        <div class="copy-card-actions">
+          ${!aprovado ? `<button class="btn-aprovar" id="btn-ap-${post.id}" onclick="aprovarCopy('${post.id}')">✓ Aprovar</button>` : '<span style="font-size:12px;color:var(--green);font-weight:600">✓ Copy aprovada</span>'}
+          ${!aprovado ? `<button class="btn-reprovar" onclick="reprovarCopy('${post.id}')">✕ Reprovar</button>` : ''}
+        </div>`;
+      list.appendChild(card);
+    });
+  } catch(e) {
+    loading.style.display = 'none';
+    showToast('Erro ao carregar copies: ' + e.message, 'red');
+  }
+}
+
+async function aprovarCopy(id) {
+  const btn = document.getElementById('btn-ap-' + id);
+  const conteudo = document.getElementById('copy-text-' + id)?.value;
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${id}`, {
+      method: 'PATCH', headers: sbHeaders(),
+      body: JSON.stringify({ status: 'copy_aprovada', conteudo })
+    });
+    if (!res.ok) throw new Error(res.status);
+    const card = document.getElementById('card-' + id);
+    card.classList.add('aprovado');
+    card.querySelector('.copy-card-head').style.background = 'var(--green-bg)';
+    card.querySelector('.copy-status-tag').className = 'copy-status-tag aprovada';
+    card.querySelector('.copy-status-tag').textContent = '✓ Aprovada';
+    card.querySelector('.copy-card-actions').innerHTML = '<span style="font-size:12px;color:var(--green);font-weight:600">✓ Copy aprovada</span>';
+    showToast('Copy aprovada!', 'green');
+    // Atualiza badge
+    const badge = document.getElementById('copies-badge');
+    const count = parseInt(badge.textContent || '0') - 1;
+    if (count > 0) { badge.textContent = count; } else { badge.style.display = 'none'; }
+  } catch(e) {
+    btn.disabled = false; btn.textContent = '✓ Aprovar';
+    showToast('Erro ao aprovar: ' + e.message, 'red');
+  }
+}
+
+async function reprovarCopy(id) {
+  if (!confirm('Reprovar esta copy? Ela voltará para "aguardando_copy".')) return;
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${id}`, {
+      method: 'PATCH', headers: sbHeaders(),
+      body: JSON.stringify({ status: 'aguardando_copy', conteudo: null, copy_gerada_em: null })
+    });
+    showToast('Copy reprovada — gere novamente quando ajustar o tema.', 'red');
+    loadCopies();
+  } catch(e) { showToast('Erro: ' + e.message, 'red'); }
+}
+
 function switchTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b => { if (b.textContent.toLowerCase().includes(tab === 'pauta' ? 'pauta' : 'análise')) b.classList.add('active'); });
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if ((tab === 'pauta' && b.textContent.toLowerCase().includes('pauta')) ||
+        (tab === 'analise' && b.textContent.toLowerCase().includes('análise')) ||
+        (tab === 'copies' && b.textContent.toLowerCase().includes('copies'))) {
+      b.classList.add('active');
+    }
+  });
   if (tab === 'analise') renderAnalise();
+  if (tab === 'copies') loadCopies();
 }
 
 // Init — abre no mês atual automaticamente
