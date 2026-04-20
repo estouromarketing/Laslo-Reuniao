@@ -1251,51 +1251,85 @@ function collectData() {
 }
 
 // ── ENVIAR POSTS PARA N8N (Gerador de Copy IA) ──
-function sendToN8n() {
+// ── SUPABASE CONFIG ──
+const SUPABASE_URL = 'https://lrrjybvdxuxgbelfozvr.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxycmp5YnZkeHV4Z2JlbGZvenZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MzM5NTAsImV4cCI6MjA5MTAwOTk1MH0.OJBvapDrm0NKQXqo4CY9ITv5H4y0Tn3Yot1uR3ybTao';
+const LASLO_CLIENT_ID = '75c7eef6-aec1-4392-9f97-f6ef06e28936';
+
+function sbHeaders() {
+  return { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
+}
+
+function monthToDateRange(month) {
+  const [mon, year] = month.split(' ');
+  const months = { 'Jan':0,'Fev':1,'Mar':2,'Abr':3,'Mai':4,'Jun':5,'Jul':6,'Ago':7,'Set':8,'Out':9,'Nov':10,'Dez':11 };
+  const m = months[mon]; const y = parseInt(year);
+  const start = new Date(y, m, 1).toISOString().split('T')[0];
+  const end   = new Date(y, m + 1, 1).toISOString().split('T')[0];
+  return { start, end };
+}
+
+function semanaToDate(semana, month) {
+  const { start } = monthToDateRange(month);
+  const day = semana === 'S1' ? 7 : semana === 'S2' ? 14 : semana === 'S3' ? 21 : 28;
+  return start.slice(0, 8) + String(day).padStart(2, '0');
+}
+
+async function sendToN8n() {
   const month = document.getElementById('month-sel').value;
   const postsData = POSTS_DATA[month] || [];
-  const posts = [];
+  const btn = document.getElementById('btn-copy');
 
+  // Coleta posts preenchidos
+  const postsRaw = [];
   document.querySelectorAll('[id^="p_tema_"]').forEach((el, i) => {
     const titulo = el.value?.trim();
     if (!titulo) return;
     const semana = postsData[i]?.[0] || 'S1';
+    const semanaNum = parseInt(semana.replace('S','')) || 1;
     const adsVal = document.getElementById('p_ads_' + i)?.value;
-    posts.push({
-      id: month.replace(' ', '_') + '_' + i,
-      titulo,
-      plataforma: 'Instagram',
-      ads: adsVal === 'Sim',
-      data_publicacao: semana
-    });
+    postsRaw.push({ titulo, plataforma: 'Instagram', ads: adsVal === 'Sim', semana: semanaNum, data_publicacao: semanaToDate(semana, month) });
   });
 
-  if (!posts.length) {
-    showToast('Nenhum post preenchido para gerar copy.', 'red');
-    return;
-  }
+  if (!postsRaw.length) { showToast('Nenhum post preenchido para gerar copy.', 'red'); return; }
 
-  const btn = document.getElementById('btn-copy');
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
+  btn.disabled = true; btn.textContent = 'Preparando...';
 
-  fetch(N8N_WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ cliente_id: 'laslo', mes: month, posts })
-  })
-  .then(r => {
-    if (r.ok) {
+  try {
+    const { start, end } = monthToDateRange(month);
+
+    // 1. Deleta posts pendentes do mês (aguardando_copy)
+    await fetch(`${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=eq.aguardando_copy`, {
+      method: 'DELETE', headers: sbHeaders()
+    });
+
+    // 2. Insere posts atuais e recebe UUIDs
+    btn.textContent = 'Inserindo posts...';
+    const insertPayload = postsRaw.map(p => ({ ...p, cliente_id: LASLO_CLIENT_ID, status: 'aguardando_copy' }));
+    const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/posts`, {
+      method: 'POST', headers: sbHeaders(), body: JSON.stringify(insertPayload)
+    });
+    if (!insertRes.ok) throw new Error('Erro ao inserir posts: ' + insertRes.status);
+    const inserted = await insertRes.json();
+
+    // 3. Envia para n8n com UUIDs reais
+    btn.textContent = 'Gerando copy...';
+    const posts = inserted.map(p => ({ id: p.id, titulo: p.titulo, plataforma: p.plataforma, ads: p.ads, data_publicacao: p.semana }));
+    const n8nRes = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cliente_id: 'laslo', mes: month, posts })
+    });
+
+    if (n8nRes.ok) {
       showToast('✓ ' + posts.length + ' posts enviados para geração de copy!', 'green');
     } else {
-      showToast('Erro ao enviar para n8n (' + r.status + ').', 'red');
+      showToast('Posts inseridos, mas erro no n8n (' + n8nRes.status + ').', 'red');
     }
-  })
-  .catch(() => showToast('Erro de conexão com n8n.', 'red'))
-  .finally(() => {
-    btn.disabled = false;
-    btn.textContent = '✦ Gerar Copy IA';
-  });
+  } catch(e) {
+    showToast('Erro: ' + e.message, 'red');
+  } finally {
+    btn.disabled = false; btn.textContent = '✦ Gerar Copy IA';
+  }
 }
 
 // ── SAVE TO SHEETS — via form submit oculto (contorna CORS + limite de URL) ──
