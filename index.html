@@ -356,12 +356,27 @@
   }
   .chart-box h3 { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
   .chart-canvas-wrap { position: relative; height: 260px; }
+  .analise-scroll-top {
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: var(--surface2);
+  }
+  .analise-scroll-top::-webkit-scrollbar { height: 8px; }
+  .analise-scroll-top::-webkit-scrollbar-track { background: var(--surface2); }
+  .analise-scroll-top::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  #analise-scroll-inner { height: 1px; }
   .analise-table-wrap {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: 0 0 var(--radius) var(--radius);
     overflow: auto;
   }
+  .analise-table-wrap::-webkit-scrollbar { height: 8px; }
+  .analise-table-wrap::-webkit-scrollbar-track { background: var(--surface); }
+  .analise-table-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
   .analise-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .analise-table thead th {
     padding: 8px 14px;
@@ -376,10 +391,25 @@
     white-space: nowrap;
     position: sticky;
     top: 0;
+    z-index: 2;
+  }
+  .analise-table thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 3;
   }
   .analise-table tbody td { padding: 7px 14px; border-bottom: 1px solid var(--border); white-space: nowrap; }
   .analise-table tbody tr:last-child td { border-bottom: none; }
-  .analise-table tbody tr:hover td { background: #FDFCFB; }
+  .analise-table tbody tr:hover td { background: rgba(255,255,255,.03); }
+  .analise-table .metric-cell {
+    position: sticky;
+    left: 0;
+    background: var(--surface);
+    z-index: 1;
+    min-width: 180px;
+    font-weight: 500;
+  }
+  .analise-table tbody tr:hover .metric-cell { background: rgba(255,255,255,.03); }
   .analise-table .cat-header td { background: var(--orange-light); color: var(--orange-dark); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
   .var-pos { color: var(--green); font-size: 11px; font-weight: 500; }
   .var-neg { color: var(--red); font-size: 11px; font-weight: 500; }
@@ -503,9 +533,10 @@
         <div class="sub-title">1D. Datas comemorativas</div>
         <table class="tbl">
           <thead><tr>
-            <th style="width:20%">Data</th>
-            <th style="width:50%">Evento</th>
-            <th style="width:30%">Status arte</th>
+            <th style="width:18%">Data</th>
+            <th style="width:48%">Evento</th>
+            <th style="width:24%">Status arte</th>
+            <th style="width:10%"></th>
           </tr></thead>
           <tbody id="dates-body"></tbody>
         </table>
@@ -612,7 +643,10 @@
       </div>
     </div>
 
-    <div class="analise-table-wrap">
+    <div class="analise-scroll-top" id="analise-scroll-top">
+      <div id="analise-scroll-inner"></div>
+    </div>
+    <div class="analise-table-wrap" id="analise-table-wrap">
       <table class="analise-table">
         <thead id="analise-thead"></thead>
         <tbody id="analise-tbody"></tbody>
@@ -781,7 +815,7 @@ function statusSel(id, val) {
     s.appendChild(o);
   });
   s.value = val || '⬜ Pendente';
-  s.onchange = () => updateStatusClass(s);
+  s.onchange = () => { updateStatusClass(s); autosaveDraft(); };
   const td = document.createElement('td');
   td.appendChild(s);
   updateStatusClass(s);
@@ -872,26 +906,89 @@ function renderAAR() {
   });
 }
 
+// ── DATES HELPERS ──
+function getDatesForMonth(month) {
+  const saved = localStorage.getItem('laslo_dates_' + month);
+  if (saved) { try { return JSON.parse(saved); } catch(e) {} }
+  return (DATES_DATA[month] || []).map(([dt, lbl]) => [dt, lbl]);
+}
+function saveDatesForMonth(month, data) {
+  localStorage.setItem('laslo_dates_' + month, JSON.stringify(data));
+}
+function makeDateEditRow(month, data, dt, label, i) {
+  const tr = document.createElement('tr');
+  const td1 = document.createElement('td');
+  const dateInp = document.createElement('input');
+  dateInp.type = 'text'; dateInp.value = dt; dateInp.placeholder = 'dd mmm';
+  dateInp.style.cssText = 'font-family:DM Mono,monospace;font-size:11px;width:76px;padding:3px 6px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:4px';
+  dateInp.onchange = () => { data[i][0] = dateInp.value; saveDatesForMonth(month, data); };
+  td1.appendChild(dateInp);
+  const td2 = document.createElement('td');
+  const labelInp = document.createElement('input');
+  labelInp.type = 'text'; labelInp.value = label; labelInp.placeholder = 'Nome do evento...';
+  labelInp.style.cssText = 'width:100%;padding:3px 6px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:4px;font-size:12px';
+  labelInp.onchange = () => { data[i][1] = labelInp.value; saveDatesForMonth(month, data); };
+  td2.appendChild(labelInp);
+  const td3 = statusSel('date_st_' + i, '⬜ Pendente');
+  const td4 = document.createElement('td');
+  const delBtn = document.createElement('button');
+  delBtn.type = 'button'; delBtn.textContent = '✕';
+  delBtn.style.cssText = 'font-size:11px;padding:3px 7px;border:1px solid var(--border);background:transparent;color:var(--text3);border-radius:4px;cursor:pointer;line-height:1';
+  delBtn.onmouseenter = () => { delBtn.style.background='#ff000018'; delBtn.style.borderColor='#ff6b6b'; delBtn.style.color='#ff6b6b'; };
+  delBtn.onmouseleave = () => { delBtn.style.background='transparent'; delBtn.style.borderColor='var(--border)'; delBtn.style.color='var(--text3)'; };
+  delBtn.onclick = () => { data.splice(i, 1); saveDatesForMonth(month, data); renderDates(month); };
+  td4.style.textAlign = 'center'; td4.appendChild(delBtn);
+  tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
+  return tr;
+}
+
 // ── RENDER DATES ──
 function renderDates(month) {
   const tbody = document.getElementById('dates-body');
   tbody.innerHTML = '';
-  const data = DATES_DATA[month] || [];
+  const data = getDatesForMonth(month);
   data.forEach(([dt, label], i) => {
-    const tr = document.createElement('tr');
-    const td1 = document.createElement('td');
-    const badge = document.createElement('span');
-    badge.style.cssText='background:var(--orange-light);color:var(--orange-dark);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:DM Mono,monospace';
-    badge.textContent = dt; td1.appendChild(badge);
-    const td2 = document.createElement('td'); td2.textContent = label;
-    tr.appendChild(td1); tr.appendChild(td2);
-    tr.appendChild(statusSel(`date_st_${i}`, 'Pendente arte'));
-    tbody.appendChild(tr);
+    tbody.appendChild(makeDateEditRow(month, data, dt, label, i));
   });
-  if (!data.length) {
-    const tr = document.createElement('tr');
-    const td = document.createElement('td'); td.colSpan = 3; td.style.color = 'var(--text3)'; td.style.padding = '12px 14px'; td.textContent = 'Nenhuma data especial mapeada para este mês.';
-    tr.appendChild(td); tbody.appendChild(tr);
+  // Add row button
+  const addTr = document.createElement('tr');
+  const addTd = document.createElement('td'); addTd.colSpan = 4; addTd.style.padding = '8px 14px';
+  const addBtn = document.createElement('button');
+  addBtn.type = 'button'; addBtn.textContent = '+ Adicionar data';
+  addBtn.style.cssText = 'font-size:12px;padding:4px 12px;border:1px dashed var(--border);background:transparent;color:var(--text3);border-radius:6px;cursor:pointer';
+  addBtn.onmouseenter = () => { addBtn.style.color='var(--text)'; addBtn.style.borderColor='var(--text)'; };
+  addBtn.onmouseleave = () => { addBtn.style.color='var(--text3)'; addBtn.style.borderColor='var(--border)'; };
+  addBtn.onclick = () => { data.push(['', '']); saveDatesForMonth(month, data); renderDates(month); };
+  addTd.appendChild(addBtn); addTr.appendChild(addTd); tbody.appendChild(addTr);
+  // Next month preview
+  const idx = MONTHS.indexOf(month);
+  if (idx >= 0 && idx < MONTHS.length - 1) {
+    const nextMonth = MONTHS[idx + 1];
+    const nextData = getDatesForMonth(nextMonth);
+    const headTr = document.createElement('tr');
+    const headTd = document.createElement('td'); headTd.colSpan = 4;
+    headTd.style.cssText = 'padding:16px 14px 8px;color:var(--text3);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-top:1px solid rgba(255,255,255,.06)';
+    headTd.textContent = '📅 Próximo mês — ' + nextMonth;
+    headTr.appendChild(headTd); tbody.appendChild(headTr);
+    if (nextData.length) {
+      nextData.forEach(([dt, lbl]) => {
+        const tr = document.createElement('tr'); tr.style.opacity = '.55';
+        const td1 = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.style.cssText = 'background:var(--orange-light);color:var(--orange-dark);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;font-family:DM Mono,monospace';
+        badge.textContent = dt || '—'; td1.appendChild(badge);
+        const td2 = document.createElement('td'); td2.style.fontSize='12px'; td2.textContent = lbl;
+        const td3 = document.createElement('td'); td3.style.cssText='color:var(--text3);font-size:11px;font-style:italic'; td3.textContent = 'preview';
+        const td4 = document.createElement('td');
+        tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
+        tbody.appendChild(tr);
+      });
+    } else {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td'); td.colSpan = 4; td.style.cssText='color:var(--text3);font-size:12px;padding:6px 14px;font-style:italic';
+      td.textContent = 'Nenhuma data cadastrada para ' + nextMonth + ' ainda.';
+      tr.appendChild(td); tbody.appendChild(tr);
+    }
   }
 }
 
@@ -1027,8 +1124,8 @@ function loadMonth() {
   renderAds();
   renderBriefings();
   renderKPIs();
-  document.getElementById('notes').value = '';
   document.getElementById('save-msg').textContent = '';
+  loadDraft(month);
   displayLastSave(month);
 }
 
@@ -1123,6 +1220,39 @@ function displayLastSave(month) {
   const ts = localStorage.getItem('laslo_save_' + month);
   const el = document.getElementById('last-save-info');
   el.textContent = ts ? 'Última atualização: ' + ts : '';
+}
+
+// ── DRAFT PERSISTENCE (status + inputs por mês) ──
+function autosaveDraft() {
+  const month = document.getElementById('month-sel')?.value;
+  if (!month) return;
+  const draft = { __ads_count__: adsRows.length, __brief_count__: briefRows.length };
+  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => { draft[el.id] = el.value; });
+  localStorage.setItem('laslo_draft_' + month, JSON.stringify(draft));
+}
+
+function loadDraft(month) {
+  const raw = localStorage.getItem('laslo_draft_' + month);
+  if (!raw) return;
+  let draft; try { draft = JSON.parse(raw); } catch(e) { return; }
+  const adsCount = parseInt(draft.__ads_count__) || 1;
+  const briefCount = parseInt(draft.__brief_count__) || 1;
+  if (adsCount !== adsRows.length) {
+    adsRows = Array.from({length: adsCount}, () => ({ camp: '', plat: 'Meta Ads', val: '', st: '⬜ Pendente' }));
+    renderAds();
+  }
+  if (briefCount !== briefRows.length) {
+    briefRows = Array.from({length: briefCount}, () => ({ mat: '', fmt: 'Feed', prazo: '', st: '⬜ Pendente' }));
+    renderBriefings();
+  }
+  Object.entries(draft).forEach(([id, val]) => {
+    if (id.startsWith('__')) return;
+    const el = document.getElementById(id);
+    if (el && el.value !== val) {
+      el.value = val;
+      if (el.classList.contains('status')) updateStatusClass(el);
+    }
+  });
 }
 
 function showToast(text, type) {
@@ -1447,7 +1577,7 @@ function renderAnaliseTable() {
 
     Object.keys(sample).forEach(metric => {
       const tr = document.createElement('tr');
-      let html = `<td>${metric}</td>`;
+      let html = `<td class="metric-cell">${metric}</td>`;
       dataMonths.forEach((m, i) => {
         const cur = KPI_ANALYTICS_DATA[m]?.[cat]?.[metric] ?? null;
         const prev = i > 0 ? (KPI_ANALYTICS_DATA[dataMonths[i-1]]?.[cat]?.[metric] ?? null) : null;
@@ -1459,10 +1589,22 @@ function renderAnaliseTable() {
   });
 }
 
+function syncScrollMirror() {
+  const wrap = document.getElementById('analise-table-wrap');
+  const top = document.getElementById('analise-scroll-top');
+  const inner = document.getElementById('analise-scroll-inner');
+  if (!wrap || !top || !inner) return;
+  inner.style.width = wrap.scrollWidth + 'px';
+  let syncing = false;
+  top.onscroll = () => { if (!syncing) { syncing = true; wrap.scrollLeft = top.scrollLeft; syncing = false; } };
+  wrap.onscroll = () => { if (!syncing) { syncing = true; top.scrollLeft = wrap.scrollLeft; syncing = false; } };
+}
+
 function renderAnalise() {
   populateMetricSelect();
   renderChart();
   renderAnaliseTable();
+  setTimeout(syncScrollMirror, 0);
 }
 
 function switchTab(tab) {
@@ -1485,6 +1627,13 @@ function switchTab(tab) {
       if (sel.options[i].value === target) { sel.selectedIndex = i; break; }
     }
   }
+  // Autosave on notes change and input changes
+  document.getElementById('notes').addEventListener('input', autosaveDraft);
+  document.addEventListener('change', e => {
+    if (e.target.tagName === 'INPUT' || (e.target.tagName === 'SELECT' && !e.target.classList.contains('status'))) {
+      autosaveDraft();
+    }
+  });
 })();
 loadMonth();
 </script>
