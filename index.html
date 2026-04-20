@@ -282,6 +282,21 @@
   .btn-save:hover { background: var(--orange-dark); }
   .btn-save:active { transform: scale(0.97); }
   .btn-save:disabled { background: var(--text3); cursor: not-allowed; }
+  .btn-copy {
+    background: transparent;
+    color: var(--orange);
+    border: 1.5px solid var(--orange);
+    border-radius: var(--radius-sm);
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .btn-copy:hover { background: var(--orange-light); }
+  .btn-copy:disabled { opacity: 0.5; cursor: not-allowed; }
   .msg { font-size: 12px; font-weight: 500; }
   .msg.ok { color: var(--green); }
   .msg.err { color: var(--red); }
@@ -748,6 +763,7 @@
   </div>
   <div style="display:flex;align-items:center;gap:12px">
     <span class="msg" id="save-msg"></span>
+    <button class="btn-copy" id="btn-copy" onclick="sendToN8n()">✦ Gerar Copy IA</button>
     <button class="btn-save" id="btn-save" onclick="saveToSheets()">Salvar reunião</button>
   </div>
 </div>
@@ -758,7 +774,8 @@
 // ══════════════════════════════════════════
 // CONFIGURAÇÃO — substitua pela sua URL do Google Apps Script
 // ══════════════════════════════════════════
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQUEdrLThoqA6FVdh-2ZQ9vFU10AA9-L4w8puv5eMn29rZ8vrtEtlTGbnrTRKy3NhC/exec'; // Cole aqui a URL do Apps Script após configurar
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQUEdrLThoqA6FVdh-2ZQ9vFU10AA9-L4w8puv5eMn29rZ8vrtEtlTGbnrTRKy3NhC/exec';
+const N8N_WEBHOOK_URL = 'https://automacao.estouro.com.br/webhook/laslo-copy';
 
 // ══════════════════════════════════════════
 // DADOS PRÉ-CARREGADOS
@@ -1231,6 +1248,54 @@ function collectData() {
   const ads = adsRows.map((_, i) => ({ campanha: document.getElementById(`ads_camp_${i}`)?.value, plataforma: document.getElementById(`ads_plat_${i}`)?.value, valor: document.getElementById(`ads_val_${i}`)?.value, status: document.getElementById(`ads_st_${i}`)?.value }));
   const briefings = briefRows.map((_, i) => ({ material: document.getElementById(`brf_mat_${i}`)?.value, formato: document.getElementById(`brf_fmt_${i}`)?.value, prazo: document.getElementById(`brf_prazo_${i}`)?.value, status: document.getElementById(`brf_st_${i}`)?.value }));
   return { mes: month, data_reuniao: new Date().toLocaleDateString('pt-BR'), posts: JSON.stringify(posts), next_posts: JSON.stringify(nextPosts), aar: JSON.stringify(aar), kpis: JSON.stringify(kpis), ecom: JSON.stringify(ecom), ads: JSON.stringify(ads), briefings: JSON.stringify(briefings), notas: document.getElementById('notes').value };
+}
+
+// ── ENVIAR POSTS PARA N8N (Gerador de Copy IA) ──
+function sendToN8n() {
+  const month = document.getElementById('month-sel').value;
+  const postsData = POSTS_DATA[month] || [];
+  const posts = [];
+
+  document.querySelectorAll('[id^="p_tema_"]').forEach((el, i) => {
+    const titulo = el.value?.trim();
+    if (!titulo) return;
+    const semana = postsData[i]?.[0] || 'S1';
+    const adsVal = document.getElementById('p_ads_' + i)?.value;
+    posts.push({
+      id: month.replace(' ', '_') + '_' + i,
+      titulo,
+      plataforma: 'Instagram',
+      ads: adsVal === 'Sim',
+      data_publicacao: semana
+    });
+  });
+
+  if (!posts.length) {
+    showToast('Nenhum post preenchido para gerar copy.', 'red');
+    return;
+  }
+
+  const btn = document.getElementById('btn-copy');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  fetch(N8N_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cliente_id: 'laslo', mes: month, posts })
+  })
+  .then(r => {
+    if (r.ok) {
+      showToast('✓ ' + posts.length + ' posts enviados para geração de copy!', 'green');
+    } else {
+      showToast('Erro ao enviar para n8n (' + r.status + ').', 'red');
+    }
+  })
+  .catch(() => showToast('Erro de conexão com n8n.', 'red'))
+  .finally(() => {
+    btn.disabled = false;
+    btn.textContent = '✦ Gerar Copy IA';
+  });
 }
 
 // ── SAVE TO SHEETS — via form submit oculto (contorna CORS + limite de URL) ──
