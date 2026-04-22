@@ -1344,8 +1344,8 @@ async function sendToN8n() {
   try {
     const { start, end } = monthToDateRange(month);
 
-    // 1. Deleta posts pendentes do mês (aguardando_copy)
-    await fetch(`${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=eq.aguardando_copy`, {
+    // 1. Deleta posts pendentes ou já gerados do mês (evita duplicatas ao re-gerar)
+    await fetch(`${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=in.(aguardando_copy,copy_gerada)`, {
       method: 'DELETE', headers: sbHeaders()
     });
 
