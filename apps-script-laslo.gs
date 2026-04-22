@@ -3,8 +3,61 @@
 // Cole em: Extensões → Apps Script → substitua tudo
 // ══════════════════════════════════════════════════════════
 
-function doGet(e) { return salvar(e); }
-function doPost(e) { return salvar(e); }
+function doGet(e)  { return rotear(e); }
+function doPost(e) { return rotear(e); }
+
+function rotear(e) {
+  var p = extrairParams(e);
+  var action = (p && p.action) || '';
+  if (action === 'save_copy') return salvarCopy(p);
+  return salvar(e);
+}
+
+function extrairParams(e) {
+  if (!e) return {};
+  // POST com JSON body
+  if (e.postData && e.postData.contents) {
+    try { return JSON.parse(e.postData.contents); } catch(err) {}
+  }
+  // GET com query params (ou POST com form)
+  return e.parameter || {};
+}
+
+function salvarCopy(p) {
+  try {
+    var ss   = SpreadsheetApp.getActiveSpreadsheet();
+    var mes  = (p.mes || '').trim();
+    var titulo = (p.titulo || '').trim();
+    var copyText = p.copy_text || '';
+
+    var abaName = mes.replace(' ', '_');
+    var aba = ss.getSheetByName(abaName);
+    if (!aba) return jsonResp({status:'erro', msg:'Aba nao encontrada: ' + abaName});
+
+    var lastRow = aba.getLastRow();
+    var colA = aba.getRange(1, 1, lastRow, 1).getValues();
+
+    var found = -1;
+    for (var i = 0; i < colA.length; i++) {
+      if (String(colA[i][0]).trim() === titulo) { found = i + 1; break; }
+    }
+    if (found === -1) return jsonResp({status:'erro', msg:'Titulo nao encontrado: ' + titulo});
+
+    aba.getRange(found, 5).setValue(copyText);
+
+    // garante header na col E se ainda não existe
+    var headerE = aba.getRange(4, 5).getValue();
+    if (!headerE) aba.getRange(4, 5).setValue('Copy IA').setFontWeight('bold').setBackground('#F2EFE9');
+
+    return jsonResp({status:'ok', mes:mes, titulo:titulo, row:found});
+  } catch(err) {
+    return jsonResp({status:'erro', msg:err.toString()});
+  }
+}
+
+function jsonResp(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
 
 function salvar(e) {
   try {
@@ -37,7 +90,8 @@ function salvar(e) {
 
     aba.getRange(row,1,1,4).merge().setValue('1A. POSTS DO MES').setBackground('#E8690A').setFontColor('#FFFFFF').setFontWeight('bold');
     row++;
-    aba.getRange(row,1,1,4).setValues([['Tema / Conteudo','Semana','ADS?','Status']]).setFontWeight('bold').setBackground('#F2EFE9');
+    aba.getRange(row,1,1,5).setValues([['Tema / Conteudo','Semana','ADS?','Status','Copy IA']]).setFontWeight('bold').setBackground('#F2EFE9');
+    aba.setColumnWidth(5,400);
     row++;
     try {
       var posts = JSON.parse(p.posts || '[]');
@@ -137,9 +191,9 @@ function salvar(e) {
     aba.setColumnWidth(3,130);
     aba.setColumnWidth(4,150);
 
-    return ContentService.createTextOutput(JSON.stringify({status:'ok',mes:mes})).setMimeType(ContentService.MimeType.JSON);
+    return jsonResp({status:'ok', mes:mes});
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({status:'erro',msg:err.toString()})).setMimeType(ContentService.MimeType.JSON);
+    return jsonResp({status:'erro', msg:err.toString()});
   }
 }
 

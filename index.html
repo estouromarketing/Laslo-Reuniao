@@ -820,7 +820,7 @@
 // ══════════════════════════════════════════
 // CONFIGURAÇÃO — substitua pela sua URL do Google Apps Script
 // ══════════════════════════════════════════
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwQUEdrLThoqA6FVdh-2ZQ9vFU10AA9-L4w8puv5eMn29rZ8vrtEtlTGbnrTRKy3NhC/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwDtq64Hg2KEZfJF2ig2gt1URsCSPNIoNJzK-ykn_vYkjjyHTbumP-wlhreBCZt1yEB/exec';
 const N8N_WEBHOOK_URL = 'https://automacao.estouro.com.br/webhook/laslo-copy';
 
 // ══════════════════════════════════════════
@@ -1344,21 +1344,33 @@ async function sendToN8n() {
   try {
     const { start, end } = monthToDateRange(month);
 
-    // 1. Deleta posts pendentes ou já gerados do mês (evita duplicatas ao re-gerar)
-    await fetch(`${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=in.(aguardando_copy,copy_gerada)`, {
+    // 1. Deleta apenas posts pendentes (aguardando_copy) — mantém em andamento e aprovados
+    await fetch(`${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=eq.aguardando_copy`, {
       method: 'DELETE', headers: sbHeaders()
     });
 
-    // 2. Insere posts atuais e recebe UUIDs
+    // 2. Busca títulos que já têm copy em andamento ou aprovada
+    const existingRes = await fetch(`${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=in.(copy_gerada,copy_aprovada)&select=titulo`, {
+      headers: sbHeaders()
+    });
+    const existing = existingRes.ok ? await existingRes.json() : [];
+    const titulosExistentes = new Set(existing.map(p => p.titulo));
+
+    // 3. Insere apenas posts que ainda não têm copy gerada ou aprovada
     btn.textContent = 'Inserindo posts...';
-    const insertPayload = postsRaw.map(p => ({ ...p, cliente_id: LASLO_CLIENT_ID, status: 'aguardando_copy' }));
+    const novos = postsRaw.filter(p => !titulosExistentes.has(p.titulo));
+    if (!novos.length) {
+      showToast('Todos os posts já têm copy em andamento ou aprovada.', 'green');
+      return;
+    }
+    const insertPayload = novos.map(p => ({ ...p, cliente_id: LASLO_CLIENT_ID, status: 'aguardando_copy' }));
     const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/posts`, {
       method: 'POST', headers: sbHeaders(), body: JSON.stringify(insertPayload)
     });
     if (!insertRes.ok) throw new Error('Erro ao inserir posts: ' + insertRes.status);
     const inserted = await insertRes.json();
 
-    // 3. Envia para n8n com UUIDs reais
+    // 4. Envia para n8n com UUIDs reais
     btn.textContent = 'Gerando copy...';
     const posts = inserted.map(p => ({ id: p.id, titulo: p.titulo, plataforma: p.plataforma, ads: p.ads, data_publicacao: p.semana }));
     const n8nRes = await fetch(N8N_WEBHOOK_URL, {
