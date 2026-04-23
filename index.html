@@ -1390,7 +1390,7 @@ async function sendToN8n() {
   }
 }
 
-// ── SAVE TO SHEETS — fetch no-cors com JSON body (evita perda de dados no redirect do Google) ──
+// ── SAVE TO SHEETS — no-cors + form-encoded (Google processa doPost antes de redirecionar) ──
 async function saveToSheets() {
   if (SHEET_URL === 'SUA_URL_AQUI') {
     showToast('Configure a URL do Google Sheets primeiro!', 'red');
@@ -1402,16 +1402,13 @@ async function saveToSheets() {
 
   try {
     const data = collectData();
-
-    try {
-      await fetch(SHEET_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
-      });
-    } catch (_) {
-      // CORS bloqueia a resposta mas o Apps Script já processou o POST
-    }
+    // no-cors: navegador não lê a resposta mas o Apps Script processa o body completo
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    });
 
     const month = document.getElementById('month-sel').value;
     const now = new Date();

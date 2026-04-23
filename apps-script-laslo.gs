@@ -15,11 +15,25 @@ function rotear(e) {
 
 function extrairParams(e) {
   if (!e) return {};
-  // POST com JSON body
   if (e.postData && e.postData.contents) {
+    // Tenta JSON (usado pelo save_copy do n8n)
     try { return JSON.parse(e.postData.contents); } catch(err) {}
+    // Tenta form-encoded (usado pelo saveToSheets do HTML)
+    try {
+      var params = {};
+      var pairs = e.postData.contents.split('&');
+      for (var i = 0; i < pairs.length; i++) {
+        var eq = pairs[i].indexOf('=');
+        if (eq > 0) {
+          var k = decodeURIComponent(pairs[i].slice(0, eq).replace(/\+/g, ' '));
+          var v = decodeURIComponent(pairs[i].slice(eq + 1).replace(/\+/g, ' '));
+          params[k] = v;
+        }
+      }
+      if (Object.keys(params).length > 0) return params;
+    } catch(err2) {}
   }
-  // GET com query params (ou POST com form)
+  // GET com query params
   return e.parameter || {};
 }
 
@@ -63,7 +77,8 @@ function salvar(e) {
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var p = extrairParams(e);
-    var mes = p.mes || '';
+    var mes = (p.mes || '').trim();
+    if (!mes) return jsonResp({status:'erro', msg:'mes nao informado'});
 
     var resumo = ss.getSheetByName('Resumo');
     if (!resumo) {
