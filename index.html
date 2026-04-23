@@ -1390,8 +1390,8 @@ async function sendToN8n() {
   }
 }
 
-// ── SAVE TO SHEETS — via form submit oculto (contorna CORS + limite de URL) ──
-function saveToSheets() {
+// ── SAVE TO SHEETS — fetch no-cors com JSON body (evita perda de dados no redirect do Google) ──
+async function saveToSheets() {
   if (SHEET_URL === 'SUA_URL_AQUI') {
     showToast('Configure a URL do Google Sheets primeiro!', 'red');
     return;
@@ -1403,56 +1403,26 @@ function saveToSheets() {
   try {
     const data = collectData();
 
-    // Cria um iframe oculto para receber a resposta sem redirecionar a página
-    let iframe = document.getElementById('save-iframe');
-    if (!iframe) {
-      iframe = document.createElement('iframe');
-      iframe.id = 'save-iframe';
-      iframe.name = 'save-iframe';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-    }
-
-    // Cria form oculto apontando para o iframe
-    let form = document.getElementById('save-form');
-    if (form) form.remove();
-    form = document.createElement('form');
-    form.id = 'save-form';
-    form.method = 'POST';
-    form.action = SHEET_URL;
-    form.target = 'save-iframe';
-    form.style.display = 'none';
-
-    // Adiciona campos
-    Object.entries(data).forEach(([k, v]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = k;
-      input.value = v;
-      form.appendChild(input);
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
     });
 
-    document.body.appendChild(form);
-    form.submit();
-
-    // Aguarda 2s e confirma sucesso (no-cors não retorna resposta legível)
-    setTimeout(() => {
-      const month = document.getElementById('month-sel').value;
-      const now = new Date();
-      const ts = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-      localStorage.setItem('laslo_save_' + month, ts);
-      displayLastSave(month);
-      msg.textContent = '✓ Salvo com sucesso!';
-      msg.className = 'msg ok';
-      showToast('Reunião salva no Google Sheets!', 'green');
-      btn.disabled = false;
-      btn.textContent = 'Salvar reunião';
-    }, 2000);
-
+    const month = document.getElementById('month-sel').value;
+    const now = new Date();
+    const ts = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    localStorage.setItem('laslo_save_' + month, ts);
+    displayLastSave(month);
+    msg.textContent = '✓ Salvo com sucesso!';
+    msg.className = 'msg ok';
+    showToast('Reunião salva no Google Sheets!', 'green');
   } catch (e) {
     msg.textContent = '✗ Erro ao salvar';
     msg.className = 'msg err';
     showToast('Erro ao salvar.', 'red');
+  } finally {
     btn.disabled = false;
     btn.textContent = 'Salvar reunião';
   }

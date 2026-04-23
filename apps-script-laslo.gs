@@ -62,7 +62,7 @@ function jsonResp(obj) {
 function salvar(e) {
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var p = e.parameter;
+    var p = extrairParams(e);
     var mes = p.mes || '';
 
     var resumo = ss.getSheetByName('Resumo');
