@@ -77,7 +77,7 @@ function salvar(e) {
     var abaName = mes.replace(' ', '_');
     var aba = ss.getSheetByName(abaName);
     if (!aba) aba = ss.insertSheet(abaName);
-    aba.clearContents();
+    aba.clear();
 
     var row = 1;
     aba.getRange(row,1).setValue('Titulo');
