@@ -96,10 +96,44 @@ O arquivo `apps-script-laslo.gs` contém o código completo. Para atualizar:
 
 **URL do Web App (SHEET_URL no index.html):**
 ```
-https://script.google.com/macros/s/AKfycbwQUEdrLThoqA6FVdh-2ZQ9vFU10AA9-L4w8puv5eMn29rZ8vrtEtlTGbnrTRKy3NhC/exec
+https://script.google.com/macros/s/AKfycbwDtq64Hg2KEZfJF2ig2gt1URsCSPNIoNJzK-ykn_vYkjjyHTbumP-wlhreBCZt1yEB/exec
 ```
 
 > Se o salvamento parar de funcionar, criar nova implantação e atualizar a SHEET_URL no index.html
+
+### Funções principais do Apps Script
+
+| Função | Descrição |
+|--------|-----------|
+| `doGet(e)` / `doPost(e)` | Entry points — chamam `rotear(e)` |
+| `rotear(e)` | Se `action === 'save_copy'` → `salvarCopy()`; senão → `salvar()` |
+| `extrairParams(e)` | Tenta `JSON.parse(postData.contents)`, fallback para `e.parameter` |
+| `salvar(e)` | Cria/atualiza aba do mês com estrutura completa |
+| `salvarCopy(p)` | Encontra título na col A, salva copy na col E |
+| `migrarFlat()` | Popula aba **Base de Dados** (tabela plana) |
+| `migrarPivot()` | Popula aba **Consolidado** (pivot por meses) |
+
+---
+
+## n8n — Fluxo de Copy IA
+
+**Webhook:** `https://automacao.estouro.com.br/webhook/laslo-copy`
+
+Fluxo: `Webhook → Extrair Posts → Gerar Copy IA → Edit Fields → Atualizar Post Supabase → HTTP Request (Apps Script)`
+
+| Nó | Função |
+|----|--------|
+| Webhook | Recebe lista de posts do HTML |
+| Extrair Posts | Split item por item |
+| Gerar Copy IA | Gera copy para Instagram (output: `$json.output`) |
+| Edit Fields | Mapeia `id = $('Extrair Posts').item.json.id` e `conteudo = $json.output` |
+| Atualizar Post Supabase | PATCH em `supabase.co/rest/v1/posts?id=eq.{{ $json.id }}` com `status: copy_gerada` |
+| HTTP Request (Apps Script) | POST JSON `{action: 'save_copy', titulo, copy_text}` para SHEET_URL |
+
+**Supabase:**
+- URL: `https://lrrjybvdxuxgbelfozvr.supabase.co`
+- Cliente Laslo: `75c7eef6-aec1-4392-9f97-f6ef06e28936`
+- Tabela: `posts` — campos relevantes: `id`, `titulo`, `status`, `copy_text`, `cliente_id`, `data_publicacao`
 
 ---
 
@@ -135,6 +169,30 @@ https://script.google.com/macros/s/AKfycbwQUEdrLThoqA6FVdh-2ZQ9vFU10AA9-L4w8puv5
 | Fev 2026 | ok |
 | Mar 2026 | ok |
 | Abr 2026+ | aguardando relatório |
+
+---
+
+## Histórico de bugs resolvidos
+
+### Sessão 2026-04-23
+
+| Bug | Causa | Solução |
+|-----|-------|---------|
+| n8n 404 no HTTP Request | Deployment do Apps Script inválido | Redeploy: Implantar → Gerenciar implantações → Nova versão |
+| "Method not allowed" no Supabase | URL do nó apontava pro Apps Script em vez do Supabase | Corrigir URL para `supabase.co/rest/v1/posts` |
+| `$json.id` vazio após IA | Nó IA só retorna `output`, não `id` | Adicionar nó "Edit Fields" mapeando `id` e `conteudo` |
+| copy_text vazio no Apps Script | Expressão errada (`conteudo` em vez de `output`) | `$('Gerar Copy IA').item.json.output` |
+| Posts acumulando no Supabase | Deleta `aguardando_copy` mas reinsere títulos com `copy_gerada` | `sendToN8n()` checa títulos existentes e pula duplicatas |
+| Formatação laranja na planilha | `clearContents()` não limpa formatação | Trocar para `aba.clear()` no Apps Script |
+| Planilha em branco após "Salvar reunião" | `mode: 'no-cors'` impede leitura do body em `e.parameter` | POST sem `no-cors`, captura CORS error esperado (commit d635ee5) |
+
+---
+
+## Pendências
+
+- [ ] Testar "Salvar reunião" após commit d635ee5 — verificar se todos os campos chegam na planilha (posts, ADS, AAR, KPIs, ecom, notas)
+- [ ] Verificar formatação da aba gerada (sem linhas laranjas)
+- [ ] Testar "Gerar Copy IA" e verificar se copy é salva na coluna E da aba do mês
 
 ---
 
