@@ -91,8 +91,13 @@ function salvar(e) {
 
     var abaName = mes.replace(' ', '_');
     var aba = ss.getSheetByName(abaName);
-    if (!aba) aba = ss.insertSheet(abaName);
-    aba.clear();
+    if (!aba) {
+      aba = ss.insertSheet(abaName);
+    } else {
+      // Desmescla tudo antes de limpar para evitar artefatos de formatação
+      try { aba.getRange(1,1,Math.max(aba.getLastRow(),1),aba.getMaxColumns()).breakApart(); } catch(e2) {}
+      aba.clear();
+    }
 
     var row = 1;
     aba.getRange(row,1).setValue('Titulo');
@@ -115,7 +120,9 @@ function salvar(e) {
         aba.getRange(row,2).setValue('S' + (Math.floor(i/2)+1));
         aba.getRange(row,3).setValue(p2.ads || '');
         aba.getRange(row,4).setValue(p2.status || '');
-        if (i % 2 === 0) aba.getRange(row,1,1,4).setBackground('#FAFAFA');
+        // Define background explicitamente em toda a linha para apagar formatação residual
+        aba.getRange(row,1,1,5).setBackground(i % 2 === 0 ? '#F2EFE9' : '#FFFFFF')
+          .setFontColor('#000000').setFontWeight('normal');
         row++;
       });
     } catch(err) {}
