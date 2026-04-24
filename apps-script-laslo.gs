@@ -10,7 +10,43 @@ function rotear(e) {
   var p = extrairParams(e);
   var action = (p && p.action) || '';
   if (action === 'save_copy') return salvarCopy(p);
+  if (action === 'save_copy_supabase') return salvarCopyDoSupabase(p);
   return salvar(e);
+}
+
+function salvarCopyDoSupabase(p) {
+  var id  = p.id  || '';
+  var mes = (p.mes || '').trim();
+  if (!id)  return jsonResp({status:'error', msg:'id ausente'});
+  if (!mes) return jsonResp({status:'error', msg:'mes ausente'});
+
+  var SUPABASE_URL = 'https://lrrjybvdxuxgbelfozvr.supabase.co';
+  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxycmp5YnZkeHV4Z2JlbGZvenZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MzM5NTAsImV4cCI6MjA5MTAwOTk1MH0.OJBvapDrm0NKQXqo4CY9ITv5H4y0Tn3Yot1uR3ybTao';
+
+  var resp = UrlFetchApp.fetch(
+    SUPABASE_URL + '/rest/v1/posts?id=eq.' + encodeURIComponent(id) + '&select=titulo,conteudo',
+    { method:'GET', headers:{ 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+  );
+  var data = JSON.parse(resp.getContentText());
+  if (!data || data.length === 0) return jsonResp({status:'error', msg:'post nao encontrado no supabase'});
+
+  var titulo   = data[0].titulo  || '';
+  var copyText = data[0].conteudo || '';
+  if (!copyText) return jsonResp({status:'error', msg:'conteudo vazio no supabase'});
+
+  var ss  = SpreadsheetApp.getActiveSpreadsheet();
+  var aba = ss.getSheetByName(mes.replace(' ', '_'));
+  if (!aba) return jsonResp({status:'error', msg:'aba nao encontrada: ' + mes});
+
+  var colA = aba.getRange('A:A').getValues();
+  var found = -1;
+  for (var i = 0; i < colA.length; i++) {
+    if (String(colA[i][0]).trim() === String(titulo).trim()) { found = i + 1; break; }
+  }
+  if (found === -1) return jsonResp({status:'error', msg:'titulo nao encontrado: ' + titulo});
+
+  aba.getRange(found, 5).setValue(copyText);
+  return jsonResp({status:'ok', mes:mes, titulo:titulo, row:found, copy_len:copyText.length});
 }
 
 function extrairParams(e) {
