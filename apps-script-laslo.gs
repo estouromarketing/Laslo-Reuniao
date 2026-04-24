@@ -161,8 +161,8 @@ function salvar(e) {
     aba.getRange(row,3).setValue('ADS');
     aba.getRange(row,4).setValue('Status');
     aba.getRange(row,5).setValue('PAUTA — ' + mes.toUpperCase() + ' | Data: ' + (p.data_reuniao || ''));
-    aba.getRange(row,1,1,4).setBackground('#CACDD9').setFontWeight('bold').setFontSize(11);
-    row += 2;
+    aba.getRange(row,1,1,5).setBackground('#CACDD9').setFontWeight('bold').setFontSize(11);
+    row += 1;
 
     aba.getRange(row,1,1,4).merge().setValue('1A. POSTS DO MES').setBackground('#E8690A').setFontColor('#FFFFFF').setFontWeight('bold');
     row++;
