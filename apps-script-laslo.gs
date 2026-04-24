@@ -11,7 +11,9 @@ function rotear(e) {
   var action = (p && p.action) || '';
   if (action === 'save_copy') return salvarCopy(p);
   if (action === 'save_copy_supabase') return salvarCopyDoSupabase(p);
-  return salvar(e);
+  // Só salva reunião se tiver mes — evita apagar aba por chamada acidental sem dados
+  if (p && p.mes) return salvar(e);
+  return jsonResp({status:'error', msg:'action ou mes ausente'});
 }
 
 function salvarCopyDoSupabase(p) {
