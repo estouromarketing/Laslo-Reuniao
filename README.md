@@ -96,7 +96,7 @@ O arquivo `apps-script-laslo.gs` contém o código completo. Para atualizar:
 
 **URL do Web App (SHEET_URL no index.html):**
 ```
-https://script.google.com/macros/s/AKfycbwDtq64Hg2KEZfJF2ig2gt1URsCSPNIoNJzK-ykn_vYkjjyHTbumP-wlhreBCZt1yEB/exec
+https://script.google.com/macros/s/AKfycbwcdv-w0OXtUFx8TjgHW27pjfZ5Fh4jra066QUf9EKhlxNflsKpeucD4PN6nLlfzl4n/exec
 ```
 
 > Se o salvamento parar de funcionar, criar nova implantação e atualizar a SHEET_URL no index.html
