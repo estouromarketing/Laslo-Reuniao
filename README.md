@@ -174,7 +174,7 @@ Fluxo: `Webhook → Extrair Posts → Gerar Copy IA → Edit Fields → Atualiza
 
 ## Histórico de bugs resolvidos
 
-### Sessão 2026-04-23
+### Sessão 2026-04-23 (parte 1)
 
 | Bug | Causa | Solução |
 |-----|-------|---------|
@@ -186,13 +186,29 @@ Fluxo: `Webhook → Extrair Posts → Gerar Copy IA → Edit Fields → Atualiza
 | Formatação laranja na planilha | `clearContents()` não limpa formatação | Trocar para `aba.clear()` no Apps Script |
 | Planilha em branco após "Salvar reunião" | `mode: 'no-cors'` impede leitura do body em `e.parameter` | POST sem `no-cors`, captura CORS error esperado (commit d635ee5) |
 
+### Sessão 2026-04-23 (parte 2)
+
+| Bug | Causa | Solução |
+|-----|-------|---------|
+| copy_len: 0 no Apps Script | URL do GET excede limite do Google (~2KB) com copy de 800+ chars | Nova ação `save_copy_supabase`: Apps Script busca copy direto no Supabase pelo `id` |
+| `$json.id` vazio no Supabase | Gerar Copy IA não passa `id` adiante | Adicionar `id = $('Extrair Posts').item.json.id` no Edit Fields1 |
+| UrlFetchApp sem permissão | Deployment antigo não tinha escopo `external_request` | Criar novo deployment (não nova versão) para forçar autorização OAuth |
+| Planilha apagada por n8n | HTTP Request sem `action` caía no `salvar()` padrão | Proteção no `rotear()`: só chama `salvar()` se `p.mes` estiver presente |
+| SHEET_URL desatualizada | Novo deployment gerou nova URL | Atualizada em `index.html` e `README.md` (commit 72892a5) |
+
+**URL atual do Apps Script:**
+```
+https://script.google.com/macros/s/AKfycbwcdv-w0OXtUFx8TjgHW27pjfZ5Fh4jra066QUf9EKhlxNflsKpeucD4PN6nLlfzl4n/exec
+```
+
 ---
 
 ## Pendências
 
-- [ ] Testar "Salvar reunião" após commit d635ee5 — verificar se todos os campos chegam na planilha (posts, ADS, AAR, KPIs, ecom, notas)
-- [ ] Verificar formatação da aba gerada (sem linhas laranjas)
-- [ ] Testar "Gerar Copy IA" e verificar se copy é salva na coluna E da aba do mês
+- [ ] **Salvar copy na planilha (col E)** — fluxo `save_copy_supabase` implementado mas não confirmado funcionando. Próximo passo: testar com n8n publicado e verificar col E
+- [ ] Verificar se planilha não apaga mais dados com a proteção do `rotear()`
+- [ ] Re-salvar dados de Abr 2026 na planilha (foram apagados acidentalmente em 2026-04-23)
+- [ ] Fluxo n8n atual: Webhook → Extrair Posts → Gerar Copy IA → Edit Fields1 → Atualizar Post Supabase → HTTP Request (save_copy_supabase) → Salvar Histórico
 
 ---
 
