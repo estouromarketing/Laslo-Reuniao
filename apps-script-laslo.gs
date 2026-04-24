@@ -77,9 +77,9 @@ function extrairParams(e) {
 
 function salvarCopy(p) {
   try {
-    var ss   = SpreadsheetApp.getActiveSpreadsheet();
-    var mes  = (p.mes || '').trim();
-    var titulo = (p.titulo || '').trim();
+    var ss      = SpreadsheetApp.getActiveSpreadsheet();
+    var mes     = (p.mes || '').trim();
+    var titulo  = (p.titulo || '').trim();
     var copyText = p.copy_text || '';
 
     var abaName = mes.replace(' ', '_');
@@ -93,9 +93,27 @@ function salvarCopy(p) {
     for (var i = 0; i < colA.length; i++) {
       if (String(colA[i][0]).trim() === titulo) { found = i + 1; break; }
     }
-    if (found === -1) return jsonResp({status:'erro', msg:'Titulo nao encontrado: ' + titulo});
 
-    aba.getRange(found, 5).setValue(copyText);
+    if (found === -1) {
+      // Título não encontrado: insere linha nova antes de "1B. CAMPANHAS DE ADS"
+      var insertBefore = -1;
+      for (var j = 0; j < colA.length; j++) {
+        if (String(colA[j][0]).trim().indexOf('1B.') === 0) { insertBefore = j + 1; break; }
+      }
+      if (insertBefore > 0) {
+        aba.insertRowBefore(insertBefore);
+        aba.getRange(insertBefore, 1, 1, aba.getMaxColumns()).clearFormat().setFontColor('#000000');
+        aba.getRange(insertBefore, 1).setValue(titulo);
+        aba.getRange(insertBefore, 5).setValue(copyText);
+        found = insertBefore;
+      } else {
+        found = lastRow + 1;
+        aba.getRange(found, 1).setValue(titulo);
+        aba.getRange(found, 5).setValue(copyText);
+      }
+    } else {
+      aba.getRange(found, 5).setValue(copyText);
+    }
 
     // garante header na col E se ainda não existe
     var headerE = aba.getRange(4, 5).getValue();
