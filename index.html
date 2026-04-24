@@ -1873,6 +1873,7 @@ async function loadCopies() {
       const card = document.createElement('div');
       card.className = 'copy-card' + (aprovado ? ' aprovado' : '');
       card.id = 'card-' + post.id;
+      card.dataset.titulo = post.titulo;
       card.innerHTML = `
         <div class="copy-card-head">
           <span class="copy-card-semana">${semLabel}</span>
@@ -1912,6 +1913,14 @@ async function aprovarCopy(id) {
     card.querySelector('.copy-status-tag').textContent = '✓ Aprovada';
     card.querySelector('.copy-card-actions').innerHTML = '<span style="font-size:12px;color:var(--green);font-weight:600">✓ Copy aprovada</span>';
     showToast('Copy aprovada!', 'green');
+    // Salva na planilha com o texto aprovado (pode ter sido editado)
+    const titulo = document.getElementById('card-' + id)?.dataset.titulo || '';
+    const month = document.getElementById('month-sel').value;
+    fetch(SHEET_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'save_copy', mes: month, titulo, copy_text: conteudo })
+    }).catch(() => {});
     // Atualiza badge
     const badge = document.getElementById('copies-badge');
     const count = parseInt(badge.textContent || '0') - 1;
@@ -1924,11 +1933,19 @@ async function aprovarCopy(id) {
 
 async function reprovarCopy(id) {
   if (!confirm('Reprovar esta copy? Ela voltará para "aguardando_copy".')) return;
+  const titulo = document.getElementById('card-' + id)?.dataset.titulo || '';
+  const month = document.getElementById('month-sel').value;
   try {
     await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${id}`, {
       method: 'PATCH', headers: sbHeaders(),
       body: JSON.stringify({ status: 'aguardando_copy', conteudo: null, copy_gerada_em: null })
     });
+    // Limpa a copy da planilha
+    fetch(SHEET_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'save_copy', mes: month, titulo, copy_text: '' })
+    }).catch(() => {});
     showToast('Copy reprovada — gere novamente quando ajustar o tema.', 'red');
     loadCopies();
   } catch(e) { showToast('Erro: ' + e.message, 'red'); }
