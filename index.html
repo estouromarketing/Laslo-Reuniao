@@ -1344,8 +1344,11 @@ async function sendToN8n() {
   try {
     const { start, end } = monthToDateRange(month);
 
-    // 1. Deleta apenas posts pendentes (aguardando_copy) — mantém em andamento e aprovados
+    // 1. Deleta posts pendentes e copy_gerada sem conteudo (ficaram presos sem texto)
     await fetch(`${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=eq.aguardando_copy`, {
+      method: 'DELETE', headers: sbHeaders()
+    });
+    await fetch(`${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&status=eq.copy_gerada&conteudo=is.null`, {
       method: 'DELETE', headers: sbHeaders()
     });
 
