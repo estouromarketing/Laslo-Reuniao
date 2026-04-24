@@ -3,6 +3,32 @@
 Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 
 **URL:** https://estouromarketing.github.io/Laslo-Reuniao/
+**Repo:** https://github.com/estouromarketing/Laslo-Reuniao
+
+---
+
+## Stack
+
+| Camada | Tecnologia |
+|--------|-----------|
+| Frontend | HTML/CSS/JS puro (sem framework, sem build) + Chart.js v4 |
+| Backend planilha | Google Apps Script (`apps-script-laslo.gs`) |
+| Banco de dados | Supabase (postgres) — tabela `posts` |
+| Automação IA | n8n workflow |
+| Hospedagem | GitHub Pages (auto-deploy no push para `main`) |
+
+---
+
+## URLs críticas
+
+| Variável | Valor |
+|----------|-------|
+| `SHEET_URL` (Apps Script) | `https://script.google.com/macros/s/AKfycbwcdv-w0OXtUFx8TjgHW27pjfZ5Fh4jra066QUf9EKhlxNflsKpeucD4PN6nLlfzl4n/exec` |
+| `N8N_WEBHOOK_URL` | `https://automacao.estouro.com.br/webhook/laslo-copy` |
+| `SUPABASE_URL` | `https://lrrjybvdxuxgbelfozvr.supabase.co` |
+| `LASLO_CLIENT_ID` | `75c7eef6-aec1-4392-9f97-f6ef06e28936` |
+
+> Se o Apps Script for reimplantado, a SHEET_URL muda — atualizar em `index.html` e aqui.
 
 ---
 
@@ -11,18 +37,141 @@ Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 1. Acesse a URL acima
 2. Selecione o mês de referência
 3. Preencha posts, ADS, AAR, KPIs e observações
-4. Clique em **Salvar reunião** — dados vão para o Google Sheets automaticamente
+4. Clique em **Salvar Reunião** → dados vão para o Google Sheets automaticamente
+5. Clique em **Gerar Copy IA** → n8n gera copies para cada post
+6. Na aba **Copies**: revise, edite e clique **Aprovar** (salva na planilha) ou **Reprovar** (limpa da planilha e regenera)
 
 ---
 
-## Adicionar novo mês de KPI (todo mês após receber o relatório Reportei)
+## Fluxo completo
 
-### Passo 1 — Adicionar dados no index.html
+```
+[HTML] Salvar Reunião
+    → Apps Script: cria/atualiza aba do mês na planilha
+    → syncCopiesToSheets(): sincroniza copies aprovadas do Supabase → planilha
 
-No arquivo `index.html`, localizar `const KPI_ANALYTICS_DATA = {` e adicionar o novo mês **antes** do primeiro mês existente:
+[HTML] Gerar Copy IA
+    → Supabase: deleta posts aguardando_copy + copy_gerada sem conteudo
+    → Supabase: insere posts novos com status aguardando_copy
+    → n8n webhook: processa cada post
+
+[n8n] Webhook → Extrair Posts → Gerar Copy IA → Edit Fields1
+    → Atualizar Post Supabase: PATCH status=copy_gerada, conteudo=<texto gerado>
+    → HTTP Request: POST save_copy → Apps Script grava col E na planilha
+
+[HTML] Aba Copies — Aprovar
+    → PATCH Supabase: status=copy_aprovada, conteudo=<texto editado>
+    → POST save_copy → Apps Script grava col E com texto final
+
+[HTML] Aba Copies — Reprovar
+    → PATCH Supabase: status=aguardando_copy, conteudo=null
+    → POST save_copy com copy_text="" → Apps Script limpa col E
+```
+
+---
+
+## Google Sheets
+
+**Planilha:** Reuniões Laslo 2026
+
+| Aba | Descrição |
+|-----|-----------|
+| `Resumo` | Log de todos os salvamentos (data, mês, notas) |
+| `Mai_2026`, `Abr_2026`... | Dados detalhados de cada reunião |
+| `Base de Dados` | Tabela plana: Mês / Categoria / Métrica / Valor |
+| `Consolidado` | Pivot: categorias × meses (leitura humana) |
+
+**Estrutura de cada aba de mês:**
+
+| Linha | Coluna A | Col E |
+|-------|----------|-------|
+| 1 | Título (header cinza) | PAUTA — MÊS \| Data: XX/XX/XXXX |
+| 2 | 1A. POSTS DO MES (laranja) | — |
+| 3 | Tema / Conteudo (sub-header) | Copy IA (sub-header) |
+| 4+ | Posts do mês | Texto gerado pela IA |
+| … | 1B. CAMPANHAS DE ADS | — |
+| … | 1C. AÇÕES ESTRATÉGICAS | — |
+| … | 2A. KPIs | — |
+| … | OBSERVAÇÕES GERAIS | — |
+
+---
+
+## Apps Script
+
+O arquivo `apps-script-laslo.gs` contém o código completo.
+
+**Para atualizar após mudança no arquivo:**
+1. Abrir a planilha → **Extensões → Apps Script**
+2. Selecionar todo o conteúdo (`Ctrl+A`) e colar o novo arquivo
+3. Salvar (`Ctrl+S`)
+4. **Implantar → Gerenciar implantações → Editar (lápis) → Nova versão → Implantar**
+
+### Funções principais
+
+| Função | Descrição |
+|--------|-----------|
+| `doGet(e)` / `doPost(e)` | Entry points — chamam `rotear(e)` |
+| `rotear(e)` | `save_copy` → `salvarCopy()`; se `p.mes` presente → `salvar()` |
+| `extrairParams(e)` | Tenta `JSON.parse(postData.contents)`, fallback para form-encoded, fallback para `e.parameter` |
+| `salvar(e)` | Cria/atualiza aba do mês com estrutura completa (header + seções laranja) |
+| `salvarCopy(p)` | Encontra título na col A → grava copy na col E; se não encontrar, insere linha antes de "1B." |
+| `migrarFlat()` | Popula aba **Base de Dados** |
+| `migrarPivot()` | Popula aba **Consolidado** |
+
+---
+
+## n8n — Workflow Copy IA
+
+**ID:** `wCingzgclv2hQwVq`
+**Webhook:** `https://automacao.estouro.com.br/webhook/laslo-copy`
+
+### Configuração dos nós
+
+| Nó | Tipo | Configuração chave |
+|----|------|--------------------|
+| Webhook | Trigger | POST, path `laslo-copy` |
+| Extrair Posts | Split In Batches | processa post a post |
+| Gerar Copy IA | AI / LLM | saída em `$json.output` |
+| Edit Fields1 | Set | `id = $('Extrair Posts').item.json.id`, `titulo = $('Extrair Posts').item.json.titulo` |
+| Atualizar Post Supabase | HTTP Request | PATCH `supabase.co/rest/v1/posts?id=eq.{{ $json.id }}` — body: `status=copy_gerada`, `conteudo={{ $('Gerar Copy IA').item.json.output }}` |
+| HTTP Request (save_copy) | HTTP Request | POST JSON para SHEET_URL — body fields: `action=save_copy`, `mes=$('Extrair Posts').item.json.mes`, `titulo=$('Edit Fields1').item.json.titulo`, `copy_text=$('Gerar Copy IA').item.json.output` |
+| Salvar Histórico | — | log interno |
+
+> **Atenção no nó "Atualizar Post Supabase":** o campo `conteudo` deve usar `{{ $('Gerar Copy IA').item.json.output }}`, NÃO `$json.conteudo` (que chega vazio).
+
+---
+
+## Supabase — Tabela `posts`
+
+| Campo | Tipo | Uso |
+|-------|------|-----|
+| `id` | uuid | PK |
+| `cliente_id` | uuid | `75c7eef6-aec1-4392-9f97-f6ef06e28936` para Laslo |
+| `titulo` | text | Tema do post |
+| `plataforma` | text | `Instagram` |
+| `ads` | bool | Se é ADS |
+| `semana` | int | 1–4 |
+| `data_publicacao` | date | Estimada pela semana |
+| `status` | text | `aguardando_copy` → `copy_gerada` → `copy_aprovada` |
+| `conteudo` | text | Texto gerado pela IA |
+| `copy_gerada_em` | timestamp | Quando a IA gerou |
+
+**Ciclo de status:**
+```
+aguardando_copy → (n8n) → copy_gerada → (HTML: Aprovar) → copy_aprovada
+                                       → (HTML: Reprovar) → aguardando_copy
+```
+
+---
+
+## Adicionar novo mês de KPI
+
+### Passo 1 — `index.html`
+
+Localizar `const KPI_ANALYTICS_DATA = {` e adicionar o novo mês antes do primeiro existente:
 
 ```javascript
-'Abr 2026': {
+'Mai 2026': {
   instagram: {
     'Alcance total (org+pago)': 0000, 'Alcance orgânico': 000, 'Alcance pago': 000,
     'Engajamento total': 000, 'Novos seguidores': 00, 'Seguidores totais': 0000,
@@ -55,85 +204,17 @@ No arquivo `index.html`, localizar `const KPI_ANALYTICS_DATA = {` e adicionar o 
 
 ```bash
 git add index.html
-git commit -m "feat: adiciona KPIs Abr 2026"
+git commit -m "feat: adiciona KPIs Mai 2026"
 git push origin main
 ```
 
-### Passo 3 — Atualizar planilha Google Sheets
+### Passo 3 — Apps Script (planilha Consolidado)
 
-No Apps Script da planilha (Extensões → Apps Script):
-1. Atualizar o array `KPI_MESES` adicionando o novo mês
-2. Adicionar o novo mês no objeto `KPI_DATA`
-3. Executar `migrarFlat` → atualiza aba **Base de Dados**
-4. Executar `migrarPivot` → atualiza aba **Consolidado**
-
-> Rodar as duas funções separadamente (cada uma leva ~30s)
-
----
-
-## Google Sheets
-
-**Planilha:** Reuniões Laslo 2026
-
-| Aba | Descrição |
-|-----|-----------|
-| `Resumo` | Log de todos os salvamentos (data, mês, notas) |
-| `Abr_2026`, `Mar_2026`... | Dados detalhados de cada reunião |
-| `Base de Dados` | Tabela plana: Mês / Categoria / Métrica / Valor (para n8n) |
-| `Consolidado` | Pivot: categorias x meses (leitura humana) |
-
----
-
-## Apps Script
-
-O arquivo `apps-script-laslo.gs` contém o código completo. Para atualizar:
-
-1. Abrir a planilha → **Extensões → Apps Script**
-2. Selecionar todo o conteúdo (Ctrl+A)
-3. Colar o conteúdo do arquivo `apps-script-laslo.gs`
-4. Salvar (Ctrl+S)
-5. Reimplantar: **Implantar → Gerenciar implantações → Editar → Nova versão → Implantar**
-
-**URL do Web App (SHEET_URL no index.html):**
-```
-https://script.google.com/macros/s/AKfycbwcdv-w0OXtUFx8TjgHW27pjfZ5Fh4jra066QUf9EKhlxNflsKpeucD4PN6nLlfzl4n/exec
-```
-
-> Se o salvamento parar de funcionar, criar nova implantação e atualizar a SHEET_URL no index.html
-
-### Funções principais do Apps Script
-
-| Função | Descrição |
-|--------|-----------|
-| `doGet(e)` / `doPost(e)` | Entry points — chamam `rotear(e)` |
-| `rotear(e)` | Se `action === 'save_copy'` → `salvarCopy()`; senão → `salvar()` |
-| `extrairParams(e)` | Tenta `JSON.parse(postData.contents)`, fallback para `e.parameter` |
-| `salvar(e)` | Cria/atualiza aba do mês com estrutura completa |
-| `salvarCopy(p)` | Encontra título na col A, salva copy na col E |
-| `migrarFlat()` | Popula aba **Base de Dados** (tabela plana) |
-| `migrarPivot()` | Popula aba **Consolidado** (pivot por meses) |
-
----
-
-## n8n — Fluxo de Copy IA
-
-**Webhook:** `https://automacao.estouro.com.br/webhook/laslo-copy`
-
-Fluxo: `Webhook → Extrair Posts → Gerar Copy IA → Edit Fields → Atualizar Post Supabase → HTTP Request (Apps Script)`
-
-| Nó | Função |
-|----|--------|
-| Webhook | Recebe lista de posts do HTML |
-| Extrair Posts | Split item por item |
-| Gerar Copy IA | Gera copy para Instagram (output: `$json.output`) |
-| Edit Fields | Mapeia `id = $('Extrair Posts').item.json.id` e `conteudo = $json.output` |
-| Atualizar Post Supabase | PATCH em `supabase.co/rest/v1/posts?id=eq.{{ $json.id }}` com `status: copy_gerada` |
-| HTTP Request (Apps Script) | POST JSON `{action: 'save_copy', titulo, copy_text}` para SHEET_URL |
-
-**Supabase:**
-- URL: `https://lrrjybvdxuxgbelfozvr.supabase.co`
-- Cliente Laslo: `75c7eef6-aec1-4392-9f97-f6ef06e28936`
-- Tabela: `posts` — campos relevantes: `id`, `titulo`, `status`, `copy_text`, `cliente_id`, `data_publicacao`
+1. Abrir planilha → **Extensões → Apps Script**
+2. Atualizar array `KPI_MESES` com o novo mês
+3. Adicionar dados no objeto `KPI_DATA`
+4. Executar `migrarFlat` → atualiza **Base de Dados**
+5. Executar `migrarPivot` → atualiza **Consolidado**
 
 ---
 
@@ -153,11 +234,40 @@ Fluxo: `Webhook → Extrair Posts → Gerar Copy IA → Edit Fields → Atualiza
 | CPC médio (R$) | Meta Ads — "CPC médio" |
 | CPM médio (R$) | Meta Ads — "CPM médio" |
 | Total de ações (GMN) | "Total de ações" |
-| Pesquisas "laslo" | Nem sempre aparece — usar null se ausente |
+| Pesquisas "laslo" | Nem sempre aparece — usar `null` se ausente |
 
 ---
 
-## Dados históricos disponíveis
+## Histórico de bugs resolvidos
+
+### Sessão 2026-04-23
+
+| Bug | Causa | Solução |
+|-----|-------|---------|
+| n8n 404 | Deployment do Apps Script inválido | Redeploy: nova versão |
+| "Method not allowed" no Supabase | URL do nó apontava pro Apps Script | Corrigir URL para `supabase.co/rest/v1/posts` |
+| `$json.id` vazio após IA | Nó IA só retorna `output` | Adicionar nó "Edit Fields" mapeando `id` |
+| copy_text vazio no Apps Script | Expressão errada | `$('Gerar Copy IA').item.json.output` |
+| Posts acumulando no Supabase | Re-inserção de títulos já processados | `sendToN8n()` checa títulos existentes |
+| Formatação laranja na planilha | `clearContents()` não limpa formatação | Trocar para `aba.clear()` |
+| Planilha em branco | `mode: 'no-cors'` impede leitura do body | POST sem `no-cors` |
+| Planilha apagada pelo n8n | HTTP Request sem `action` caía em `salvar()` | `rotear()` só chama `salvar()` se `p.mes` presente |
+
+### Sessão 2026-04-24
+
+| Bug | Causa | Solução |
+|-----|-------|---------|
+| Linha vazia no topo da planilha | `row += 2` criava linha em branco na row 2 | Mudado para `row += 1` |
+| Fundo cinza não cobria col E (PAUTA) | Range era `(row,1,1,4)` | Mudado para `(row,1,1,5)` |
+| "Copy IA" aparecendo na row 4 (dados) | `salvarCopy` tinha checagem hardcoded em row 4 (era row do sub-header no layout antigo, virou dado no novo) | Removida a checagem — `salvar()` sempre escreve o header |
+| 6 copies presas com status `copy_gerada` e `conteudo` nulo | n8n "Atualizar Post Supabase" usava `$json.conteudo` (vazio) | Corrigido para `$('Gerar Copy IA').item.json.output` |
+| `copy_gerada` sem conteudo bloqueava regeneração | `sendToN8n()` excluía `copy_gerada` da regeneração | DELETE adicional para `copy_gerada` com `conteudo IS NULL` |
+| Aprovar não salvava na planilha imediatamente | `aprovarCopy()` só atualizava Supabase | Adicionado POST `save_copy` ao Apps Script após o PATCH |
+| Reprovar não limpava col E imediatamente | `reprovarCopy()` só atualizava Supabase | Adicionado POST `save_copy` com `copy_text=""` após o PATCH |
+
+---
+
+## Dados históricos
 
 | Mês | Status |
 |-----|--------|
@@ -168,53 +278,5 @@ Fluxo: `Webhook → Extrair Posts → Gerar Copy IA → Edit Fields → Atualiza
 | Jan 2026 | ok |
 | Fev 2026 | ok |
 | Mar 2026 | ok |
-| Abr 2026+ | aguardando relatório |
-
----
-
-## Histórico de bugs resolvidos
-
-### Sessão 2026-04-23 (parte 1)
-
-| Bug | Causa | Solução |
-|-----|-------|---------|
-| n8n 404 no HTTP Request | Deployment do Apps Script inválido | Redeploy: Implantar → Gerenciar implantações → Nova versão |
-| "Method not allowed" no Supabase | URL do nó apontava pro Apps Script em vez do Supabase | Corrigir URL para `supabase.co/rest/v1/posts` |
-| `$json.id` vazio após IA | Nó IA só retorna `output`, não `id` | Adicionar nó "Edit Fields" mapeando `id` e `conteudo` |
-| copy_text vazio no Apps Script | Expressão errada (`conteudo` em vez de `output`) | `$('Gerar Copy IA').item.json.output` |
-| Posts acumulando no Supabase | Deleta `aguardando_copy` mas reinsere títulos com `copy_gerada` | `sendToN8n()` checa títulos existentes e pula duplicatas |
-| Formatação laranja na planilha | `clearContents()` não limpa formatação | Trocar para `aba.clear()` no Apps Script |
-| Planilha em branco após "Salvar reunião" | `mode: 'no-cors'` impede leitura do body em `e.parameter` | POST sem `no-cors`, captura CORS error esperado (commit d635ee5) |
-
-### Sessão 2026-04-23 (parte 2)
-
-| Bug | Causa | Solução |
-|-----|-------|---------|
-| copy_len: 0 no Apps Script | URL do GET excede limite do Google (~2KB) com copy de 800+ chars | Nova ação `save_copy_supabase`: Apps Script busca copy direto no Supabase pelo `id` |
-| `$json.id` vazio no Supabase | Gerar Copy IA não passa `id` adiante | Adicionar `id = $('Extrair Posts').item.json.id` no Edit Fields1 |
-| UrlFetchApp sem permissão | Deployment antigo não tinha escopo `external_request` | Criar novo deployment (não nova versão) para forçar autorização OAuth |
-| Planilha apagada por n8n | HTTP Request sem `action` caía no `salvar()` padrão | Proteção no `rotear()`: só chama `salvar()` se `p.mes` estiver presente |
-| SHEET_URL desatualizada | Novo deployment gerou nova URL | Atualizada em `index.html` e `README.md` (commit 72892a5) |
-
-**URL atual do Apps Script:**
-```
-https://script.google.com/macros/s/AKfycbwcdv-w0OXtUFx8TjgHW27pjfZ5Fh4jra066QUf9EKhlxNflsKpeucD4PN6nLlfzl4n/exec
-```
-
----
-
-## Pendências
-
-- [ ] **Salvar copy na planilha (col E)** — fluxo `save_copy_supabase` implementado mas não confirmado funcionando. Próximo passo: testar com n8n publicado e verificar col E
-- [ ] Verificar se planilha não apaga mais dados com a proteção do `rotear()`
-- [ ] Re-salvar dados de Abr 2026 na planilha (foram apagados acidentalmente em 2026-04-23)
-- [ ] Fluxo n8n atual: Webhook → Extrair Posts → Gerar Copy IA → Edit Fields1 → Atualizar Post Supabase → HTTP Request (save_copy_supabase) → Salvar Histórico
-
----
-
-## Stack
-
-- HTML/CSS/JS puro (sem framework, sem build)
-- Chart.js v4.4.0 (gráficos de KPI)
-- Google Apps Script (salvar reunião na planilha)
-- GitHub Pages (hospedagem)
+| Abr 2026 | ok |
+| Mai 2026 | em andamento |
