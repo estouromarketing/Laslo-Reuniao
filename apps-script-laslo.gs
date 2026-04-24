@@ -63,7 +63,7 @@ function salvarCopy(p) {
     var headerE = aba.getRange(4, 5).getValue();
     if (!headerE) aba.getRange(4, 5).setValue('Copy IA').setFontWeight('bold').setBackground('#F2EFE9');
 
-    return jsonResp({status:'ok', mes:mes, titulo:titulo, row:found});
+    return jsonResp({status:'ok', mes:mes, titulo:titulo, row:found, copy_len:copyText.length});
   } catch(err) {
     return jsonResp({status:'erro', msg:err.toString()});
   }
