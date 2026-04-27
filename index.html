@@ -790,7 +790,21 @@
         <h2 style="font-size:15px;font-weight:600;color:var(--text)">Aprovação de Copies</h2>
         <p style="font-size:12px;color:var(--text3);margin-top:2px">Revise, edite e aprove cada copy antes de gerar a arte</p>
       </div>
-      <div style="display:flex;gap:8px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <select id="copies-month-sel" onchange="loadCopies()" style="font-size:12px;padding:6px 10px;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-sm);cursor:pointer;color:var(--text2);font-family:'DM Sans',sans-serif">
+          <option value="Jan 2026">Janeiro 2026</option>
+          <option value="Fev 2026">Fevereiro 2026</option>
+          <option value="Mar 2026">Março 2026</option>
+          <option value="Abr 2026">Abril 2026</option>
+          <option value="Mai 2026">Maio 2026</option>
+          <option value="Jun 2026">Junho 2026</option>
+          <option value="Jul 2026">Julho 2026</option>
+          <option value="Ago 2026">Agosto 2026</option>
+          <option value="Set 2026">Setembro 2026</option>
+          <option value="Out 2026">Outubro 2026</option>
+          <option value="Nov 2026">Novembro 2026</option>
+          <option value="Dez 2026">Dezembro 2026</option>
+        </select>
         <button class="copies-reload-btn" onclick="exportarParaWord()" id="btn-export-word" style="display:none">⬇ Exportar Word</button>
         <button class="copies-reload-btn" onclick="loadCopies()">↻ Atualizar</button>
       </div>
@@ -1851,7 +1865,7 @@ function renderAnalise() {
 let _copiesCache = [];
 
 async function loadCopies() {
-  const month = document.getElementById('month-sel').value;
+  const month = document.getElementById('copies-month-sel').value || document.getElementById('month-sel').value;
   const { start, end } = monthToDateRange(month);
   const list = document.getElementById('copies-list');
   const empty = document.getElementById('copies-empty');
@@ -1908,7 +1922,7 @@ async function loadCopies() {
 }
 
 function exportarParaWord() {
-  const month = document.getElementById('month-sel').value;
+  const month = document.getElementById('copies-month-sel').value || document.getElementById('month-sel').value;
   const posts = _copiesCache;
   if (!posts.length) return;
 
@@ -2013,7 +2027,16 @@ function switchTab(tab) {
     }
   });
   if (tab === 'analise') renderAnalise();
-  if (tab === 'copies') loadCopies();
+  if (tab === 'copies') {
+    const copiesSel = document.getElementById('copies-month-sel');
+    const mainMonth = document.getElementById('month-sel').value;
+    if (copiesSel && copiesSel.value !== mainMonth) {
+      for (let i = 0; i < copiesSel.options.length; i++) {
+        if (copiesSel.options[i].value === mainMonth) { copiesSel.selectedIndex = i; break; }
+      }
+    }
+    loadCopies();
+  }
 }
 
 // Init — abre no mês atual automaticamente
