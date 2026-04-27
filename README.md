@@ -40,6 +40,8 @@ Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 4. Clique em **Salvar Reunião** → dados vão para o Google Sheets automaticamente
 5. Clique em **Gerar Copy IA** → n8n gera copies para cada post
 6. Na aba **Copies**: revise, edite e clique **Aprovar** (salva na planilha) ou **Reprovar** (limpa da planilha e regenera)
+7. Na aba **Copies**: use o seletor de mês para consultar copies de outros meses sem alterar o mês de referência
+8. Clique em **⬇ Exportar Word** para baixar as copies do mês selecionado em formato `.doc`
 
 ---
 
@@ -252,6 +254,13 @@ git push origin main
 | Formatação laranja na planilha | `clearContents()` não limpa formatação | Trocar para `aba.clear()` |
 | Planilha em branco | `mode: 'no-cors'` impede leitura do body | POST sem `no-cors` |
 | Planilha apagada pelo n8n | HTTP Request sem `action` caía em `salvar()` | `rotear()` só chama `salvar()` se `p.mes` presente |
+
+### Sessão 2026-04-27
+
+| Funcionalidade | Descrição |
+|---------------|-----------|
+| Exportar Word | Botão "⬇ Exportar Word" na aba Copies — gera `.doc` com todas as copies (aprovadas + aguardando) do mês, em formato de parágrafos simples, sem tabelas |
+| Seletor de mês nas Copies | Seletor independente no header da aba Copies — sincroniza com o mês de referência ao abrir a aba, mas pode ser alterado livremente sem afetar o restante da ferramenta |
 
 ### Sessão 2026-04-24
 
