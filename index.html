@@ -790,7 +790,10 @@
         <h2 style="font-size:15px;font-weight:600;color:var(--text)">Aprovação de Copies</h2>
         <p style="font-size:12px;color:var(--text3);margin-top:2px">Revise, edite e aprove cada copy antes de gerar a arte</p>
       </div>
-      <button class="copies-reload-btn" onclick="loadCopies()">↻ Atualizar</button>
+      <div style="display:flex;gap:8px">
+        <button class="copies-reload-btn" onclick="exportarParaWord()" id="btn-export-word" style="display:none">⬇ Exportar Word</button>
+        <button class="copies-reload-btn" onclick="loadCopies()">↻ Atualizar</button>
+      </div>
     </div>
     <div id="copies-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--text3)">
       <div style="font-size:32px;margin-bottom:12px">✦</div>
@@ -1845,6 +1848,8 @@ function renderAnalise() {
 }
 
 // ── ABA COPIES ──
+let _copiesCache = [];
+
 async function loadCopies() {
   const month = document.getElementById('month-sel').value;
   const { start, end } = monthToDateRange(month);
@@ -1860,6 +1865,7 @@ async function loadCopies() {
       { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
     );
     const posts = await res.json();
+    _copiesCache = posts;
     loading.style.display = 'none';
 
     // badge na aba
@@ -1867,6 +1873,8 @@ async function loadCopies() {
     const badge = document.getElementById('copies-badge');
     if (pendentes > 0) { badge.style.display = 'inline'; badge.textContent = pendentes; }
     else { badge.style.display = 'none'; }
+
+    document.getElementById('btn-export-word').style.display = posts.length ? 'inline' : 'none';
 
     if (!posts.length) { empty.style.display = 'block'; return; }
 
@@ -1897,6 +1905,53 @@ async function loadCopies() {
     loading.style.display = 'none';
     showToast('Erro ao carregar copies: ' + e.message, 'red');
   }
+}
+
+function exportarParaWord() {
+  const month = document.getElementById('month-sel').value;
+  const posts = _copiesCache;
+  if (!posts.length) return;
+
+  const dataExport = new Date().toLocaleDateString('pt-BR');
+
+  const rows = posts.map(p => {
+    const status = p.status === 'copy_aprovada' ? 'Aprovada' : 'Aguardando aprovação';
+    const cor = p.status === 'copy_aprovada' ? '#1a7f4b' : '#b45309';
+    const copy = (p.conteudo || '').replace(/\n/g, '<br>');
+    return `
+      <tr>
+        <td style="padding:18px 0;border-bottom:1px solid #e5e7eb;vertical-align:top">
+          <p style="margin:0 0 4px;font-size:11px;color:#6b7280">Semana ${p.semana}</p>
+          <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#111">${p.titulo}</p>
+          <p style="margin:0 0 10px;font-size:11px;color:${cor};font-weight:600">${status}</p>
+          <p style="margin:0;font-size:13px;color:#374151;line-height:1.7">${copy}</p>
+        </td>
+      </tr>`;
+  }).join('');
+
+  const html = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta charset="utf-8">
+    <style>
+      body { font-family: Arial, sans-serif; margin: 40px; color: #111; }
+      h1 { font-size: 20px; color: #111; margin-bottom: 4px; }
+      .sub { font-size: 12px; color: #6b7280; margin-bottom: 32px; }
+      table { width: 100%; border-collapse: collapse; }
+    </style>
+    </head>
+    <body>
+      <h1>Laslo Vet — Copies ${month}</h1>
+      <p class="sub">Exportado em ${dataExport} &nbsp;·&nbsp; ${posts.length} post${posts.length > 1 ? 's' : ''}</p>
+      <table>${rows}</table>
+    </body></html>`;
+
+  const blob = new Blob([html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Laslo_Copies_${month.replace(' ', '_')}.doc`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 async function aprovarCopy(id) {
