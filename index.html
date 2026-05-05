@@ -491,6 +491,8 @@
   .brief-tag-conceitual { background:#f3e5f5; color:#7b1fa2; }
   .btn-copiar-brief { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; color:var(--text2); font-family:'DM Sans',sans-serif; transition:background .15s; }
   .btn-copiar-brief:hover { background:var(--border); }
+  .btn-canva { display:inline-flex; align-items:center; gap:6px; background:#00c4a7; color:#fff; border:none; border-radius:var(--radius-sm); padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; transition:background .15s; }
+  .btn-canva:hover { background:#00a991; }
 
   /* ── RESPONSIVE ── */
   /* ── RESPONSIVE 768px (tablet / celular landscape) ── */
@@ -2310,7 +2312,8 @@ function abrirBrief(postId) {
     rows('Headline', `<strong>"${_esc(headline)}"</strong><br><span style="font-size:11px;color:var(--text3)">→ Bold uppercase · Cor <strong style="color:#5C2D1E">#5C2D1E</strong> · ~64px · Centralizado</span>`) +
     rows('Subtítulo', `<em>Extrair 2ª frase de impacto da copy</em><br><span style="font-size:11px;color:var(--text3)">→ Cor <em>#E8841A</em> · ~36px</span>`) +
     rows('Imagem', layout.imagem.replace(/\n/g,'<br>')) +
-    (layout.cta_feed !== '—' ? rows('CTA', layout.cta_feed) : '')
+    (layout.cta_feed !== '—' ? rows('CTA', layout.cta_feed) : '') +
+    `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)"><a href="https://www.canva.com/create/instagram-posts/" target="_blank" rel="noopener" class="btn-canva">🖌️ Abrir no Canva — Feed 1080×1080</a></div>`
   );
 
   // Story
@@ -2320,7 +2323,8 @@ function abrirBrief(postId) {
     rows('Headline', `Mesma cor e fonte · Quebras de linha mais frequentes (coluna mais estreita) · ~52px`) +
     rows('Subtítulo', `Abaixo da headline · ~30px`) +
     rows('CTA', layout.cta_story) +
-    rows('Imagem', `Ocupa ~55% da altura inferior · Centralizada · Pode ser maior que no feed`)
+    rows('Imagem', `Ocupa ~55% da altura inferior · Centralizada · Pode ser maior que no feed`) +
+    `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)"><a href="https://www.canva.com/create/instagram-stories/" target="_blank" rel="noopener" class="btn-canva">🖌️ Abrir no Canva — Story 1080×1920</a></div>`
   );
 
   // Imagem de produto (se houver)
