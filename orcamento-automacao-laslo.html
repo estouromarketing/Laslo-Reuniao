@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Comercial — Automação de Leads Laslo Vet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f5f5f5;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,.10);
+  }
+
+  /* Header */
+  .header {
+    background: #1a1a2e;
+    padding: 36px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .header-left p {
+    font-size: 13px;
+    color: rgba(255,255,255,.55);
+  }
+  .header-right {
+    text-align: right;
+  }
+  .header-right .tag {
+    display: inline-block;
+    background: #fbab48;
+    color: #1a1a2e;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 8px;
+  }
+  .header-right p {
+    font-size: 12px;
+    color: rgba(255,255,255,.5);
+  }
+
+  /* Body */
+  .body { padding: 48px; }
+
+  /* Meta */
+  .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+    background: #f9f9f9;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .meta-item label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #999;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .meta-item span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  /* Section */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #fbab48;
+    margin-bottom: 12px;
+  }
+  .section p {
+    color: #444;
+    margin-bottom: 10px;
+  }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid #ebebeb; margin: 32px 0; }
+
+  /* Includes list */
+  .includes {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+  }
+  .includes li {
+    font-size: 13px;
+    color: #333;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .includes li::before {
+    content: '✓';
+    color: #fbab48;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Flow */
+  .flow {
+    background: #f9f9f9;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .flow-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .flow-item:last-child { margin-bottom: 0; }
+  .flow-num {
+    width: 24px;
+    height: 24px;
+    background: #fbab48;
+    color: #1a1a2e;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .flow-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+  }
+  .flow-text span {
+    font-size: 12px;
+    color: #777;
+  }
+
+  /* Investment table */
+  .invest-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .invest-table thead tr {
+    background: #1a1a2e;
+    color: #fff;
+  }
+  .invest-table thead th {
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .invest-table tbody tr {
+    border-bottom: 1px solid #ebebeb;
+  }
+  .invest-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  .invest-table tbody td {
+    padding: 12px 16px;
+    color: #333;
+  }
+  .invest-table .tag-unica {
+    display: inline-block;
+    background: #fff3e0;
+    color: #e65100;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .invest-table .tag-mensal {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .invest-table .tag-obs {
+    display: inline-block;
+    background: #f3f4f6;
+    color: #666;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .invest-table .valor {
+    font-weight: 700;
+    color: #1a1a1a;
+    white-space: nowrap;
+  }
+  .invest-total {
+    background: #f9f9f9;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .invest-total-item { text-align: center; }
+  .invest-total-item label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #999;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .invest-total-item .val {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .invest-total-item .val.destaque { color: #fbab48; }
+  .invest-total-divider {
+    width: 1px;
+    height: 40px;
+    background: #ebebeb;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    gap: 0;
+  }
+  .timeline-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    right: 0;
+    width: 50%;
+    height: 2px;
+    background: #ebebeb;
+  }
+  .timeline-item:last-child::after { display: none; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 0;
+    width: 50%;
+    height: 2px;
+    background: #ebebeb;
+  }
+  .timeline-item:first-child::before { display: none; }
+  .timeline-dot {
+    width: 32px;
+    height: 32px;
+    background: #fbab48;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1a1a2e;
+    position: relative;
+    z-index: 1;
+  }
+  .timeline-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+  }
+  .timeline-sub {
+    font-size: 10px;
+    color: #999;
+  }
+
+  /* Next steps */
+  .next-steps {
+    background: #1a1a2e;
+    border-radius: 8px;
+    padding: 24px 28px;
+    color: #fff;
+  }
+  .next-steps h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fbab48;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 14px;
+  }
+  .next-steps ol {
+    padding-left: 18px;
+  }
+  .next-steps ol li {
+    font-size: 13px;
+    color: rgba(255,255,255,.8);
+    margin-bottom: 8px;
+  }
+  .next-steps ol li:last-child { margin-bottom: 0; }
+
+  /* Footer */
+  .footer {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid #ebebeb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer p { font-size: 11px; color: #bbb; }
+  .footer strong { color: #888; }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <img src="assets/logo-estouro.png" alt="Estouro Marketing" style="height:80px;object-fit:contain;margin-bottom:16px;display:block;mix-blend-mode:screen">
+      <h1>Proposta Comercial</h1>
+      <p>Automação de Captação e Atendimento de Leads</p>
+    </div>
+    <div class="header-right">
+      <div class="tag">Proposta</div>
+      <p>Estouro Marketing</p>
+      <p>Maio de 2026</p>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- Meta -->
+    <div class="meta">
+      <div class="meta-item">
+        <label>Cliente</label>
+        <span>Laslo</span>
+      </div>
+      <div class="meta-item">
+        <label>Data</label>
+        <span>Maio de 2026</span>
+      </div>
+      <div class="meta-item">
+        <label>Validade</label>
+        <span>30 dias</span>
+      </div>
+    </div>
+
+    <!-- Contexto -->
+    <div class="section">
+      <div class="section-title">O cenário atual</div>
+      <p>
+        Os anúncios pagos no Meta Ads estão gerando leads via WhatsApp e Instagram.
+        Porém, sem um processo estruturado de atendimento, esses leads chegam e ficam
+        sem resposta — o que representa oportunidades de venda sendo perdidas diariamente.
+      </p>
+      <p>
+        A solução proposta vai além do atendimento inicial: automatiza a captação,
+        qualificação e follow-up de novos leads, e ainda ativa a base de clientes
+        existente com comunicações mensais — gerando novas oportunidades de venda
+        sem custo adicional em anúncios.
+      </p>
+    </div>
+
+    <hr>
+
+    <!-- Fluxo -->
+    <div class="section">
+      <div class="section-title">Como vai funcionar</div>
+
+      <p style="font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Etapa 1 — Captação do lead</p>
+      <div class="flow" style="margin-bottom:20px">
+        <div class="flow-item">
+          <div class="flow-num">1</div>
+          <div class="flow-text">
+            <strong>Lead envia mensagem no WhatsApp ou Instagram</strong>
+            <span>Qualquer contato recebido nos dois canais é capturado automaticamente — nenhum lead passa despercebido, mesmo fora do horário comercial.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">2</div>
+          <div class="flow-text">
+            <strong>Resposta imediata e automática</strong>
+            <span>Em segundos, o lead recebe uma mensagem personalizada de boas-vindas. Essa resposta rápida é decisiva: leads que esperam mais de 5 minutos por um retorno têm chances muito menores de fechar negócio.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">3</div>
+          <div class="flow-text">
+            <strong>Qualificação automática</strong>
+            <span>O sistema faz 2 perguntas rápidas ao lead — cidade e produto de interesse (bomba, insumo ou comodato). Quando o gerente comercial receber o aviso, já saberá exatamente com quem está falando e o que oferecer, sem precisar começar do zero.</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Etapa 2 — Atendimento e controle</p>
+      <div class="flow" style="margin-bottom:20px">
+        <div class="flow-item">
+          <div class="flow-num">4</div>
+          <div class="flow-text">
+            <strong>Gerente comercial é notificado na hora pelo WhatsApp</strong>
+            <span>Assim que o lead responde as perguntas, o gerente recebe uma mensagem no seu WhatsApp pessoal com nome, contato, canal de origem e produto de interesse. A mensagem inclui duas opções de resposta rápida: <strong>1 — Converteu</strong> ou <strong>2 — Não fechou</strong>. Ao responder, o sistema atualiza o status automaticamente e decide se dispara ou cancela o follow-up.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">5</div>
+          <div class="flow-text">
+            <strong>Registro automático em planilha</strong>
+            <span>Todos os dados são salvos automaticamente — sem depender de preenchimento manual. A Laslo terá um histórico completo de todos os leads recebidos, com data, canal e status de atendimento.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">6</div>
+          <div class="flow-text">
+            <strong>Sequência de follow-up automático para leads não convertidos</strong>
+            <span>Se o lead não fechar negócio, o sistema não desiste. Mensagens são enviadas automaticamente no <strong>dia 3</strong> ("Posso te ajudar com alguma dúvida?") e no <strong>dia 7</strong> ("Ainda temos condições especiais disponíveis"). Essa sequência recupera leads que esfriaram sem nenhum esforço da equipe.</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Etapa 3 — Pós-venda e crescimento</p>
+      <div class="flow">
+        <div class="flow-item">
+          <div class="flow-num">7</div>
+          <div class="flow-text">
+            <strong>Avaliação no Google após a venda</strong>
+            <span>Quando uma venda é confirmada, o cliente recebe automaticamente uma mensagem de agradecimento com um link para avaliar a Laslo no Google. Mais avaliações = mais visibilidade nas buscas locais = mais leads chegando de forma orgânica, sem pagar anúncio.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">8</div>
+          <div class="flow-text">
+            <strong>Reativação mensal da base de clientes</strong>
+            <span>Todo mês, os clientes existentes recebem uma mensagem com novidades, produtos e promoções. WhatsApp tem taxa de abertura de 90% — muito acima do e-mail marketing. Essa ação gera novas oportunidades de venda sem nenhum custo adicional em anúncios.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">9</div>
+          <div class="flow-text">
+            <strong>Relatório mensal automático</strong>
+            <span>No dia 1º de cada mês, a Laslo recebe um resumo completo: quantos leads chegaram, quantos foram atendidos e quantos converteram — sem precisar pedir ou esperar relatório de ninguém.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- O que está incluído -->
+    <div class="section">
+      <div class="section-title">O que está incluído</div>
+
+      <p style="font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Captação e atendimento</p>
+      <ul class="includes" style="margin-bottom:20px">
+        <li>Resposta automática no WhatsApp Business</li>
+        <li>Resposta automática no Instagram Direct</li>
+        <li>Qualificação do lead antes do atendimento</li>
+        <li>Notificação em tempo real via WhatsApp para o gerente comercial</li>
+        <li>Registro automático de todos os leads em planilha</li>
+        <li>Follow-up automático nos dias 1, 3 e 7</li>
+      </ul>
+
+      <p style="font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Relacionamento e crescimento</p>
+      <ul class="includes" style="margin-bottom:20px">
+        <li>Campanha mensal de reativação da base de clientes</li>
+        <li>Solicitação automática de avaliação no Google após venda</li>
+        <li>Relatório mensal automático enviado para o cliente</li>
+        <li>Manutenção e monitoramento dos fluxos</li>
+        <li>Suporte técnico contínuo</li>
+        <li>Ajustes e melhorias mensais</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- Investimento -->
+    <div class="section">
+      <div class="section-title">Investimento</div>
+      <table class="invest-table">
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th style="text-align:right">Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong>Setup — Configuração completa da automação</strong><br>
+              <span style="font-size:12px;color:#888">Mapeamento, desenvolvimento dos fluxos, integrações e testes</span>
+            </td>
+            <td><span class="tag-unica">Taxa única</span></td>
+            <td class="valor" style="text-align:right">R$ 1.500,00</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Gestão mensal da automação</strong><br>
+              <span style="font-size:12px;color:#888">Monitoramento, ajustes, relatório e suporte</span>
+            </td>
+            <td><span class="tag-mensal">Mensal</span></td>
+            <td class="valor" style="text-align:right">R$ 1.000,00</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Z-API — WhatsApp Business API</strong><br>
+              <span style="font-size:12px;color:#888">Plataforma de integração com o WhatsApp (contratada diretamente pela Laslo)</span>
+            </td>
+            <td><span class="tag-obs">Direto</span></td>
+            <td class="valor" style="text-align:right">R$ 97,00/mês</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="invest-total">
+        <div class="invest-total-item">
+          <label>Investimento no 1º mês</label>
+          <div class="val">R$ 2.597,00</div>
+        </div>
+        <div class="invest-total-divider"></div>
+        <div class="invest-total-item">
+          <label>A partir do 2º mês</label>
+          <div class="val destaque">R$ 1.097,00/mês</div>
+        </div>
+        <div class="invest-total-divider"></div>
+        <div class="invest-total-item">
+          <label>Ferramentas adicionais</label>
+          <div class="val" style="font-size:14px">R$ 0,00</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Prazo -->
+    <div class="section">
+      <div class="section-title">Prazo de implementação</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <div class="timeline-label">Dias 1–2</div>
+          <div class="timeline-sub">Configuração técnica e integrações</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-label">Dias 3–4</div>
+          <div class="timeline-sub">Testes e ajustes dos fluxos</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-label">Dia 5</div>
+          <div class="timeline-sub">Ativação e acompanhamento</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Próximos passos -->
+    <div class="next-steps">
+      <h3>Próximos passos</h3>
+      <ol>
+        <li>Aprovação desta proposta</li>
+        <li>Contratação do Z-API pela Laslo (link enviado pela Estouro)</li>
+        <li>Agendamento de 30 min para configuração inicial com acesso ao WhatsApp da Laslo</li>
+        <li>Automação ativa em até 5 dias úteis</li>
+      </ol>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>Estouro Marketing</strong> · contato@estouro.com.br</p>
+      <p>Proposta válida por <strong>30 dias</strong> a partir da data de emissão</p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
