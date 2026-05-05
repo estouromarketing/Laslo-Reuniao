@@ -43,6 +43,8 @@ Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 7. Na aba **Copies**: use o seletor de mês para consultar copies de outros meses sem alterar o mês de referência
 8. Clique em **⬇ Exportar Word** para baixar as copies do mês selecionado em formato `.doc`
 9. Quando o cliente devolver o arquivo corrigido (`.htm`), clique em **⬆ Importar Correções** → selecione o arquivo → confirme o preview → salva tudo como aprovado
+10. Para criar as artes: clique em **🎨 Brief de Arte** em qualquer copy aprovada → o brief abre com todas as instruções de layout + botões **Abrir no Canva** para feed e story
+11. Na aba **Diagnóstico**: veja automaticamente o que melhorou e o que piorou nos últimos 3 meses, com ações sugeridas
 
 ---
 
@@ -221,6 +223,55 @@ git push origin main
 
 ---
 
+## Brief de Arte
+
+Botão **🎨 Brief de Arte** aparece em cada copy aprovada na aba Copies.
+
+Ao clicar, abre um modal com:
+- **Copy aprovada** — texto completo para referência
+- **Feed (1080×1080)** — fundo, logo, headline, subtítulo, imagem, CTA + botão Abrir no Canva
+- **Story (1080×1920)** — mesma identidade, instruções de reposicionamento vertical + botão Abrir no Canva
+- **Arquivo de imagem** — nome do arquivo do produto correspondente (quando aplicável)
+- **Prompt Gemini** — prompt em inglês para gerar imagem de fundo (posts de data comemorativa)
+- **Paleta da marca** — hex codes visuais para referência rápida
+
+### Paleta de cores Laslo
+
+| Nome | Hex |
+|------|-----|
+| Marrom | `#8b2a1c` |
+| Laranja | `#fbab48` |
+| Terracota | `#c46b5b` |
+| Branco | `#FFFFFF` |
+| Fundo | `#F5F5F5` |
+
+### Fluxo de criação de artes (manual via Canva)
+
+1. Abrir brief da copy aprovada
+2. Se post de data comemorativa: copiar prompt Gemini → gerar imagem de fundo em gemini.google.com
+3. Clicar **Abrir no Canva — Feed** → montar conforme brief → salvar
+4. Clicar **Abrir no Canva — Story** → adaptar para vertical → salvar
+5. Todo mês: duplicar o design anterior e editar título/imagem
+
+---
+
+## Aba Diagnóstico
+
+Comparativo automático dos últimos 3 meses com dados disponíveis.
+
+**Métricas monitoradas:**
+
+| Plataforma | Métricas |
+|-----------|---------|
+| Instagram | Alcance orgânico, Novos seguidores, Interações totais, Views Stories |
+| Meta Ads | Cliques no link, Conversas iniciadas, CTR, CPC médio, CPM médio |
+| Google | Total de ações, Ligações, Cliques website |
+| LinkedIn | Novos seguidores, Impressões, Engajamento |
+
+**Lógica:** melhora/piora ≥ 5% de variação entre o penúltimo e o último mês. Ações sugeridas aparecem automaticamente conforme os resultados.
+
+---
+
 ## Mapeamento de métricas (Reportei → KPI_ANALYTICS_DATA)
 
 | Campo no código | Origem no Reportei |
@@ -260,7 +311,11 @@ git push origin main
 
 | Funcionalidade | Descrição |
 |---------------|-----------|
-| Importar Correções | Botão "⬆ Importar Correções" na aba Copies — importa o arquivo `.htm` devolvido pelo cliente com as copies corrigidas, mostra preview e salva tudo no Supabase como `copy_aprovada` em um clique |
+| Importar Correções | Botão "⬆ Importar Correções" na aba Copies — importa `.htm` devolvido pelo cliente, mostra preview e salva como `copy_aprovada` |
+| Brief de Arte | Botão "🎨 Brief de Arte" em cada copy aprovada — gera brief completo com layout feed/story, arquivo de produto, paleta e prompt Gemini |
+| Abrir no Canva | Botões dentro do brief que abrem o Canva com as dimensões corretas (feed 1080×1080 e story 1080×1920) |
+| Paleta corrigida | Cores da marca atualizadas: marrom `#8b2a1c`, laranja `#fbab48`, terracota `#c46b5b` |
+| Aba Diagnóstico | Nova aba com comparativo automático dos últimos 3 meses — melhorou/piorou por métrica + ações sugeridas |
 
 **Fluxo de importação:**
 ```
