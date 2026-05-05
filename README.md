@@ -45,6 +45,7 @@ Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 9. Quando o cliente devolver o arquivo corrigido (`.htm`), clique em **⬆ Importar Correções** → selecione o arquivo → confirme o preview → salva tudo como aprovado
 10. Para criar as artes: clique em **🎨 Brief de Arte** em qualquer copy aprovada → o brief abre com todas as instruções de layout + botões **Abrir no Canva** para feed e story
 11. Na aba **Diagnóstico**: veja automaticamente o que melhorou e o que piorou nos últimos 3 meses, com ações sugeridas
+12. Na aba **Análise de KPIs**: clique em **↓ Baixar CSV** ou **⎘ Copiar tabela** para exportar todos os KPIs no formato CANAL / KPI / PERÍODO / RESULTADO — pronto para enviar ao cliente
 
 ---
 
@@ -316,6 +317,7 @@ Comparativo automático dos últimos 3 meses com dados disponíveis.
 | Abrir no Canva | Botões dentro do brief que abrem o Canva com as dimensões corretas (feed 1080×1080 e story 1080×1920) |
 | Paleta corrigida | Cores da marca atualizadas: marrom `#8b2a1c`, laranja `#fbab48`, terracota `#c46b5b` |
 | Aba Diagnóstico | Nova aba com comparativo automático dos últimos 3 meses — melhorou/piorou por métrica + ações sugeridas |
+| Exportar para cliente | Botões na aba Análise de KPIs — geram tabela CANAL/KPI/PERÍODO/RESULTADO em CSV (Excel) ou cópia para Sheets |
 
 **Fluxo de importação:**
 ```
