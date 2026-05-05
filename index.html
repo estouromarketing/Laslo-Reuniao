@@ -846,6 +846,13 @@
       </table>
     </div>
 
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span style="font-size:12px;font-weight:600;color:var(--text2);margin-right:4px">Exportar para cliente</span>
+      <button class="btn-copiar-brief" onclick="exportarKPIsCSV()">↓ Baixar CSV</button>
+      <button class="btn-copiar-brief" onclick="copiarKPIs()">⎘ Copiar tabela</button>
+      <span id="export-status" style="font-size:11px;color:var(--text3)"></span>
+    </div>
+
   </div>
 </div><!-- /tab-analise -->
 
@@ -2166,6 +2173,55 @@ async function reprovarCopy(id) {
     showToast('Copy reprovada — gere novamente quando ajustar o tema.', 'red');
     loadCopies();
   } catch(e) { showToast('Erro: ' + e.message, 'red'); }
+}
+
+// ── Exportar KPIs para cliente ─────────────────────────────────────────────
+
+function _periodoExport(m) {
+  const [mes, ano] = m.split(' ');
+  return `${mes.toLowerCase()}/${ano.slice(-2)}`;
+}
+
+function _fmtValorExport(v) {
+  if (v === null || v === undefined) return '';
+  if (Number.isInteger(v)) return v.toLocaleString('pt-BR');
+  return v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function _gerarLinhasKPI() {
+  const CAT_NOMES = { instagram: 'Instagram', metaads: 'Meta Ads', gmn: 'Google Meu Negócio', linkedin: 'LinkedIn' };
+  const linhas = [];
+  KPI_ANALYTICS_MONTHS.filter(m => KPI_ANALYTICS_DATA[m]).forEach(mes => {
+    const periodo = _periodoExport(mes);
+    Object.entries(CAT_NOMES).forEach(([cat, catNome]) => {
+      const dados = KPI_ANALYTICS_DATA[mes]?.[cat];
+      if (!dados) return;
+      Object.entries(dados).forEach(([kpi, valor]) => {
+        if (valor === null || valor === undefined) return;
+        linhas.push([catNome, kpi, periodo, _fmtValorExport(valor)]);
+      });
+    });
+  });
+  return linhas;
+}
+
+function exportarKPIsCSV() {
+  const linhas = _gerarLinhasKPI();
+  const csv = ['CANAL;KPI;PERÍODO;RESULTADO', ...linhas.map(l => l.join(';'))].join('\n');
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'laslo_kpis.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copiarKPIs() {
+  const linhas = _gerarLinhasKPI();
+  const texto = ['CANAL\tKPI\tPERÍODO\tRESULTADO', ...linhas.map(l => l.join('\t'))].join('\n');
+  navigator.clipboard.writeText(texto).then(() => {
+    const el = document.getElementById('export-status');
+    el.textContent = 'Copiado!';
+    setTimeout(() => el.textContent = '', 2000);
+  });
 }
 
 // ── Diagnóstico ────────────────────────────────────────────────────────────
