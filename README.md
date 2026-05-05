@@ -42,6 +42,7 @@ Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 6. Na aba **Copies**: revise, edite e clique **Aprovar** (salva na planilha) ou **Reprovar** (limpa da planilha e regenera)
 7. Na aba **Copies**: use o seletor de mês para consultar copies de outros meses sem alterar o mês de referência
 8. Clique em **⬇ Exportar Word** para baixar as copies do mês selecionado em formato `.doc`
+9. Quando o cliente devolver o arquivo corrigido (`.htm`), clique em **⬆ Importar Correções** → selecione o arquivo → confirme o preview → salva tudo como aprovado
 
 ---
 
@@ -254,6 +255,31 @@ git push origin main
 | Formatação laranja na planilha | `clearContents()` não limpa formatação | Trocar para `aba.clear()` |
 | Planilha em branco | `mode: 'no-cors'` impede leitura do body | POST sem `no-cors` |
 | Planilha apagada pelo n8n | HTTP Request sem `action` caía em `salvar()` | `rotear()` só chama `salvar()` se `p.mes` presente |
+
+### Sessão 2026-05-05
+
+| Funcionalidade | Descrição |
+|---------------|-----------|
+| Importar Correções | Botão "⬆ Importar Correções" na aba Copies — importa o arquivo `.htm` devolvido pelo cliente com as copies corrigidas, mostra preview e salva tudo no Supabase como `copy_aprovada` em um clique |
+
+**Fluxo de importação:**
+```
+Cliente recebe .doc exportado do Word
+    → Corrige os textos
+    → Salva como "Página Web" (.htm) e devolve
+[HTML] ⬆ Importar Correções
+    → Lê o arquivo (detecta encoding UTF-16 do Word automaticamente)
+    → Extrai pares título → texto (título em <strong>, indicador "Semana X" em cinza)
+    → Busca cada título no Supabase pelo mês selecionado
+    → Mostra preview: S | Título | Prévia | ✓/✗
+    → PATCH Supabase: conteudo=<texto do cliente>, status=copy_aprovada
+```
+
+**Formato esperado do arquivo `.htm`:**
+- Exportado pelo Word via "Salvar como → Página Web (*.htm)"
+- Cada post: `<strong>Título</strong>` + `Semana X` em cinza + parágrafo com o texto
+- Posts separados por linha em branco (`&nbsp;`)
+- O título no arquivo deve bater exatamente com o `titulo` no Supabase
 
 ### Sessão 2026-04-27
 
