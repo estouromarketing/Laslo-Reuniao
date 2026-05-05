@@ -519,7 +519,7 @@
   .diag-actions-head { background:var(--surface2); padding:10px 16px; font-size:12px; font-weight:700; color:var(--text2); letter-spacing:.04em; }
   .diag-action-item { padding:12px 16px; border-bottom:1px solid var(--border); font-size:12px; line-height:1.6; display:flex; gap:10px; }
   .diag-action-item:last-child { border-bottom:none; }
-  .diag-action-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+  .diag-action-icon { font-size:14px; flex-shrink:0; margin-top:2px; color:var(--text3); font-weight:700; }
   .diag-action-text strong { color:var(--text); display:block; margin-bottom:2px; font-size:12px; }
   .diag-action-text span { color:var(--text3); }
   @media(max-width:600px) { .diag-grid { grid-template-columns:1fr; } }
@@ -643,7 +643,7 @@
   <div class="tab-nav-inner">
     <button class="tab-btn active" onclick="switchTab('pauta')">Pauta da Reunião</button>
     <button class="tab-btn" onclick="switchTab('analise')">Análise de KPIs</button>
-    <button class="tab-btn" onclick="switchTab('diagnostico')">📊 Diagnóstico</button>
+    <button class="tab-btn" onclick="switchTab('diagnostico')">Diagnóstico</button>
     <button class="tab-btn" onclick="switchTab('copies')">✦ Copies <span id="copies-badge" style="display:none;background:var(--orange);color:#fff;border-radius:20px;font-size:10px;padding:1px 6px;margin-left:4px;font-weight:700"></span></button>
   </div>
 </div>
@@ -2203,25 +2203,25 @@ function renderDiagnostico() {
 
   const ACTIONS = [
     { trigger: r => r.cat==='metaads' && (r.key==='CPC médio (R$)'||r.key==='CPM médio (R$)') && r.isBad,
-      icon:'📢', title:'Renovar criativos dos Meta Ads',
+      icon:'→', title:'Renovar criativos dos Meta Ads',
       desc:'CPM/CPC subindo indica fadiga — o público esgotou. Troque imagens e textos dos anúncios e amplie o público-alvo.' },
     { trigger: r => r.cat==='metaads' && r.key==='Conversas iniciadas' && r.isBad,
-      icon:'💬', title:'Testar campanha com objetivo "Mensagens"',
+      icon:'→', title:'Testar campanha com objetivo "Mensagens"',
       desc:'Conversas caindo — mudar o objetivo da campanha para Mensagens (WhatsApp direto) reduz o atrito da conversão.' },
     { trigger: r => r.cat==='gmn' && r.key==='Ligações' && r.isBad,
-      icon:'📍', title:'Verificar número de telefone no Google',
+      icon:'→', title:'Verificar número de telefone no Google',
       desc:'Ligações zeradas no Google Meu Negócio — conferir se o número está correto e atualizado no perfil.' },
     { trigger: r => r.cat==='gmn' && r.key==='Total de ações' && r.isBad,
-      icon:'🔍', title:'Publicar posts no Google Meu Negócio',
+      icon:'→', title:'Publicar posts no Google Meu Negócio',
       desc:'Posts sobre produtos e promoções no GMN aumentam visibilidade nas buscas locais e geram mais ações.' },
     { trigger: r => r.cat==='instagram' && r.key==='Visualizações dos Stories' && r.isGood,
-      icon:'📱', title:'Manter frequência de Stories',
+      icon:'→', title:'Manter frequência de Stories',
       desc:'Stories crescendo bem — manter no mínimo 3x por semana para sustentar o crescimento.' },
     { trigger: r => r.cat==='instagram' && r.key==='Novos seguidores' && r.isGood,
-      icon:'👥', title:'Identificar posts que trouxeram mais seguidores',
+      icon:'→', title:'Identificar posts que trouxeram mais seguidores',
       desc:'Aquisição acelerando — analisar quais posts geraram mais seguidores no mês e replicar o formato.' },
     { trigger: r => r.cat==='linkedin' && r.key==='Impressões' && r.isGood,
-      icon:'💼', title:'Manter cadência no LinkedIn',
+      icon:'→', title:'Manter cadência no LinkedIn',
       desc:'LinkedIn com boa performance — manter pelo menos 5–6 posts/mês para sustentar o crescimento.' },
   ];
 
@@ -2281,13 +2281,13 @@ function renderDiagnostico() {
     <p class="diag-period">Analisando os últimos 3 meses: ${periodStr}</p>
     <div class="diag-grid">
       <div>
-        <div class="diag-col-head green">✅ Melhorou (${improved.length})</div>
+        <div class="diag-col-head green">↑ Melhorou (${improved.length})</div>
         <div class="diag-col-body">
           ${improved.length ? improved.map(itemHtml).join('') : '<div class="diag-item" style="color:var(--text3)">Nenhuma métrica com melhora significativa</div>'}
         </div>
       </div>
       <div>
-        <div class="diag-col-head red">⚠️ Piorou (${worsened.length})</div>
+        <div class="diag-col-head red">↓ Piorou (${worsened.length})</div>
         <div class="diag-col-body">
           ${worsened.length ? worsened.map(itemHtml).join('') : '<div class="diag-item" style="color:var(--text3)">Nenhuma métrica com piora significativa</div>'}
         </div>
@@ -2295,7 +2295,7 @@ function renderDiagnostico() {
     </div>
     ${actionItems.length ? `
     <div class="diag-actions">
-      <div class="diag-actions-head">💡 Ações sugeridas</div>
+      <div class="diag-actions-head">Ações sugeridas</div>
       ${actionItems.map(a => `
         <div class="diag-action-item">
           <span class="diag-action-icon">${a.icon}</span>
