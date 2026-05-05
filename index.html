@@ -469,6 +469,28 @@
   .import-preview-table td { padding:8px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
   .import-match-ok { color:var(--green); font-weight:700; }
   .import-match-fail { color:var(--red); font-weight:600; font-size:11px; }
+  /* Brief de Arte */
+  .brief-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:2000; display:flex; align-items:center; justify-content:center; }
+  .brief-modal { background:var(--surface); border-radius:var(--radius); width:min(720px,96vw); max-height:90vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,.18); }
+  .brief-modal-head { padding:14px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; gap:10px; }
+  .brief-modal-body { padding:20px; overflow-y:auto; flex:1; }
+  .brief-section { border:1px solid var(--border); border-radius:var(--radius-sm); margin-bottom:14px; overflow:hidden; }
+  .brief-section-head { background:var(--surface2); padding:8px 14px; font-size:12px; font-weight:700; color:var(--text2); letter-spacing:.03em; display:flex; align-items:center; gap:6px; }
+  .brief-section-body { padding:12px 14px; }
+  .brief-row { display:flex; gap:8px; margin-bottom:7px; font-size:12px; line-height:1.5; }
+  .brief-label { font-weight:700; color:var(--text2); min-width:90px; flex-shrink:0; }
+  .brief-value { color:var(--text); }
+  .brief-value strong { color:#5C2D1E; }
+  .brief-value em { color:#E8841A; font-style:normal; }
+  .brief-copy-box { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 12px; font-size:12px; color:var(--text2); line-height:1.6; white-space:pre-wrap; margin-bottom:0; }
+  .brief-prompt-box { background:#1a1a2e; border-radius:var(--radius-sm); padding:12px 14px; font-size:11px; color:#a8d8ea; line-height:1.7; white-space:pre-wrap; font-family:'DM Mono',monospace; }
+  .brief-tag { display:inline-block; padding:2px 8px; border-radius:20px; font-size:10px; font-weight:700; margin-left:6px; }
+  .brief-tag-produto { background:#fff3e0; color:#E8841A; }
+  .brief-tag-data { background:#e8f5e9; color:#388e3c; }
+  .brief-tag-servico { background:#e3f2fd; color:#1976d2; }
+  .brief-tag-conceitual { background:#f3e5f5; color:#7b1fa2; }
+  .btn-copiar-brief { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; color:var(--text2); font-family:'DM Sans',sans-serif; transition:background .15s; }
+  .btn-copiar-brief:hover { background:var(--border); }
 
   /* ── RESPONSIVE ── */
   /* ── RESPONSIVE 768px (tablet / celular landscape) ── */
@@ -831,6 +853,23 @@
     <div id="copies-list"></div>
   </div>
 </div><!-- /tab-copies -->
+
+<!-- Modal: Brief de Arte -->
+<div id="modal-brief" style="display:none" class="brief-overlay" onclick="if(event.target===this)document.getElementById('modal-brief').style.display='none'">
+  <div class="brief-modal">
+    <div class="brief-modal-head">
+      <div style="display:flex;align-items:center;gap:8px;min-width:0">
+        <span style="font-size:14px;font-weight:700;color:var(--text)">🎨 Brief de Arte</span>
+        <span id="brief-tag-tipo" class="brief-tag"></span>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="btn-copiar-brief" onclick="copiarBrief()">⎘ Copiar tudo</button>
+        <button onclick="document.getElementById('modal-brief').style.display='none'" style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--text3);padding:0 4px">✕</button>
+      </div>
+    </div>
+    <div class="brief-modal-body" id="brief-modal-body"></div>
+  </div>
+</div>
 
 <!-- Modal: Importar Correções -->
 <div id="modal-importar" style="display:none" class="import-overlay" onclick="if(event.target===this)fecharImportarCorrecoes()">
@@ -1987,6 +2026,7 @@ async function loadCopies() {
         <div class="copy-card-actions">
           ${!aprovado ? `<button class="btn-aprovar" id="btn-ap-${post.id}" onclick="aprovarCopy('${post.id}')">✓ Aprovar</button>` : '<span style="font-size:12px;color:var(--green);font-weight:600">✓ Copy aprovada</span>'}
           ${!aprovado ? `<button class="btn-reprovar" onclick="reprovarCopy('${post.id}')">✕ Reprovar</button>` : ''}
+          ${(post.conteudo) ? `<button class="btn-reprovar" style="border-color:var(--orange);color:var(--orange-dark)" onclick="abrirBrief('${post.id}')">🎨 Brief de Arte</button>` : ''}
         </div>`;
       list.appendChild(card);
     });
@@ -2113,6 +2153,220 @@ function switchTab(tab) {
     loadCopies();
   }
 }
+
+// ── Brief de Arte ──────────────────────────────────────────────────────────
+
+const LASLO_CORES = {
+  marrom:      '#5C2D1E',
+  laranja:     '#E8841A',
+  laranjaClaro:'#F5A623',
+  branco:      '#FFFFFF',
+  fundoClaro:  '#F5F5F5',
+  fundoBranco: '#FFFFFF',
+};
+
+function _classificarPost(titulo, copy) {
+  const t = (titulo + ' ' + copy).toLowerCase();
+  if (/dia das m[ãa]es|pet.?mom/i.test(t))            return { tipo: 'DATA',       label: 'Data Comemorativa', subtipo: 'Dia das Mães',        tagClass: 'brief-tag-data' };
+  if (/zootecnista/i.test(t))                          return { tipo: 'DATA',       label: 'Data Comemorativa', subtipo: 'Zootecnista',          tagClass: 'brief-tag-data' };
+  if (/ado[çc][ãa]o/i.test(t))                         return { tipo: 'DATA',       label: 'Data Comemorativa', subtipo: 'Adoção Animal',         tagClass: 'brief-tag-data' };
+  if (/abril.?laranja|crueldade.?animal/i.test(t))      return { tipo: 'DATA',       label: 'Data Comemorativa', subtipo: 'Abril Laranja',        tagClass: 'brief-tag-data' };
+  if (/tci|bsvet/i.test(t))                             return { tipo: 'PRODUTO',    label: 'Produto',           subtipo: 'Bomba BSVet TCI',      tagClass: 'brief-tag-produto' };
+  if (/bvvet|bv.?vet/i.test(t))                         return { tipo: 'PRODUTO',    label: 'Produto',           subtipo: 'Bomba BVVet',          tagClass: 'brief-tag-produto' };
+  if (/bs.?680/i.test(t))                               return { tipo: 'PRODUTO',    label: 'Produto',           subtipo: 'Bomba BS680',          tagClass: 'brief-tag-produto' };
+  if (/serisam|seringa/i.test(t))                       return { tipo: 'PRODUTO',    label: 'Produto',           subtipo: 'Insumos / Seringas',   tagClass: 'brief-tag-produto' };
+  if (/equipo/i.test(t))                                return { tipo: 'PRODUTO',    label: 'Produto',           subtipo: 'Insumos / Equipo',     tagClass: 'brief-tag-produto' };
+  if (/elastovet|elastosam/i.test(t))                   return { tipo: 'PRODUTO',    label: 'Produto',           subtipo: 'Elastovet',            tagClass: 'brief-tag-produto' };
+  if (/insumo/i.test(t))                                return { tipo: 'PRODUTO',    label: 'Produto',           subtipo: 'Insumos (geral)',      tagClass: 'brief-tag-produto' };
+  if (/bomba/i.test(t))                                 return { tipo: 'PRODUTO',    label: 'Produto',           subtipo: 'Bombas (geral)',       tagClass: 'brief-tag-produto' };
+  if (/clube.?laslo|comodato/i.test(t))                 return { tipo: 'SERVICO',    label: 'Serviço',           subtipo: 'Clube Laslo / Comodato', tagClass: 'brief-tag-servico' };
+  return                                                 { tipo: 'CONCEITUAL',        label: 'Conceitual',        subtipo: 'Institucional',       tagClass: 'brief-tag-conceitual' };
+}
+
+function _imagemProduto(titulo, copy) {
+  const t = (titulo + ' ' + copy).toLowerCase();
+  if (/tci|bsvet/i.test(t))       return { nome: 'BSVet TCI',         arquivo: 'bomba_BSvet_frontal_transparencia.png',  obs: 'Fundo transparente — ideal para sobrepor' };
+  if (/bvvet|bv.?vet/i.test(t))   return { nome: 'BVVet',             arquivo: 'bomba_BVvet_frontal_transparencia.png',  obs: 'Fundo transparente — ideal para sobrepor' };
+  if (/bs.?680/i.test(t))         return { nome: 'BS680',             arquivo: '_10_10_25_BS680_feed.jpg',               obs: 'Usar render do catálogo BS680.pdf' };
+  if (/serisam|seringa/i.test(t)) return { nome: 'Seringas Serisam',  arquivo: 'SERISAM_conjunto.png',                  obs: 'Conjunto completo — melhor para post de linha' };
+  if (/equipo/i.test(t))          return { nome: 'Equipo',            arquivo: 'EI0421 0000....png',                    obs: 'Produto transparente' };
+  if (/elastovet/i.test(t))       return { nome: 'Elastovet',         arquivo: 'elastovet completo.png',                obs: 'Produto completo com mangueira' };
+  if (/insumo/i.test(t))          return { nome: 'Conjunto de Insumos',arquivo:'SERISAM_conjunto.png',                  obs: 'Usar foto do conjunto ou composição dos produtos' };
+  if (/clube.?laslo/i.test(t))    return { nome: 'Logo Clube Laslo',  arquivo: 'lOGO_CLUBE_LASLO.png',                  obs: 'Logo do clube + bomba BVVet ao fundo' };
+  if (/comodato/i.test(t))        return { nome: 'BVVet + BSVet TCI', arquivo: 'bomba_BVvet_frontal_transparencia.png', obs: 'Duas bombas lado a lado — referência: 14_04_2026_COMODATO_bombas_Laslo_feed.jpg' };
+  if (/bomba/i.test(t))           return { nome: 'Bombas (geral)',    arquivo: 'bomba_BVvet_frontal_transparencia.png', obs: 'Escolher conforme contexto do post' };
+  return null;
+}
+
+function _layoutBrief(cls, titulo, copy, imagem) {
+  const c = LASLO_CORES;
+  switch(cls.tipo) {
+    case 'PRODUTO': return {
+      fundo:    `Branco ${c.fundoBranco} — gradiente sutil no rodapé: branco → laranja claro ${c.laranjaClaro} (início nos 70% inferiores)`,
+      logo:     `Versão COLORIDA — topo centro, ~180px de largura no feed`,
+      headline: `Bold uppercase, cor MARROM ${c.marrom}, ~64px (feed) / ~52px (story), centralizado`,
+      subtitulo:`Regular/Medium, cor LARANJA ${c.laranja}, ~36px (feed) / ~30px (story)`,
+      imagem:   imagem ? `${imagem.nome} — arquivo: ${imagem.arquivo}\n                 Posição: metade inferior centralizado, ligeiramente recortado pela borda\n                 Obs: ${imagem.obs}` : 'Foto do produto correspondente',
+      cta_feed: '—',
+      cta_story:`Botão "SAIBA MAIS" — pill border ${c.laranja}, texto ${c.laranja} bold, entre headline e produto`,
+    };
+    case 'DATA': return {
+      fundo:    cls.subtipo === 'Adoção Animal' || cls.subtipo === 'Zootecnista'
+                  ? `Branco ${c.fundoBranco} com foto animal/profissional como elemento principal`
+                  : `Cor sólida LARANJA ${c.laranja} — texto sobre fundo colorido`,
+      logo:     cls.subtipo === 'Adoção Animal' || cls.subtipo === 'Zootecnista'
+                  ? `Versão COLORIDA — topo centro`
+                  : `Versão BRANCA — centro vertical, acima da foto`,
+      headline: `Bold uppercase, ${cls.subtipo.includes('Mãe') || cls.subtipo.includes('Adoção') || cls.subtipo.includes('Zootecnista') ? `cor MARROM ${c.marrom}` : `cor BRANCO ${c.branco}`}, ~64px (feed)`,
+      subtitulo:`${cls.subtipo.includes('Mãe') || cls.subtipo.includes('Adoção') || cls.subtipo.includes('Zootecnista') ? `Itálico, pill com borda ${c.marrom}` : `Regular, cor MARROM ${c.marrom}`}, ~28px`,
+      imagem:   `Foto de animal (cão ou gato) — estilo fotografia clean, boa iluminação\n                 Posição: metade inferior ou recortado pela borda inferior`,
+      cta_feed: '—',
+      cta_story:`Tag no topo: pill arredondado laranja com nome da data em branco`,
+    };
+    case 'SERVICO': return {
+      fundo:    `Gradiente diagonal: branco ${c.fundoBranco} (topo esq.) → laranja ${c.laranja} (rodapé dir.)`,
+      logo:     `Versão COLORIDA — topo centro`,
+      headline: `Bold uppercase, cor MARROM ${c.marrom}, ~64px (feed)`,
+      subtitulo:`Bold, cor LARANJA ${c.laranja}, ~36px — pode ser o CTA principal`,
+      imagem:   imagem ? `${imagem.nome} — arquivo: ${imagem.arquivo}\n                 Posição: rodapé, centralizado, ocupando ~45% da altura\n                 Obs: ${imagem.obs}` : 'Bombas de infusão',
+      cta_feed: '—',
+      cta_story:`Botão "SAIBA MAIS" ou "FALE CONOSCO" — pill border ${c.marrom}`,
+    };
+    default: return {
+      fundo:    `Branco ${c.fundoBranco} — clean e minimalista`,
+      logo:     `Versão COLORIDA — topo centro`,
+      headline: `Bold uppercase, cor MARROM ${c.marrom}, ~60px (feed), centralizado`,
+      subtitulo:`Regular, cor LARANJA ${c.laranja}, ~28px`,
+      imagem:   `Foto ambiência veterinária — animal em procedimento, equipe clínica\n                 Posição: metade inferior ou lado direito`,
+      cta_feed: '—',
+      cta_story:`'Saiba mais' ou contato — pill border`,
+    };
+  }
+}
+
+function _promptGemini(cls, titulo, copy) {
+  const base = `Photorealistic image, clean background, professional quality, no text, no logos.`;
+  switch(cls.tipo) {
+    case 'DATA':
+      if (/m[ãa]es|pet.?mom/i.test(titulo + copy))
+        return `${base} A loving pet owner (woman, professional attire) gently caring for a dog or cat in a bright veterinary clinic. Warm natural lighting, orange and brown color palette. High resolution, sharp focus.`;
+      if (/zootecnista/i.test(titulo + copy))
+        return `${base} Veterinary professional in white coat working with animals in a modern clinic. Clean environment, warm lighting. Orange and brown tones. Professional photography style.`;
+      if (/ado[çc][ãa]o/i.test(titulo + copy))
+        return `${base} Cute rescued dog or cat with gentle, hopeful expression, soft natural lighting, warm background. Emotional, heartwarming composition. Orange and warm tones.`;
+      return `${base} Cute dog or cat in a bright, clean environment. Warm orange and brown tones. Professional photo studio lighting.`;
+    case 'CONCEITUAL':
+      return `${base} Close-up of veterinarian hands carefully handling medical equipment or examining a calm pet. Modern veterinary clinic interior, clean white and orange tones, shallow depth of field.`;
+    default:
+      return null;
+  }
+}
+
+function _extrairHeadline(copy) {
+  if (!copy) return '';
+  const primeira = copy.split('\n')[0].trim();
+  const words = primeira.split(' ');
+  return words.length > 10 ? words.slice(0, 8).join(' ') + '…' : primeira;
+}
+
+function abrirBrief(postId) {
+  const post = _copiesCache.find(p => p.id === postId);
+  if (!post) return;
+
+  const cls     = _classificarPost(post.titulo, post.conteudo || '');
+  const imagem  = _imagemProduto(post.titulo, post.conteudo || '');
+  const layout  = _layoutBrief(cls, post.titulo, post.conteudo || '', imagem);
+  const prompt  = _promptGemini(cls, post.titulo, post.conteudo || '');
+  const headline = _extrairHeadline(post.conteudo);
+  const semana  = 'Semana ' + post.semana;
+
+  // Tag
+  const tagEl = document.getElementById('brief-tag-tipo');
+  tagEl.textContent = cls.label;
+  tagEl.className = 'brief-tag ' + cls.tagClass;
+
+  const rows = (label, value) => `
+    <div class="brief-row">
+      <span class="brief-label">${label}</span>
+      <span class="brief-value">${value}</span>
+    </div>`;
+
+  const secao = (icon, titulo, conteudo) => `
+    <div class="brief-section">
+      <div class="brief-section-head">${icon} ${titulo}</div>
+      <div class="brief-section-body">${conteudo}</div>
+    </div>`;
+
+  let html = '';
+
+  // Copy aprovada
+  html += secao('📝', 'Copy Aprovada',
+    `<div class="brief-copy-box">${_esc(post.conteudo || '')}</div>`);
+
+  // Feed
+  html += secao('📐', 'Feed — 1080 × 1080 px',
+    rows('Fundo', `<strong>${layout.fundo}</strong>`) +
+    rows('Logo', layout.logo) +
+    rows('Headline', `<strong>"${_esc(headline)}"</strong><br><span style="font-size:11px;color:var(--text3)">→ Bold uppercase · Cor <strong style="color:#5C2D1E">#5C2D1E</strong> · ~64px · Centralizado</span>`) +
+    rows('Subtítulo', `<em>Extrair 2ª frase de impacto da copy</em><br><span style="font-size:11px;color:var(--text3)">→ Cor <em>#E8841A</em> · ~36px</span>`) +
+    rows('Imagem', layout.imagem.replace(/\n/g,'<br>')) +
+    (layout.cta_feed !== '—' ? rows('CTA', layout.cta_feed) : '')
+  );
+
+  // Story
+  html += secao('📱', 'Story — 1080 × 1920 px',
+    `<div class="brief-row"><span class="brief-label">Base</span><span class="brief-value">Mesma identidade do Feed — reposicionar elementos para formato vertical</span></div>` +
+    rows('Logo', `Topo centro · ~200px largura · Margem topo: 80px`) +
+    rows('Headline', `Mesma cor e fonte · Quebras de linha mais frequentes (coluna mais estreita) · ~52px`) +
+    rows('Subtítulo', `Abaixo da headline · ~30px`) +
+    rows('CTA', layout.cta_story) +
+    rows('Imagem', `Ocupa ~55% da altura inferior · Centralizada · Pode ser maior que no feed`)
+  );
+
+  // Imagem de produto (se houver)
+  if (imagem) {
+    html += secao('🖼️', 'Arquivo de Imagem',
+      rows('Produto', imagem.nome) +
+      rows('Arquivo', `<code style="font-size:11px;background:var(--surface2);padding:2px 6px;border-radius:4px">${_esc(imagem.arquivo)}</code>`) +
+      rows('Obs', imagem.obs)
+    );
+  }
+
+  // Prompt Gemini
+  if (prompt) {
+    html += secao('🤖', 'Prompt para Gemini (gerar imagem de fundo)',
+      `<div class="brief-prompt-box">${_esc(prompt)}</div>
+       <p style="font-size:11px;color:var(--text3);margin-top:8px">→ Cole este prompt em <strong>gemini.google.com</strong> → clique em "Gerar imagem" → baixe o resultado → use como fundo no Canva, depois sobreponha logo e texto.</p>`
+    );
+  } else {
+    html += secao('🤖', 'Imagem de Fundo',
+      `<p style="font-size:12px;color:var(--text3);margin:0">Este post usa foto real do produto — <strong>não é necessário gerar imagem</strong>.<br>Use o arquivo indicado acima diretamente no Canva.</p>`
+    );
+  }
+
+  // Cores de referência
+  html += secao('🎨', 'Paleta da Marca',
+    `<div style="display:flex;gap:10px;flex-wrap:wrap;padding:2px 0">
+      ${[['#5C2D1E','Marrom'],['#E8841A','Laranja'],['#F5A623','Laranja claro'],['#FFFFFF','Branco'],['#F5F5F5','Fundo']]
+        .map(([cor,nome]) => `<div style="text-align:center">
+          <div style="width:40px;height:40px;background:${cor};border-radius:6px;border:1px solid var(--border);margin:0 auto 4px"></div>
+          <div style="font-size:9px;color:var(--text3)">${nome}</div>
+          <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--text2)">${cor}</div>
+        </div>`).join('')}
+    </div>`
+  );
+
+  document.getElementById('brief-modal-body').innerHTML = html;
+  document.getElementById('modal-brief').style.display = 'flex';
+}
+
+function copiarBrief() {
+  const body = document.getElementById('brief-modal-body');
+  const texto = body.innerText || body.textContent;
+  navigator.clipboard.writeText(texto).then(() => showToast('Brief copiado!', 'green'));
+}
+
+// ────────────────────────────────────────────────────────────────────────────
 
 // ── Importar Correções do Cliente ──────────────────────────────────────────
 let _importData = [];
