@@ -457,6 +457,18 @@
   .copy-status-tag { font-size: 11px; font-weight: 600; margin-left: auto; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
   .copy-status-tag.gerada { background: var(--amber-bg); color: var(--amber); }
   .copy-status-tag.aprovada { background: var(--green-bg); color: var(--green); }
+  /* Import modal */
+  .import-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:2000; display:flex; align-items:center; justify-content:center; }
+  .import-modal { background:var(--surface); border-radius:var(--radius); width:min(700px,95vw); max-height:88vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,.18); }
+  .import-modal-head { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+  .import-modal-body { padding:20px; overflow-y:auto; flex:1; }
+  .import-drop { border:2px dashed var(--border); border-radius:var(--radius); padding:36px 20px; text-align:center; cursor:pointer; transition:border-color .2s,background .2s; }
+  .import-drop:hover, .import-drop.over { border-color:var(--orange); background:var(--surface2); }
+  .import-preview-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:4px; }
+  .import-preview-table th { text-align:left; padding:8px 10px; background:var(--surface2); border-bottom:2px solid var(--border); font-weight:600; color:var(--text2); }
+  .import-preview-table td { padding:8px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .import-match-ok { color:var(--green); font-weight:700; }
+  .import-match-fail { color:var(--red); font-weight:600; font-size:11px; }
 
   /* ── RESPONSIVE ── */
   /* ── RESPONSIVE 768px (tablet / celular landscape) ── */
@@ -806,6 +818,7 @@
           <option value="Dez 2026">Dezembro 2026</option>
         </select>
         <button class="copies-reload-btn" onclick="exportarParaWord()" id="btn-export-word" style="display:none">⬇ Exportar Word</button>
+        <button class="copies-reload-btn" id="btn-importar-correcoes" onclick="abrirImportarCorrecoes()">⬆ Importar Correções</button>
         <button class="copies-reload-btn" onclick="loadCopies()">↻ Atualizar</button>
       </div>
     </div>
@@ -818,6 +831,41 @@
     <div id="copies-list"></div>
   </div>
 </div><!-- /tab-copies -->
+
+<!-- Modal: Importar Correções -->
+<div id="modal-importar" style="display:none" class="import-overlay" onclick="if(event.target===this)fecharImportarCorrecoes()">
+  <div class="import-modal">
+    <div class="import-modal-head">
+      <span style="font-size:14px;font-weight:600;color:var(--text)">Importar Correções do Cliente</span>
+      <button onclick="fecharImportarCorrecoes()" style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--text3);line-height:1;padding:0 4px">✕</button>
+    </div>
+    <div class="import-modal-body">
+      <!-- Passo 1: upload -->
+      <div id="import-step1">
+        <p style="font-size:12px;color:var(--text3);margin-bottom:14px">Selecione o arquivo <strong>.htm</strong> que o cliente devolveu (exportado do Word). O sistema vai identificar os posts e mostrar um preview antes de salvar.</p>
+        <div class="import-drop" id="import-drop" onclick="document.getElementById('import-file-input').click()">
+          <div style="font-size:30px;margin-bottom:8px">📄</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text)">Clique para selecionar o arquivo</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px">Aceita .htm e .html exportados do Word</div>
+          <input type="file" id="import-file-input" accept=".htm,.html" style="display:none" onchange="processarArquivoImport(this.files[0])">
+        </div>
+        <div id="import-status" style="margin-top:12px;font-size:12px;color:var(--text3);text-align:center;min-height:20px"></div>
+      </div>
+      <!-- Passo 2: preview -->
+      <div id="import-step2" style="display:none">
+        <div id="import-summary" style="font-size:13px;margin-bottom:14px;color:var(--text2)"></div>
+        <table class="import-preview-table">
+          <thead><tr><th>S</th><th>Título</th><th>Copy (prévia)</th><th></th></tr></thead>
+          <tbody id="import-tbody"></tbody>
+        </table>
+        <div style="display:flex;gap:8px;margin-top:18px;justify-content:flex-end">
+          <button class="copies-reload-btn" onclick="resetImport()">← Voltar</button>
+          <button class="btn-aprovar" id="btn-salvar-import" onclick="salvarCorrecoes()">Salvar Correções</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Save Bar -->
 <div class="save-bar">
@@ -2065,6 +2113,158 @@ function switchTab(tab) {
     loadCopies();
   }
 }
+
+// ── Importar Correções do Cliente ──────────────────────────────────────────
+let _importData = [];
+
+function abrirImportarCorrecoes() {
+  resetImport();
+  document.getElementById('modal-importar').style.display = 'flex';
+}
+
+function fecharImportarCorrecoes() {
+  document.getElementById('modal-importar').style.display = 'none';
+}
+
+function resetImport() {
+  document.getElementById('import-step1').style.display = 'block';
+  document.getElementById('import-step2').style.display = 'none';
+  document.getElementById('import-status').textContent = '';
+  const inp = document.getElementById('import-file-input');
+  if (inp) inp.value = '';
+  _importData = [];
+}
+
+async function processarArquivoImport(file) {
+  if (!file) return;
+  const status = document.getElementById('import-status');
+  status.style.color = 'var(--text3)';
+  status.textContent = 'Lendo arquivo...';
+  try {
+    const buffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    let text;
+    if (bytes[0] === 0xFF && bytes[1] === 0xFE) {
+      text = new TextDecoder('utf-16le').decode(buffer);
+    } else if (bytes[0] === 0xFE && bytes[1] === 0xFF) {
+      text = new TextDecoder('utf-16be').decode(buffer);
+    } else {
+      text = new TextDecoder('utf-8').decode(buffer);
+    }
+
+    status.textContent = 'Identificando posts...';
+    const parsed = _parseWordHTMLCorrecoes(text);
+    if (!parsed.length) {
+      status.style.color = 'var(--red)';
+      status.textContent = '⚠ Nenhum post encontrado. Verifique se é um .htm exportado do Word.';
+      return;
+    }
+
+    status.textContent = `${parsed.length} post(s) encontrado(s). Verificando no banco...`;
+    const month = document.getElementById('copies-month-sel').value;
+    const { start, end } = monthToDateRange(month);
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/posts?cliente_id=eq.${LASLO_CLIENT_ID}&data_publicacao=gte.${start}&data_publicacao=lt.${end}&select=id,titulo,semana`,
+      { headers: sbHeaders() }
+    );
+    const posts = await res.json();
+
+    _importData = parsed.map(p => {
+      const match = posts.find(post => _normTitle(post.titulo) === _normTitle(p.titulo));
+      return { titulo: p.titulo, conteudo: p.conteudo, postId: match?.id || null, semana: match?.semana || null, matched: !!match };
+    });
+
+    _showImportPreview();
+  } catch(e) {
+    status.style.color = 'var(--red)';
+    status.textContent = '✕ Erro: ' + e.message;
+  }
+}
+
+function _normTitle(t) {
+  return (t || '').toLowerCase().trim().replace(/[""]/g, '"').replace(/['']/g, "'").replace(/\s+/g, ' ');
+}
+
+function _parseWordHTMLCorrecoes(htmlText) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlText, 'text/html');
+  const ps = Array.from(doc.querySelectorAll('p'));
+  const result = [];
+  for (let i = 0; i < ps.length; i++) {
+    const p = ps[i];
+    if (!p.firstElementChild || p.firstElementChild.tagName !== 'STRONG') continue;
+    // Deve ter indicador "Semana X" para não pegar o título do documento
+    const hasWeek = [...p.querySelectorAll('span')].some(s => /Semana\s+\d/i.test(s.textContent));
+    if (!hasWeek) continue;
+    const titulo = p.firstElementChild.textContent.replace(/\s+/g, ' ').trim();
+    // Próximo parágrafo não-vazio é o conteúdo
+    let conteudo = '';
+    for (let j = i + 1; j < ps.length; j++) {
+      if (ps[j].textContent.replace(/ /g, '').trim()) {
+        conteudo = _extractTextBreaks(ps[j]);
+        break;
+      }
+    }
+    if (titulo && conteudo) result.push({ titulo, conteudo });
+  }
+  return result;
+}
+
+function _extractTextBreaks(el) {
+  let h = el.innerHTML.replace(/<br\s*\/?>/gi, '\n');
+  const tmp = document.createElement('div');
+  tmp.innerHTML = h;
+  return tmp.textContent.replace(/ /g, ' ').trim();
+}
+
+function _showImportPreview() {
+  document.getElementById('import-step1').style.display = 'none';
+  document.getElementById('import-step2').style.display = 'block';
+  const matched = _importData.filter(p => p.matched).length;
+  const total = _importData.length;
+  const failSpan = matched < total
+    ? ` <span style="color:var(--red)">${total - matched} não identificado(s).</span>` : '';
+  document.getElementById('import-summary').innerHTML =
+    `<strong>${matched} de ${total}</strong> posts identificados no banco.${failSpan}`;
+  document.getElementById('import-tbody').innerHTML = _importData.map(p => `
+    <tr>
+      <td style="white-space:nowrap;color:var(--text3)">${p.semana ? 'S' + p.semana : '?'}</td>
+      <td style="font-size:12px;font-weight:500;color:var(--text);max-width:200px">${_esc(p.titulo)}</td>
+      <td style="font-size:11px;color:var(--text3);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${_esc(p.conteudo.substring(0, 90))}${p.conteudo.length > 90 ? '…' : ''}</td>
+      <td>${p.matched ? '<span class="import-match-ok">✓</span>' : '<span class="import-match-fail">✗ não encontrado</span>'}</td>
+    </tr>`).join('');
+  const btn = document.getElementById('btn-salvar-import');
+  btn.disabled = matched === 0;
+  btn.textContent = `Salvar ${matched} Correção${matched !== 1 ? 'ões' : ''}`;
+}
+
+function _esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function salvarCorrecoes() {
+  const btn = document.getElementById('btn-salvar-import');
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  const toSave = _importData.filter(p => p.matched);
+  let saved = 0, errors = 0;
+  for (const p of toSave) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/posts?id=eq.${p.postId}`, {
+        method: 'PATCH', headers: sbHeaders(),
+        body: JSON.stringify({ conteudo: p.conteudo, status: 'copy_aprovada' })
+      });
+      if (!res.ok) throw new Error(res.status);
+      saved++;
+    } catch(e) { errors++; }
+  }
+  fecharImportarCorrecoes();
+  loadCopies();
+  showToast(
+    errors ? `${saved} salva(s), ${errors} erro(s).` : `${saved} correção${saved !== 1 ? 'ões' : ''} importada${saved !== 1 ? 's' : ''}!`,
+    errors ? 'red' : 'green'
+  );
+}
+// ────────────────────────────────────────────────────────────────────────────
 
 // Init — abre no mês atual automaticamente
 (function() {
