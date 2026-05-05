@@ -494,6 +494,36 @@
   .btn-canva { display:inline-flex; align-items:center; gap:6px; background:#00c4a7; color:#fff; border:none; border-radius:var(--radius-sm); padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; transition:background .15s; }
   .btn-canva:hover { background:#00a991; }
 
+  /* Diagnóstico */
+  .diag-wrap { max-width:860px; margin:0 auto; padding:24px 24px 80px; }
+  .diag-period { font-size:12px; color:var(--text3); margin-bottom:20px; }
+  .diag-period strong { color:var(--text2); }
+  .diag-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+  .diag-col-head { font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:8px 12px; border-radius:var(--radius-sm) var(--radius-sm) 0 0; }
+  .diag-col-head.green { background:#d1fae5; color:#065f46; }
+  .diag-col-head.red { background:#fee2e2; color:#991b1b; }
+  .diag-col-body { border:1px solid var(--border); border-top:none; border-radius:0 0 var(--radius-sm) var(--radius-sm); }
+  .diag-item { padding:9px 12px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; font-size:12px; }
+  .diag-item:last-child { border-bottom:none; }
+  .diag-plat { font-size:10px; font-weight:700; padding:1px 6px; border-radius:20px; flex-shrink:0; white-space:nowrap; }
+  .diag-plat-ig  { background:#f3e8ff; color:#7e22ce; }
+  .diag-plat-ads { background:#dbeafe; color:#1d4ed8; }
+  .diag-plat-gmn { background:#d1fae5; color:#065f46; }
+  .diag-plat-li  { background:#e0f2fe; color:#0369a1; }
+  .diag-label { flex:1; color:var(--text); }
+  .diag-values { color:var(--text3); font-size:11px; white-space:nowrap; }
+  .diag-pct { font-weight:700; font-size:12px; margin-left:4px; white-space:nowrap; }
+  .diag-pct.up   { color:#16a34a; }
+  .diag-pct.down { color:#dc2626; }
+  .diag-actions { border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+  .diag-actions-head { background:var(--surface2); padding:10px 16px; font-size:12px; font-weight:700; color:var(--text2); letter-spacing:.04em; }
+  .diag-action-item { padding:12px 16px; border-bottom:1px solid var(--border); font-size:12px; line-height:1.6; display:flex; gap:10px; }
+  .diag-action-item:last-child { border-bottom:none; }
+  .diag-action-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+  .diag-action-text strong { color:var(--text); display:block; margin-bottom:2px; font-size:12px; }
+  .diag-action-text span { color:var(--text3); }
+  @media(max-width:600px) { .diag-grid { grid-template-columns:1fr; } }
+
   /* ── RESPONSIVE ── */
   /* ── RESPONSIVE 768px (tablet / celular landscape) ── */
   @media (max-width: 768px) {
@@ -613,6 +643,7 @@
   <div class="tab-nav-inner">
     <button class="tab-btn active" onclick="switchTab('pauta')">Pauta da Reunião</button>
     <button class="tab-btn" onclick="switchTab('analise')">Análise de KPIs</button>
+    <button class="tab-btn" onclick="switchTab('diagnostico')">📊 Diagnóstico</button>
     <button class="tab-btn" onclick="switchTab('copies')">✦ Copies <span id="copies-badge" style="display:none;background:var(--orange);color:#fff;border-radius:20px;font-size:10px;padding:1px 6px;margin-left:4px;font-weight:700"></span></button>
   </div>
 </div>
@@ -817,6 +848,11 @@
 
   </div>
 </div><!-- /tab-analise -->
+
+<!-- TAB DIAGNÓSTICO -->
+<div id="tab-diagnostico" class="tab-panel">
+  <div id="diag-content" class="diag-wrap"></div>
+</div>
 
 <!-- TAB COPIES -->
 <div id="tab-copies" class="tab-panel">
@@ -2132,6 +2168,142 @@ async function reprovarCopy(id) {
   } catch(e) { showToast('Erro: ' + e.message, 'red'); }
 }
 
+// ── Diagnóstico ────────────────────────────────────────────────────────────
+
+function renderDiagnostico() {
+  const container = document.getElementById('diag-content');
+
+  const withData = KPI_ANALYTICS_MONTHS.filter(m => KPI_ANALYTICS_DATA[m]);
+  if (withData.length < 2) {
+    container.innerHTML = '<p style="padding:40px;color:var(--text3);text-align:center">Dados insuficientes. Importe pelo menos 2 meses de KPIs.</p>';
+    return;
+  }
+
+  const last3  = withData.slice(-3);
+  const has3   = last3.length >= 3;
+  const [p2, prev, curr] = has3 ? last3 : [null, ...last3];
+
+  const METRICS = [
+    { cat:'instagram', key:'Alcance orgânico',         label:'Alcance orgânico',    plat:'ig',  dir:1 },
+    { cat:'instagram', key:'Novos seguidores',          label:'Novos seguidores',     plat:'ig',  dir:1 },
+    { cat:'instagram', key:'Interações totais',         label:'Interações totais',    plat:'ig',  dir:1 },
+    { cat:'instagram', key:'Visualizações dos Stories', label:'Views Stories',        plat:'ig',  dir:1 },
+    { cat:'metaads',   key:'Cliques no link',           label:'Cliques no link',      plat:'ads', dir:1 },
+    { cat:'metaads',   key:'Conversas iniciadas',       label:'Conversas iniciadas',  plat:'ads', dir:1 },
+    { cat:'metaads',   key:'CTR (%)',                   label:'CTR',                  plat:'ads', dir:1 },
+    { cat:'metaads',   key:'CPC médio (R$)',            label:'CPC médio',            plat:'ads', dir:-1 },
+    { cat:'metaads',   key:'CPM médio (R$)',            label:'CPM médio',            plat:'ads', dir:-1 },
+    { cat:'gmn',       key:'Total de ações',            label:'Total de ações',       plat:'gmn', dir:1 },
+    { cat:'gmn',       key:'Ligações',                  label:'Ligações',             plat:'gmn', dir:1 },
+    { cat:'gmn',       key:'Cliques no website',        label:'Cliques website',      plat:'gmn', dir:1 },
+    { cat:'linkedin',  key:'Novos seguidores',          label:'Novos seguidores',     plat:'li',  dir:1 },
+    { cat:'linkedin',  key:'Impressões',                label:'Impressões',           plat:'li',  dir:1 },
+    { cat:'linkedin',  key:'Engajamento',               label:'Engajamento',          plat:'li',  dir:1 },
+  ];
+
+  const ACTIONS = [
+    { trigger: r => r.cat==='metaads' && (r.key==='CPC médio (R$)'||r.key==='CPM médio (R$)') && r.isBad,
+      icon:'📢', title:'Renovar criativos dos Meta Ads',
+      desc:'CPM/CPC subindo indica fadiga — o público esgotou. Troque imagens e textos dos anúncios e amplie o público-alvo.' },
+    { trigger: r => r.cat==='metaads' && r.key==='Conversas iniciadas' && r.isBad,
+      icon:'💬', title:'Testar campanha com objetivo "Mensagens"',
+      desc:'Conversas caindo — mudar o objetivo da campanha para Mensagens (WhatsApp direto) reduz o atrito da conversão.' },
+    { trigger: r => r.cat==='gmn' && r.key==='Ligações' && r.isBad,
+      icon:'📍', title:'Verificar número de telefone no Google',
+      desc:'Ligações zeradas no Google Meu Negócio — conferir se o número está correto e atualizado no perfil.' },
+    { trigger: r => r.cat==='gmn' && r.key==='Total de ações' && r.isBad,
+      icon:'🔍', title:'Publicar posts no Google Meu Negócio',
+      desc:'Posts sobre produtos e promoções no GMN aumentam visibilidade nas buscas locais e geram mais ações.' },
+    { trigger: r => r.cat==='instagram' && r.key==='Visualizações dos Stories' && r.isGood,
+      icon:'📱', title:'Manter frequência de Stories',
+      desc:'Stories crescendo bem — manter no mínimo 3x por semana para sustentar o crescimento.' },
+    { trigger: r => r.cat==='instagram' && r.key==='Novos seguidores' && r.isGood,
+      icon:'👥', title:'Identificar posts que trouxeram mais seguidores',
+      desc:'Aquisição acelerando — analisar quais posts geraram mais seguidores no mês e replicar o formato.' },
+    { trigger: r => r.cat==='linkedin' && r.key==='Impressões' && r.isGood,
+      icon:'💼', title:'Manter cadência no LinkedIn',
+      desc:'LinkedIn com boa performance — manter pelo menos 5–6 posts/mês para sustentar o crescimento.' },
+  ];
+
+  const fmt = v => v == null ? '—' : (Number.isInteger(v) ? v.toLocaleString('pt-BR') : v.toFixed(v >= 10 ? 1 : 2));
+
+  const results = METRICS.map(m => {
+    const vP2   = has3 ? (KPI_ANALYTICS_DATA[p2]?.[m.cat]?.[m.key] ?? null) : null;
+    const vPrev = KPI_ANALYTICS_DATA[prev]?.[m.cat]?.[m.key] ?? null;
+    const vCurr = KPI_ANALYTICS_DATA[curr]?.[m.cat]?.[m.key] ?? null;
+    const pct   = (vPrev != null && vCurr != null && vPrev !== 0) ? ((vCurr - vPrev) / Math.abs(vPrev) * 100) : null;
+    const isGood = pct !== null && ((m.dir===1 && pct>0)||(m.dir===-1 && pct<0));
+    const isBad  = pct !== null && ((m.dir===1 && pct<0)||(m.dir===-1 && pct>0));
+    return { ...m, vP2, vPrev, vCurr, pct, isGood, isBad };
+  }).filter(r => r.vPrev != null || r.vCurr != null);
+
+  const improved = results.filter(r => r.isGood  && r.pct !== null && Math.abs(r.pct) >= 5);
+  const worsened = results.filter(r => r.isBad   && r.pct !== null && Math.abs(r.pct) >= 5);
+
+  const platBadge = p => {
+    const map = { ig:['diag-plat-ig','Instagram'], ads:['diag-plat-ads','Meta Ads'], gmn:['diag-plat-gmn','Google'], li:['diag-plat-li','LinkedIn'] };
+    return `<span class="diag-plat ${map[p][0]}">${map[p][1]}</span>`;
+  };
+
+  const pctHtml = r => {
+    if (r.pct === null) return '';
+    const cls = r.isGood ? 'up' : (r.isBad ? 'down' : '');
+    return `<span class="diag-pct ${cls}">${r.pct>0?'+':''}${r.pct.toFixed(0)}%</span>`;
+  };
+
+  const valStr = r => {
+    const parts = [];
+    if (has3 && r.vP2  != null) parts.push(fmt(r.vP2));
+    if (r.vPrev != null) parts.push(fmt(r.vPrev));
+    if (r.vCurr != null) parts.push(`<strong>${fmt(r.vCurr)}</strong>`);
+    return parts.join(' → ');
+  };
+
+  const itemHtml = r => `
+    <div class="diag-item">
+      ${platBadge(r.plat)}
+      <span class="diag-label">${r.label}</span>
+      <span class="diag-values">${valStr(r)}</span>
+      ${pctHtml(r)}
+    </div>`;
+
+  const seenAct = new Set();
+  const actionItems = [];
+  results.forEach(r => ACTIONS.forEach(a => {
+    if (a.trigger(r) && !seenAct.has(a.title)) { seenAct.add(a.title); actionItems.push(a); }
+  }));
+
+  const periodStr = has3
+    ? `${p2} → ${prev} → <strong>${curr}</strong>`
+    : `${prev} → <strong>${curr}</strong>`;
+
+  container.innerHTML = `
+    <p class="diag-period">Analisando os últimos 3 meses: ${periodStr}</p>
+    <div class="diag-grid">
+      <div>
+        <div class="diag-col-head green">✅ Melhorou (${improved.length})</div>
+        <div class="diag-col-body">
+          ${improved.length ? improved.map(itemHtml).join('') : '<div class="diag-item" style="color:var(--text3)">Nenhuma métrica com melhora significativa</div>'}
+        </div>
+      </div>
+      <div>
+        <div class="diag-col-head red">⚠️ Piorou (${worsened.length})</div>
+        <div class="diag-col-body">
+          ${worsened.length ? worsened.map(itemHtml).join('') : '<div class="diag-item" style="color:var(--text3)">Nenhuma métrica com piora significativa</div>'}
+        </div>
+      </div>
+    </div>
+    ${actionItems.length ? `
+    <div class="diag-actions">
+      <div class="diag-actions-head">💡 Ações sugeridas</div>
+      ${actionItems.map(a => `
+        <div class="diag-action-item">
+          <span class="diag-action-icon">${a.icon}</span>
+          <div class="diag-action-text"><strong>${a.title}</strong><span>${a.desc}</span></div>
+        </div>`).join('')}
+    </div>` : ''}`;
+}
+
 function switchTab(tab) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -2139,11 +2311,13 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => {
     if ((tab === 'pauta' && b.textContent.toLowerCase().includes('pauta')) ||
         (tab === 'analise' && b.textContent.toLowerCase().includes('análise')) ||
+        (tab === 'diagnostico' && b.textContent.includes('Diagnóstico')) ||
         (tab === 'copies' && b.textContent.toLowerCase().includes('copies'))) {
       b.classList.add('active');
     }
   });
   if (tab === 'analise') renderAnalise();
+  if (tab === 'diagnostico') renderDiagnostico();
   if (tab === 'copies') {
     const copiesSel = document.getElementById('copies-month-sel');
     const mainMonth = document.getElementById('month-sel').value;
