@@ -1190,7 +1190,16 @@ function renderPosts(month, tbodyId, prefix) {
     if (tipo === 'webinar') tr.className = 'webinar-row';
     tr.appendChild(inputTd(`${prefix}_tema_${i}`, tema, 'Tema do post...'));
     const wkTd = document.createElement('td');
-    wkTd.style.fontSize = '11px'; wkTd.style.color = tipo === 'webinar' ? '#2563eb' : 'var(--text3)'; wkTd.textContent = tipo === 'webinar' ? '📡 ' + week : week;
+    wkTd.style.fontSize = '11px'; wkTd.style.color = tipo === 'webinar' ? '#2563eb' : 'var(--text3)';
+    if (tipo === 'webinar') {
+      const dateM = tema.match(/^(\d{2}\/\d{2})/);
+      const dM = tema.match(/Webinar\s+(D-\d+)/);
+      const wDate = dateM ? dateM[1] : '';
+      const wLabel = dM ? dM[1] : 'D-0';
+      wkTd.innerHTML = `📡 ${wLabel}<br><span style="font-size:10px;color:#6b9fd4">${wDate}</span>`;
+    } else {
+      wkTd.textContent = week;
+    }
     tr.appendChild(wkTd);
     tr.appendChild(adsSel(`${prefix}_ads_${i}`, ads));
     tr.appendChild(statusSel(`${prefix}_st_${i}`, '⬜ Pendente'));
