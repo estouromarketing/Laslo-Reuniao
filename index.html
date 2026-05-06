@@ -657,9 +657,9 @@
 <div class="tab-nav">
   <div class="tab-nav-inner">
     <button class="tab-btn active" onclick="switchTab('pauta')">Pauta da Reunião</button>
+    <button class="tab-btn" onclick="switchTab('copies')">✦ Copies <span id="copies-badge" style="display:none;background:var(--orange);color:#fff;border-radius:20px;font-size:10px;padding:1px 6px;margin-left:4px;font-weight:700"></span></button>
     <button class="tab-btn" onclick="switchTab('analise')">Análise de KPIs</button>
     <button class="tab-btn" onclick="switchTab('diagnostico')">Diagnóstico</button>
-    <button class="tab-btn" onclick="switchTab('copies')">✦ Copies <span id="copies-badge" style="display:none;background:var(--orange);color:#fff;border-radius:20px;font-size:10px;padding:1px 6px;margin-left:4px;font-weight:700"></span></button>
   </div>
 </div>
 
@@ -1663,6 +1663,12 @@ function loadDraft(month) {
   }
   Object.entries(draft).forEach(([id, val]) => {
     if (id.startsWith('__')) return;
+    // Nunca sobrescrever linhas de webinar com rascunho antigo
+    if (id.startsWith('p_tema_') || id.startsWith('p_ads_') || id.startsWith('p_st_')) {
+      const idx = parseInt(id.split('_').pop());
+      const row = (POSTS_DATA[month] || [])[idx];
+      if (row && row[3] === 'webinar') return;
+    }
     const el = document.getElementById(id);
     if (el && el.value !== val) {
       el.value = val;
