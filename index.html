@@ -666,6 +666,7 @@
     <button class="tab-btn" onclick="switchTab('copies')">✦ Copies <span id="copies-badge" style="display:none;background:var(--orange);color:#fff;border-radius:20px;font-size:10px;padding:1px 6px;margin-left:4px;font-weight:700"></span></button>
     <button class="tab-btn" onclick="switchTab('analise')">Análise de KPIs</button>
     <button class="tab-btn" onclick="switchTab('diagnostico')">Diagnóstico</button>
+    <button class="tab-btn" onclick="switchTab('webinars')">Webinars</button>
   </div>
 </div>
 
@@ -883,6 +884,27 @@
 <!-- TAB DIAGNÓSTICO -->
 <div id="tab-diagnostico" class="tab-panel">
   <div id="diag-content" class="diag-wrap"></div>
+</div>
+
+<!-- TAB WEBINARS -->
+<div id="tab-webinars" class="tab-panel">
+  <div class="main" style="padding-top:24px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+      <label style="font-size:13px;font-weight:600;color:var(--text2)">Selecionar webinar:</label>
+      <select id="webinar-sel" onchange="loadWebinar()" style="font-size:13px;padding:8px 14px;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-sm);cursor:pointer;color:var(--text);font-family:'DM Sans',sans-serif;min-width:280px">
+        <option value="webinars/01-icavet-bomba-infusao.html">01 · ICAVET, Bomba de Infusao (30/06/2026)</option>
+        <option value="webinars/02-descartaveis.html">02 · Descartaveis (ago/2026)</option>
+        <option value="webinars/03-bs680-bomba-seringa.html">03 · BS680, Bomba Seringa (set/2026)</option>
+        <option value="webinars/04-elastovet.html">04 · ElastoVet (out/2026)</option>
+        <option value="webinars/05-bsvet-tci.html">05 · BSVet TCI (nov/2026)</option>
+        <option value="webinars/06-bvvet.html">06 · BVVet (nov/2026)</option>
+        <option value="webinars/07-pedestal-roama.html">07 · Pedestal Roama (dez/2026)</option>
+      </select>
+    </div>
+    <iframe id="webinar-frame" src="webinars/01-icavet-bomba-infusao.html"
+      style="width:100%;height:calc(100vh - 180px);border:none;border-radius:var(--radius);background:var(--surface)"
+      title="Planejamento do webinar"></iframe>
+  </div>
 </div>
 
 <!-- TAB COPIES -->
@@ -2429,7 +2451,8 @@ function switchTab(tab) {
     if ((tab === 'pauta' && b.textContent.toLowerCase().includes('pauta')) ||
         (tab === 'analise' && b.textContent.toLowerCase().includes('análise')) ||
         (tab === 'diagnostico' && b.textContent.includes('Diagnóstico')) ||
-        (tab === 'copies' && b.textContent.toLowerCase().includes('copies'))) {
+        (tab === 'copies' && b.textContent.toLowerCase().includes('copies')) ||
+        (tab === 'webinars' && b.textContent.toLowerCase().includes('webinar'))) {
       b.classList.add('active');
     }
   });
@@ -2445,6 +2468,11 @@ function switchTab(tab) {
     }
     loadCopies();
   }
+}
+
+function loadWebinar() {
+  const sel = document.getElementById('webinar-sel');
+  document.getElementById('webinar-frame').src = sel.value;
 }
 
 // ── Brief de Arte ──────────────────────────────────────────────────────────
