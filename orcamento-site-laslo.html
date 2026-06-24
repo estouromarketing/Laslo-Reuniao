@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Comercial — Novo Site + E-commerce Laslo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f5f5f5;
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,.10);
+  }
+
+  /* Header */
+  .header {
+    background: #1a1a2e;
+    padding: 36px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left h1 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .header-left p { font-size: 13px; color: rgba(255,255,255,.55); }
+  .header-right { text-align: right; }
+  .header-right .tag {
+    display: inline-block;
+    background: #fbab48;
+    color: #1a1a2e;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 8px;
+  }
+  .header-right p { font-size: 12px; color: rgba(255,255,255,.5); }
+
+  /* Body */
+  .body { padding: 48px; }
+
+  /* Meta */
+  .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+    background: #f9f9f9;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .meta-item label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #999;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .meta-item span { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+
+  hr { border: none; border-top: 1px solid #ebebeb; margin: 32px 0; }
+
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #fbab48;
+    margin-bottom: 12px;
+  }
+  .section p { color: #444; margin-bottom: 10px; }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* Flow */
+  .flow { background: #f9f9f9; border: 1px solid #ebebeb; border-radius: 8px; padding: 20px 24px; }
+  .flow-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
+  .flow-item:last-child { margin-bottom: 0; }
+  .flow-num {
+    width: 26px; height: 26px;
+    background: #fbab48;
+    color: #1a1a2e;
+    border-radius: 50%;
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .flow-text strong { display: block; font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 2px; }
+  .flow-text span { font-size: 12px; color: #777; }
+
+  /* Includes */
+  .includes { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+  .includes li { font-size: 13px; color: #333; display: flex; align-items: flex-start; gap: 8px; }
+  .includes li::before { content: '✓'; color: #fbab48; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* Excludes */
+  .excludes { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .excludes li { font-size: 13px; color: #666; display: flex; align-items: flex-start; gap: 8px; }
+  .excludes li::before { content: '×'; color: #ccc; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* Tools */
+  .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tool-card {
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .tool-card strong { font-size: 13px; color: #1a1a1a; display: block; margin-bottom: 2px; }
+  .tool-card span { font-size: 12px; color: #888; display: block; margin-bottom: 6px; }
+  .tool-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .tool-free { background: #d1fae5; color: #065f46; }
+  .tool-client { background: #fff3e0; color: #e65100; }
+  .tool-pct { background: #e0f2fe; color: #0369a1; }
+
+  /* Investment table */
+  .invest-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .invest-table thead tr { background: #1a1a2e; color: #fff; }
+  .invest-table thead th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .invest-table tbody tr { border-bottom: 1px solid #ebebeb; }
+  .invest-table tbody tr:last-child { border-bottom: none; }
+  .invest-table tbody td { padding: 12px 16px; color: #333; }
+  .tag-unica { display: inline-block; background: #fff3e0; color: #e65100; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+  .tag-mensal { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+  .tag-direto { display: inline-block; background: #f3f4f6; color: #666; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .valor { font-weight: 700; color: #1a1a1a; white-space: nowrap; }
+
+  .invest-total {
+    background: #f9f9f9;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .invest-total-item { text-align: center; }
+  .invest-total-item label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #999; display: block; margin-bottom: 4px; }
+  .invest-total-item .val { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+  .invest-total-item .val.destaque { color: #fbab48; }
+  .invest-total-divider { width: 1px; height: 40px; background: #ebebeb; }
+
+  /* Phase 2 */
+  .phase2 {
+    border: 2px dashed #ebebeb;
+    border-radius: 8px;
+    padding: 24px 28px;
+    background: #fafafa;
+  }
+  .phase2-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .phase2-badge {
+    background: #1a1a2e;
+    color: #fbab48;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .phase2-head h3 { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+  .phase2 p { font-size: 12px; color: #666; line-height: 1.7; margin-bottom: 10px; }
+  .phase2 p:last-child { margin-bottom: 0; }
+  .phase2-items { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; margin-top: 12px; }
+  .phase2-items li { font-size: 12px; color: #555; list-style: none; display: flex; gap: 6px; }
+  .phase2-items li::before { content: '→'; color: #fbab48; font-weight: 700; flex-shrink: 0; }
+
+  /* Timeline */
+  .timeline { display: flex; }
+  .timeline-item { flex: 1; text-align: center; position: relative; }
+  .timeline-item::after { content: ''; position: absolute; top: 16px; right: 0; width: 50%; height: 2px; background: #ebebeb; }
+  .timeline-item:last-child::after { display: none; }
+  .timeline-item::before { content: ''; position: absolute; top: 16px; left: 0; width: 50%; height: 2px; background: #ebebeb; }
+  .timeline-item:first-child::before { display: none; }
+  .timeline-dot { width: 32px; height: 32px; background: #fbab48; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #1a1a2e; position: relative; z-index: 1; }
+  .timeline-label { font-size: 11px; font-weight: 600; color: #333; margin-bottom: 2px; }
+  .timeline-sub { font-size: 10px; color: #999; }
+
+  /* Next steps */
+  .next-steps { background: #1a1a2e; border-radius: 8px; padding: 24px 28px; color: #fff; }
+  .next-steps h3 { font-size: 13px; font-weight: 700; color: #fbab48; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+  .next-steps ol { padding-left: 18px; }
+  .next-steps ol li { font-size: 13px; color: rgba(255,255,255,.8); margin-bottom: 8px; }
+  .next-steps ol li:last-child { margin-bottom: 0; }
+
+  /* Footer */
+  .footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid #ebebeb; display: flex; justify-content: space-between; align-items: center; }
+  .footer p { font-size: 11px; color: #bbb; }
+  .footer strong { color: #888; }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <img src="assets/logo-estouro.png" alt="Estouro Marketing" style="height:80px;object-fit:contain;margin-bottom:16px;display:block;mix-blend-mode:screen">
+      <h1>Proposta Comercial</h1>
+      <p>Novo Site Institucional + E-commerce</p>
+    </div>
+    <div class="header-right">
+      <div class="tag">Proposta</div>
+      <p>Estouro Marketing</p>
+      <p>Maio de 2026</p>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- Meta -->
+    <div class="meta">
+      <div class="meta-item">
+        <label>Cliente</label>
+        <span>Laslo</span>
+      </div>
+      <div class="meta-item">
+        <label>Data</label>
+        <span>Maio de 2026</span>
+      </div>
+      <div class="meta-item">
+        <label>Validade</label>
+        <span>30 dias</span>
+      </div>
+    </div>
+
+    <!-- Contexto -->
+    <div class="section">
+      <div class="section-title">O cenário atual</div>
+      <p>
+        A Laslo opera com dois domínios separados — site institucional e e-commerce — com histórico de
+        instabilidades na integração com o ERP Protheus. O objetivo desta proposta é unificar tudo
+        em um único site moderno, estável e de fácil gestão, com e-commerce funcionando de imediato.
+      </p>
+      <p>
+        A integração com o ERP Protheus, por sua complexidade e dependência de suporte técnico externo,
+        será tratada como uma segunda fase — orçada separadamente após o site estar no ar.
+      </p>
+    </div>
+
+    <hr>
+
+    <!-- Como vai funcionar -->
+    <div class="section">
+      <div class="section-title">Como vai funcionar o e-commerce</div>
+      <div class="flow">
+        <div class="flow-item">
+          <div class="flow-num">1</div>
+          <div class="flow-text">
+            <strong>Cliente acessa o site e escolhe os produtos</strong>
+            <span>Catálogo organizado por categoria, com fotos, descrições e preços por embalagem (caixa com 50 ou 100 unidades, conforme o produto).</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">2</div>
+          <div class="flow-text">
+            <strong>Frete calculado automaticamente</strong>
+            <span>Integração com Melhor Envio — o cliente digita o CEP e vê as opções de transportadora com prazo e valor em tempo real.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">3</div>
+          <div class="flow-text">
+            <strong>Pagamento aprovado via Mercado Pago</strong>
+            <span>Pix, cartão de crédito (parcelado) e boleto bancário. Antifraude e aprovação automáticos — sem intervenção manual.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">4</div>
+          <div class="flow-text">
+            <strong>Gerente comercial recebe o pedido por e-mail</strong>
+            <span>Assim que o pagamento é confirmado, o gerente recebe um e-mail completo com os dados do pedido: cliente, produtos, quantidades, endereço de entrega e valor pago.</span>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">5</div>
+          <div class="flow-text">
+            <strong>Gerente processa o pedido internamente</strong>
+            <span>Com as informações em mãos, o gerente lança o pedido no Protheus e dá andamento à separação e envio — mantendo o processo interno atual sem mudanças.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Ferramentas -->
+    <div class="section">
+      <div class="section-title">Ferramentas utilizadas</div>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <strong>WordPress + WooCommerce</strong>
+          <span>Plataforma do site e e-commerce</span>
+          <span class="tool-tag tool-free">Gratuito</span>
+        </div>
+        <div class="tool-card">
+          <strong>Hostinger</strong>
+          <span>Hospedagem (migração da Locaweb)</span>
+          <span class="tool-tag tool-client">~R$ 50/mês — pago pela Laslo</span>
+        </div>
+        <div class="tool-card">
+          <strong>Mercado Pago</strong>
+          <span>Gateway de pagamento</span>
+          <span class="tool-tag tool-pct">~2,99% por transação</span>
+        </div>
+        <div class="tool-card">
+          <strong>Melhor Envio</strong>
+          <span>Cálculo de frete (Correios, Jadlog etc.)</span>
+          <span class="tool-tag tool-free">Gratuito — pago por envio</span>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- O que está incluído -->
+    <div class="section">
+      <div class="section-title">O que está incluído</div>
+      <ul class="includes">
+        <li>Criação do novo site institucional</li>
+        <li>E-commerce com carrinho e checkout completo</li>
+        <li>Catálogo com ~30 produtos organizados por categoria</li>
+        <li>Precificação por embalagem (caixa × unidade)</li>
+        <li>Integração com Mercado Pago (Pix, cartão, boleto)</li>
+        <li>Integração com Melhor Envio (cálculo de frete)</li>
+        <li>Notificação de pedido por e-mail ao gerente</li>
+        <li>Migração da Locaweb para a Hostinger</li>
+        <li>Certificado SSL (HTTPS)</li>
+        <li>Design responsivo (desktop e celular)</li>
+        <li>Configuração de SEO básico</li>
+        <li>Treinamento para gestão de conteúdo</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- O que NÃO está incluído -->
+    <div class="section">
+      <div class="section-title">O que não está incluído nesta fase</div>
+      <ul class="excludes">
+        <li>Integração com ERP Protheus — prevista para a Fase 2, orçada separadamente</li>
+        <li>Criação de fotos ou vídeos dos produtos</li>
+        <li>Redação de textos institucionais e descrições de produtos</li>
+        <li>Campanhas de marketing e gestão de tráfego pago</li>
+        <li>Customizações no ERP Protheus ou em qualquer sistema de terceiros</li>
+        <li>Integrações não previstas nesta proposta</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <!-- Investimento -->
+    <div class="section">
+      <div class="section-title">Investimento</div>
+      <table class="invest-table">
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th style="text-align:right">Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong>Desenvolvimento do site + e-commerce</strong><br>
+              <span style="font-size:12px;color:#888">Design, configuração, integrações, catálogo de produtos e lançamento</span>
+            </td>
+            <td><span class="tag-unica">3x R$ 2.000,00</span></td>
+            <td class="valor" style="text-align:right">R$ 6.000,00</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Manutenção mensal</strong><br>
+              <span style="font-size:12px;color:#888">Atualizações, monitoramento, suporte e gestão do e-commerce</span>
+            </td>
+            <td><span class="tag-mensal">Mensal</span></td>
+            <td class="valor" style="text-align:right">R$ 750,00/mês</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Hostinger — hospedagem</strong><br>
+              <span style="font-size:12px;color:#888">Contratado diretamente pela Laslo</span>
+            </td>
+            <td><span class="tag-direto">Direto</span></td>
+            <td class="valor" style="text-align:right">~R$ 50,00/mês</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="invest-total">
+        <div class="invest-total-item">
+          <label>Desenvolvimento</label>
+          <div class="val">3x R$ 2.000,00</div>
+        </div>
+        <div class="invest-total-divider"></div>
+        <div class="invest-total-item">
+          <label>Mensalidade após entrega</label>
+          <div class="val destaque">R$ 800,00/mês*</div>
+        </div>
+        <div class="invest-total-divider"></div>
+        <div class="invest-total-item">
+          <label>Prazo de entrega</label>
+          <div class="val" style="font-size:15px">~30 dias úteis</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#aaa;margin-top:8px">* R$ 750 Estouro + ~R$ 50 Hostinger</p>
+    </div>
+
+    <hr>
+
+    <!-- Fase 2 -->
+    <div class="section">
+      <div class="section-title">Próxima fase</div>
+      <div class="phase2">
+        <div class="phase2-head">
+          <span class="phase2-badge">Fase 2</span>
+          <h3>Integração com ERP Protheus</h3>
+        </div>
+        <p>
+          Com o site no ar e funcionando, a próxima etapa será conectar o e-commerce diretamente
+          ao ERP Protheus — eliminando o processo manual de lançamento de pedidos e garantindo
+          estoque, preços e logística sempre atualizados em tempo real.
+        </p>
+        <p>
+          O orçamento desta fase será apresentado separadamente, após mapeamento da API disponível
+          no ambiente Protheus da Laslo com o suporte técnico da TOTVS.
+        </p>
+        <ul class="phase2-items">
+          <li>Sincronização de estoque em tempo real</li>
+          <li>Preços atualizados automaticamente pelo ERP</li>
+          <li>Pedidos enviados diretamente ao Protheus</li>
+          <li>Logística integrada com o sistema de expedição</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Prazo -->
+    <div class="section">
+      <div class="section-title">Prazo de entrega</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <div class="timeline-label">Semana 1</div>
+          <div class="timeline-sub">Setup, hospedagem e migração de domínio</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div class="timeline-label">Semanas 2–3</div>
+          <div class="timeline-sub">Design, catálogo de produtos e integrações</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <div class="timeline-label">Semana 4</div>
+          <div class="timeline-sub">Testes, ajustes e lançamento</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Próximos passos -->
+    <div class="next-steps">
+      <h3>Próximos passos</h3>
+      <ol>
+        <li>Aprovação desta proposta</li>
+        <li>Contratação da Hostinger pela Laslo (link enviado pela Estouro)</li>
+        <li>Envio das fotos e informações dos produtos para a Estouro</li>
+        <li>Kickoff do projeto — início imediato após aprovação</li>
+        <li>Site no ar em aproximadamente 30 dias úteis</li>
+      </ol>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>Estouro Marketing</strong> · contato@estouro.com.br</p>
+      <p>Proposta válida por <strong>30 dias</strong> a partir da data de emissão</p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
