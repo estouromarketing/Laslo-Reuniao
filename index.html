@@ -637,6 +637,22 @@
     .save-bar { justify-content: flex-end; }
     .btn-save { padding: 9px 18px; font-size: 13px; }
   }
+
+  /* ── IMPRESSÃO / PDF ── */
+  @media print {
+    .tab-nav, .month-bar, .save-bar, .toast, .no-print,
+    button, .modal-overlay { display: none !important; }
+    body { background: #fff; }
+    .header { position: static; box-shadow: none; }
+    .main { max-width: 100%; padding: 16px 0 0; }
+    .section, .kpi-cell, .diag-card, .analise-table, .flow-item {
+      break-inside: avoid; page-break-inside: avoid;
+    }
+    .tab-panel { display: none !important; }
+    .tab-panel.active { display: block !important; }
+    a { text-decoration: none; color: inherit; }
+    @page { margin: 12mm; }
+  }
 </style>
 </head>
 <body>
@@ -1010,6 +1026,9 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<button class="no-print" onclick="window.print()" title="Exportar a aba atual como PDF"
+  style="position:fixed;bottom:22px;right:22px;z-index:200;background:var(--orange);color:#fff;border:none;border-radius:24px;padding:11px 20px;font-size:13px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,0.22);cursor:pointer">🖨 Exportar PDF</button>
 
 <script>
 // ══════════════════════════════════════════
