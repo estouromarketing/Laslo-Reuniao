@@ -73,6 +73,13 @@ MAPS = {
         ("CPC médio (R$)", "CPC"),
         ("CPM médio (R$)", "CPM"),
         ("Frequência", "Frequencia"),
+        ("Leads", "Leads"),
+        ("Custo por lead (R$)", "Custo por lead"),
+        ("Custo por conversa (R$)", "Custo por conversa"),
+        ("Alcance Facebook", "Alcance Facebook"),
+        ("Alcance Instagram", "Alcance Instagram"),
+        ("Investimento Facebook (R$)", "Investimento Facebook"),
+        ("Investimento Instagram (R$)", "Investimento Instagram"),
     ],
     "gmn": [
         ("Total de ações", "Total acoes"),
