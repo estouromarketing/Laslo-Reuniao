@@ -658,8 +658,10 @@
     .analise-wrap { max-width: 100%; padding: 0; }
     .analise-filters { display: none !important; }
     .chart-box { break-inside: avoid; page-break-inside: avoid; }
+    .chart-canvas-wrap { height: 280px !important; overflow: hidden; }
+    .chart-canvas-wrap canvas { width: 100% !important; height: 280px !important; }
     .analise-scroll-top { display: none !important; }
-    .analise-table-wrap { overflow: visible !important; border-radius: var(--radius); }
+    .analise-table-wrap { overflow: visible !important; border-radius: var(--radius); margin-top: 20px; }
     .analise-table { font-size: 9px; }
     .analise-table thead { display: table-header-group; }
     .analise-table thead th,
@@ -2219,6 +2221,13 @@ window.addEventListener('beforeprint', () => {
     document.head.appendChild(st);
   }
   st.textContent = isAnalise ? '@page { size: A4 landscape; margin: 10mm; }' : '';
+  // Chart.js não termina o resize a tempo do print e o canvas vaza por cima
+  // da tabela — força o tamanho de impressão (A4 paisagem útil ≈ 1000px)
+  if (isAnalise && typeof kpiChart !== 'undefined' && kpiChart) kpiChart.resize(1000, 280);
+});
+
+window.addEventListener('afterprint', () => {
+  if (typeof kpiChart !== 'undefined' && kpiChart) kpiChart.resize();
 });
 
 // ── ABA COPIES ──
