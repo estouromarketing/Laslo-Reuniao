@@ -643,15 +643,32 @@
     .tab-nav, .month-bar, .save-bar, .toast, .no-print,
     button, .modal-overlay { display: none !important; }
     body { background: #fff; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .header { position: static; box-shadow: none; }
     .main { max-width: 100%; padding: 16px 0 0; }
-    .section, .kpi-cell, .diag-card, .analise-table, .flow-item {
+    .section, .kpi-cell, .diag-card, .flow-item {
       break-inside: avoid; page-break-inside: avoid;
     }
     .tab-panel { display: none !important; }
     .tab-panel.active { display: block !important; }
     a { text-decoration: none; color: inherit; }
     @page { margin: 12mm; }
+
+    /* ── Análise de KPIs ── */
+    .analise-wrap { max-width: 100%; padding: 0; }
+    .analise-filters { display: none !important; }
+    .chart-box { break-inside: avoid; page-break-inside: avoid; }
+    .analise-scroll-top { display: none !important; }
+    .analise-table-wrap { overflow: visible !important; border-radius: var(--radius); }
+    .analise-table { font-size: 9px; }
+    .analise-table thead { display: table-header-group; }
+    .analise-table thead th,
+    .analise-table tbody td { padding: 4px 6px; position: static !important; box-shadow: none !important; }
+    .analise-table .metric-cell { position: static !important; box-shadow: none !important; min-width: 0; }
+    .analise-table tr { break-inside: avoid; page-break-inside: avoid; }
+    .analise-table .cat-header { break-after: avoid; page-break-after: avoid; }
+    .analise-table .var-pos, .analise-table .var-neg, .analise-table .var-neu,
+    .analise-table .num-cell { font-size: inherit; }
   }
 </style>
 </head>
@@ -887,7 +904,7 @@
       </table>
     </div>
 
-    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <div class="no-print" style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span style="font-size:12px;font-weight:600;color:var(--text2);margin-right:4px">Exportar para cliente</span>
       <button class="btn-copiar-brief" onclick="exportarKPIsCSV()">↓ Baixar CSV</button>
       <button class="btn-copiar-brief" onclick="copiarKPIs()">⎘ Copiar tabela</button>
@@ -2185,6 +2202,24 @@ function renderAnalise() {
   renderAnaliseTable();
   setTimeout(syncScrollMirror, 0);
 }
+
+// Impressão da Análise de KPIs: zera a rolagem horizontal (senão o PDF sai com
+// colunas cortadas e os títulos de categoria fora da página) e usa paisagem
+// pra tabela de meses caber inteira.
+window.addEventListener('beforeprint', () => {
+  const wrap = document.getElementById('analise-table-wrap');
+  const top = document.getElementById('analise-scroll-top');
+  if (wrap) wrap.scrollLeft = 0;
+  if (top) top.scrollLeft = 0;
+  const isAnalise = document.getElementById('tab-analise')?.classList.contains('active');
+  let st = document.getElementById('print-page-style');
+  if (!st) {
+    st = document.createElement('style');
+    st.id = 'print-page-style';
+    document.head.appendChild(st);
+  }
+  st.textContent = isAnalise ? '@page { size: A4 landscape; margin: 10mm; }' : '';
+});
 
 // ── ABA COPIES ──
 let _copiesCache = [];
