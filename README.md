@@ -49,6 +49,26 @@ Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 
 ---
 
+## Agenda editorial — `agenda.json` (desde 07/07/2026)
+
+O planejamento de posts NÃO fica mais hardcoded no `index.html` (POSTS_DATA/DATES_DATA foram removidos).
+A fonte única é **`agenda.json`**: array de itens com data real, em 4 camadas:
+
+- 🟢 `contrato` — 2 posts de feed/semana (aparecem na seção 1A da Pauta)
+- 🔵 `live` — campanhas de webinar (stories/feeds extras, modelo D-13→D+1)
+- 🔴 `reels` — cortes de live no Reels/YouTube (bônus fora do contrato)
+- 🟠 `evento` — datas comemorativas e feiras (alimentam a seção 1D)
+
+A aba **📅 Calendário** mostra tudo numa grade mensal com filtros por camada; clique num item abre
+detalhes e permite marcar status (persistido em localStorage). Deep-link: `.../#calendario`.
+
+**Editar a agenda:** editar `agenda.json` → `python3 check_agenda.py` → commit/push (GH Pages atualiza ~1 min).
+Regras editoriais (loop de produtos, lives, datas fixas): ver **`AGENDA-EDITORIAL.md`**.
+
+> ⚠️ Aposentados na reforma: `gen_pauta.py`, `posts.csv` e `datas.csv` (congelados como histórico pré-julho/2026).
+
+---
+
 ## Fluxo completo
 
 ```
