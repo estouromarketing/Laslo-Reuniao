@@ -434,12 +434,11 @@
   .plan-table th { text-align:left; padding:9px 10px; background:var(--surface2); color:var(--text2); font-size:10px; text-transform:uppercase; letter-spacing:.04em; }
   .plan-table td { padding:10px; border-bottom:1px solid var(--border); vertical-align:top; }
   .plan-table tr:last-child td { border-bottom:0; }
+  .plan-table select { width:100%; min-width:145px; padding:6px 7px; border:1px solid var(--border); border-radius:7px; background:#fff; color:var(--text); font:inherit; font-size:10px; }
   .plan-tag { display:inline-block; padding:3px 7px; border-radius:12px; font-size:9px; font-weight:700; text-transform:uppercase; background:var(--orange-light); color:var(--orange-dark); }
   .plan-internal-col { display:none; }
   .show-internal .plan-internal-col { display:table-cell; }
   .plan-pending { margin:0; padding-left:18px; font-size:12px; line-height:1.7; }
-  .plan-meeting { display:flex; gap:14px; align-items:center; }
-  .plan-meeting-date { min-width:82px; text-align:center; background:var(--orange-light); color:var(--orange-dark); border-radius:10px; padding:10px; font-weight:700; }
   @media(max-width:760px) {
     .plan-grid { grid-template-columns:1fr; }
     .plan-priorities { grid-template-columns:1fr; }
@@ -775,7 +774,7 @@
     </div>
     <div class="header-meta">
       <strong>Reunião quinzenal · terças às 15h</strong>
-      Próxima: sex. 31/07 às 09h
+      Alinhamento de marketing
       <span id="last-save-info" style="display:block;font-size:11px;color:#6B6460;margin-top:3px;"></span>
     </div>
   </div>
@@ -974,6 +973,27 @@
         <option value="Nov 2026">Novembro 2026</option><option value="Dez 2026">Dezembro 2026</option>
       </select>
       <label style="font-size:12px;color:var(--text2)"><input type="checkbox" id="plan-internal-toggle" onchange="togglePlanInternal()"> Mostrar prazos internos</label>
+      <span id="plan-local-note" style="font-size:11px;color:var(--text3)">Andamento e aprovação ficam salvos neste navegador.</span>
+      <select id="plan-category-filter" onchange="renderMonthlyPlan()" aria-label="Filtrar categoria">
+        <option value="all">Todas as categorias</option>
+        <option value="petvet">PET VET</option>
+        <option value="live">Live e Webinar</option>
+        <option value="produto">Produtos e soluções</option>
+        <option value="institucional">Institucional</option>
+        <option value="data">Datas e eventos</option>
+        <option value="reels">Reels e vídeos</option>
+      </select>
+      <select id="plan-workflow-filter" onchange="renderMonthlyPlan()" aria-label="Filtrar andamento">
+        <option value="all">Todos os andamentos</option>
+        <option value="Não iniciado">Não iniciado</option>
+        <option value="Em criação">Em criação</option>
+        <option value="Revisão interna">Revisão interna</option>
+        <option value="Aguardando aprovação">Aguardando aprovação</option>
+        <option value="Ajustes solicitados">Ajustes solicitados</option>
+        <option value="Aprovado">Aprovado</option>
+        <option value="Agendado">Agendado</option>
+        <option value="Publicado">Publicado</option>
+      </select>
       <button class="btn-save" onclick="window.print()">Exportar este planejamento em PDF</button>
     </div>
     <div id="plan-content"></div>
@@ -1190,12 +1210,6 @@
 // ══════════════════════════════════════════
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwcdv-w0OXtUFx8TjgHW27pjfZ5Fh4jra066QUf9EKhlxNflsKpeucD4PN6nLlfzl4n/exec';
 const N8N_WEBHOOK_URL = 'https://automacao.estouro.com.br/webhook/laslo-copy';
-const REUNIOES_CONFIG = {
-  proxima: { data: '2026-07-31', hora: '09:00', tipo: 'Excepcional' },
-  recorrencia: 'Quinzenal, às terças-feiras, 15h',
-  observacao: 'Próxima terça da recorrência a confirmar após a reunião excepcional.'
-};
-
 // ══════════════════════════════════════════
 // DADOS PRÉ-CARREGADOS
 // ══════════════════════════════════════════
@@ -1246,8 +1260,40 @@ function creationDateFor(it) {
 function escapeHTML(value) {
   return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+function cleanLasloText(value) {
+  return String(value ?? '')
+    .replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/gu, '')
+    .replace(/[—–]/g, ':')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
 function getAgendaStatus(id) { return localStorage.getItem('laslo_ag_status_' + id) || '⬜ Pendente'; }
 function setAgendaStatus(id, val) { localStorage.setItem('laslo_ag_status_' + id, val); }
+const WORKFLOW_STATES = ['Não iniciado','Em criação','Revisão interna','Aguardando aprovação','Ajustes solicitados','Aprovado','Agendado','Publicado'];
+const APPROVAL_STATES = ['Não enviado','Aguardando Vera','Ajustes solicitados','Aprovado'];
+function getWorkflowStatus(id) { return localStorage.getItem('laslo_workflow_' + id) || 'Não iniciado'; }
+function setWorkflowStatus(id, value) { localStorage.setItem('laslo_workflow_' + id, value); renderMonthlyPlan(); }
+function getApprovalStatus(id) { return localStorage.getItem('laslo_approval_' + id) || 'Não enviado'; }
+function setApprovalStatus(id, value) { localStorage.setItem('laslo_approval_' + id, value); renderMonthlyPlan(); }
+function itemCategory(it) {
+  const text = `${it.titulo || ''} ${it.produto || ''}`.toLowerCase();
+  if (/pet.?vet/.test(text)) return 'petvet';
+  if (it.camada === 'live' || /live|webinar/.test(text)) return 'live';
+  if (it.camada === 'reels' || it.formato === 'reel') return 'reels';
+  if (it.camada === 'evento') return 'data';
+  if (it.produto === 'institucional' || /institucional|dia do|homenagem|dna vet/.test(text)) return 'institucional';
+  return 'produto';
+}
+function categoryLabel(it) {
+  return {
+    petvet:'PET VET',
+    live:'Live e Webinar',
+    reels:'Reels e vídeos',
+    data:'Datas e eventos',
+    institucional:'Institucional',
+    produto:'Produtos e soluções'
+  }[itemCategory(it)];
+}
 const WEBINAR_COINCIDENCE_ALERT = {
   'Ago 2026': '⚠️ <strong>Agosto tem Webinar (BS680 — 25/08) e PET VET Expo (12–14/ago) no mesmo mês.</strong> O D-13 do webinar (12/08) coincide com o Dia 1 da feira — use stories nos intervalos do evento.',
   'Set 2026': '⚠️ <strong>Setembro tem Webinar (Elastovet — 29/09) e CBAV Salvador no mesmo mês.</strong> Verifique se os temas se complementam e aproveite o evento para divulgar o webinar.',
@@ -1713,7 +1759,7 @@ function clientPlanItems(items) {
       data_label: first.data === last.data ? formatDateBR(first.data) : `${ddmm(first.data)} a ${ddmm(last.data)}`,
       camada: 'live',
       formato: 'sequência de stories',
-      titulo: `Campanha de stories — ${key} (${group.length} peças)`,
+      titulo: `Campanha de stories: ${key} (${group.length} peças)`,
       produto: key,
       ads: group.some(x => x.ads)
     });
@@ -1736,13 +1782,22 @@ function planPriorityItems(month, items) {
 function renderMonthlyPlan() {
   const month = document.getElementById('plan-month-sel').value;
   const content = document.getElementById('plan-content');
-  const items = agendaForMonth(month).slice().sort((a,b) => (a.data || '').localeCompare(b.data || '') || (a.hora || '').localeCompare(b.hora || ''));
+  const categoryFilter = document.getElementById('plan-category-filter').value;
+  const workflowFilter = document.getElementById('plan-workflow-filter').value;
+  const allItems = agendaForMonth(month).slice().sort((a,b) => (a.data || '').localeCompare(b.data || '') || (a.hora || '').localeCompare(b.hora || ''));
+  const items = allItems.filter(it =>
+    (categoryFilter === 'all' || itemCategory(it) === categoryFilter) &&
+    (workflowFilter === 'all' || getWorkflowStatus(it.id) === workflowFilter)
+  );
   const internal = document.getElementById('plan-internal-toggle').checked;
   const displayItems = internal ? items : clientPlanItems(items);
-  const contract = items.filter(x => x.camada === 'contrato').length;
-  const stories = items.filter(x => x.formato === 'story').length;
-  const campaigns = new Set(items.filter(x => x.camada === 'live' || /pet.?vet/i.test(x.titulo)).map(x => x.produto || x.titulo.split(':')[0])).size;
-  const priorities = planPriorityItems(month, items);
+  const feedPosts = allItems.filter(x => x.formato === 'feed').length;
+  const stories = allItems.filter(x => x.formato === 'story').length;
+  const campaigns = new Set(allItems.filter(x => x.camada === 'live' || /pet.?vet/i.test(x.titulo)).map(x => x.produto || x.titulo.split(':')[0])).size;
+  const awaiting = allItems.filter(x => getWorkflowStatus(x.id) === 'Aguardando aprovação' || getApprovalStatus(x.id) === 'Aguardando Vera').length;
+  const open = allItems.filter(x => !['Aprovado','Agendado','Publicado'].includes(getWorkflowStatus(x.id))).length;
+  const completed = allItems.filter(x => ['Agendado','Publicado'].includes(getWorkflowStatus(x.id))).length;
+  const priorities = planPriorityItems(month, allItems);
   const pendencias = month === 'Ago 2026' ? [
     'Confirmar participação de estudantes no sorteio da BLVet.',
     'Aprovar regulamento e campos finais do formulário.',
@@ -1758,9 +1813,15 @@ function renderMonthlyPlan() {
       <p>Preview mensal para alinhamento, aprovação e preparação das campanhas.</p>
     </section>
     <div class="plan-grid">
-      <div class="plan-stat"><strong>${contract}</strong><span>feeds de contrato</span></div>
-      <div class="plan-stat"><strong>${stories}</strong><span>stories de campanha</span></div>
-      <div class="plan-stat"><strong>${campaigns}</strong><span>campanhas prioritárias</span></div>
+      ${internal ? `
+        <div class="plan-stat"><strong>${open}</strong><span>atividades em aberto</span></div>
+        <div class="plan-stat"><strong>${awaiting}</strong><span>aguardando aprovação</span></div>
+        <div class="plan-stat"><strong>${completed}</strong><span>agendadas ou publicadas</span></div>
+      ` : `
+        <div class="plan-stat"><strong>${feedPosts}</strong><span>posts no feed</span></div>
+        <div class="plan-stat"><strong>${stories}</strong><span>stories de campanha</span></div>
+        <div class="plan-stat"><strong>${campaigns}</strong><span>campanhas prioritárias</span></div>
+      `}
     </div>
     <section class="plan-section">
       <div class="plan-section-head"><h3>Prioridades do mês</h3><span class="plan-tag">Estratégia</span></div>
@@ -1771,24 +1832,18 @@ function renderMonthlyPlan() {
     <section class="plan-section">
       <div class="plan-section-head"><h3>Calendário de atividades</h3><span class="plan-tag">${displayItems.length} itens${internal ? '' : ' resumidos'}</span></div>
       <div class="plan-table-wrap"><table class="plan-table">
-        <thead><tr><th>Publicação</th><th>Frente</th><th>Formato</th><th>Atividade</th><th>ADS</th><th class="plan-internal-col">Criar até</th><th class="plan-internal-col">Status</th></tr></thead>
+        <thead><tr><th>Publicação</th><th>Categoria</th><th>Formato</th><th>Atividade</th><th>ADS</th><th class="plan-internal-col">Criar até</th><th class="plan-internal-col">Andamento</th><th class="plan-internal-col">Aprovação</th></tr></thead>
         <tbody>${displayItems.map(it => `<tr>
           <td><strong>${escapeHTML(it.data_label || formatDateBR(it.data_publicacao || it.data))}</strong>${it.hora ? `<br><small>${escapeHTML(it.hora)}</small>` : ''}</td>
-          <td>${escapeHTML((CAMADAS[it.camada] || {}).label || it.camada)}</td>
+          <td>${escapeHTML(categoryLabel(it))}</td>
           <td>${escapeHTML(it.formato)}</td>
-          <td><strong>${escapeHTML(it.titulo)}</strong>${it.produto ? `<br><small>${escapeHTML(it.produto)}</small>` : ''}</td>
+          <td><strong>${escapeHTML(cleanLasloText(it.titulo))}</strong>${it.produto ? `<br><small>${escapeHTML(cleanLasloText(it.produto))}</small>` : ''}</td>
           <td>${it.ads ? 'Sim' : 'Não'}</td>
           <td class="plan-internal-col">${formatDateBR(creationDateFor(it))}</td>
-          <td class="plan-internal-col">${escapeHTML(getAgendaStatus(it.id))}</td>
-        </tr>`).join('') || '<tr><td colspan="7">Nenhuma atividade cadastrada.</td></tr>'}</tbody>
+          <td class="plan-internal-col"><select onchange="setWorkflowStatus('${escapeHTML(it.id)}',this.value)">${WORKFLOW_STATES.map(x => `<option${getWorkflowStatus(it.id) === x ? ' selected' : ''}>${x}</option>`).join('')}</select></td>
+          <td class="plan-internal-col"><select onchange="setApprovalStatus('${escapeHTML(it.id)}',this.value)">${APPROVAL_STATES.map(x => `<option${getApprovalStatus(it.id) === x ? ' selected' : ''}>${x}</option>`).join('')}</select></td>
+        </tr>`).join('') || '<tr><td colspan="8">Nenhuma atividade cadastrada para os filtros selecionados.</td></tr>'}</tbody>
       </table></div>
-    </section>
-    <section class="plan-section">
-      <div class="plan-section-head"><h3>Próxima reunião</h3><span class="plan-tag">${escapeHTML(REUNIOES_CONFIG.proxima.tipo)}</span></div>
-      <div class="plan-section-body plan-meeting">
-        <div class="plan-meeting-date">${formatDateBR(REUNIOES_CONFIG.proxima.data).slice(0,5)}<br>${escapeHTML(REUNIOES_CONFIG.proxima.hora)}</div>
-        <div><strong>${escapeHTML(REUNIOES_CONFIG.recorrencia)}</strong><br><span style="font-size:12px;color:var(--text3)">${escapeHTML(REUNIOES_CONFIG.observacao)}</span></div>
-      </div>
     </section>
     <section class="plan-section">
       <div class="plan-section-head"><h3>Pontos para aprovação da Laslo</h3><span class="plan-tag">Pendências</span></div>
@@ -3392,6 +3447,9 @@ async function salvarCorrecoes() {
 fetchAgenda().then(() => {
   loadMonth();
   syncPlanMonth();
+  if (new URLSearchParams(location.search).get('modo') === 'interno') {
+    document.getElementById('plan-internal-toggle').checked = true;
+  }
   renderMonthlyPlan();
   const hash = location.hash.replace('#', '');
   if (hash && document.getElementById('tab-' + hash)) switchTab(hash);

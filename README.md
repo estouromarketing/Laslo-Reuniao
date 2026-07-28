@@ -66,7 +66,29 @@ detalhes e permite marcar status (persistido em localStorage). Deep-link: `.../#
 
 A aba **Planejamento Mensal** transforma a mesma agenda em um preview apresentável ao cliente.
 Por padrão, mostra apenas o calendário de publicação. A opção **Mostrar prazos internos** acrescenta
-datas de criação e status para uso da Estouro. Deep-link: `.../#planejamento`.
+datas de criação, andamento e aprovação para uso da Estouro.
+
+- Visão do cliente: `.../#planejamento`
+- Visão interna: `...?modo=interno#planejamento`
+
+Categorias exibidas:
+
+- PET VET;
+- Live e Webinar;
+- Produtos e soluções;
+- Institucional;
+- Datas e eventos;
+- Reels e vídeos.
+
+Fluxo operacional disponível por atividade:
+
+`Não iniciado → Em criação → Revisão interna → Aguardando aprovação → Ajustes solicitados → Aprovado → Agendado → Publicado`
+
+O controle de aprovação registra separadamente: `Não enviado`, `Aguardando Vera`,
+`Ajustes solicitados` ou `Aprovado`.
+
+Na visualização do planejamento, títulos são apresentados sem emoticons e sem travessões.
+O valor literal no `agenda.json` é preservado para não quebrar o fluxo de copies.
 
 ### Datas de produção
 
