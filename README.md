@@ -36,14 +36,16 @@ Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 
 1. Acesse a URL acima
 2. Selecione o mês de referência
-3. Preencha posts, ADS, AAR, KPIs e observações
-4. Clique em **Salvar Reunião** → dados vão para o Google Sheets automaticamente
-5. Clique em **Gerar Copy IA** → n8n gera copies para cada post
+3. Abra **Planejamento Mensal** para apresentar ao cliente e exportar o preview em PDF
+4. Ative **Mostrar prazos internos** somente para a visão de produção
+5. Preencha posts, ADS, AAR, KPIs e observações
+6. Clique em **Salvar Reunião** → dados vão para o Google Sheets automaticamente
+7. Clique em **Gerar Copy IA** → n8n gera copies para cada post
 6. Na aba **Copies**: revise, edite e clique **Aprovar** (salva na planilha) ou **Reprovar** (limpa da planilha e regenera)
 7. Na aba **Copies**: use o seletor de mês para consultar copies de outros meses sem alterar o mês de referência
 8. Clique em **⬇ Exportar Word** para baixar as copies do mês selecionado em formato `.doc`
 9. Quando o cliente devolver o arquivo corrigido (`.htm`), clique em **⬆ Importar Correções** → selecione o arquivo → confirme o preview → salva tudo como aprovado
-10. Para criar as artes: clique em **🎨 Brief de Arte** em qualquer copy aprovada → o brief abre com todas as instruções de layout + botões **Abrir no Canva** para feed e story
+10. Para criar as artes: clique em **🎨 Brief de Arte** em qualquer copy aprovada → o brief abre com todas as instruções de layout + botões **Abrir no Canva** para feed 1080×1350 e story
 11. Na aba **Diagnóstico**: veja automaticamente o que melhorou e o que piorou nos últimos 3 meses, com ações sugeridas
 12. Na aba **Análise de KPIs**: clique em **↓ Baixar CSV** ou **⎘ Copiar tabela** para exportar todos os KPIs no formato CANAL / KPI / PERÍODO / RESULTADO — pronto para enviar ao cliente
 
@@ -61,6 +63,21 @@ A fonte única é **`agenda.json`**: array de itens com data real, em 4 camadas:
 
 A aba **📅 Calendário** mostra tudo numa grade mensal com filtros por camada; clique num item abre
 detalhes e permite marcar status (persistido em localStorage). Deep-link: `.../#calendario`.
+
+A aba **Planejamento Mensal** transforma a mesma agenda em um preview apresentável ao cliente.
+Por padrão, mostra apenas o calendário de publicação. A opção **Mostrar prazos internos** acrescenta
+datas de criação e status para uso da Estouro. Deep-link: `.../#planejamento`.
+
+### Datas de produção
+
+Itens da agenda podem receber os campos opcionais:
+
+- `data_criacao`: prazo interno de criação;
+- `data_aprovacao`: prazo desejado de aprovação;
+- `data_publicacao`: data externa de publicação.
+
+Durante a transição, `data` continua obrigatória e funciona como data de publicação. Quando
+`data_criacao` não existir, o preview interno calcula uma antecedência de referência.
 
 **Editar a agenda:** editar `agenda.json` → `python3 check_agenda.py` → commit/push (GH Pages atualiza ~1 min).
 Regras editoriais (loop de produtos, lives, datas fixas): ver **`AGENDA-EDITORIAL.md`**.
@@ -250,7 +267,7 @@ Botão **🎨 Brief de Arte** aparece em cada copy aprovada na aba Copies.
 
 Ao clicar, abre um modal com:
 - **Copy aprovada** — texto completo para referência
-- **Feed (1080×1080)** — fundo, logo, headline, subtítulo, imagem, CTA + botão Abrir no Canva
+- **Feed (1080×1350, 4:5)** — fundo, logo, headline, subtítulo, imagem, CTA + botão Abrir no Canva
 - **Story (1080×1920)** — mesma identidade, instruções de reposicionamento vertical + botão Abrir no Canva
 - **Arquivo de imagem** — nome do arquivo do produto correspondente (quando aplicável)
 - **Prompt Gemini** — prompt em inglês para gerar imagem de fundo (posts de data comemorativa)
@@ -270,7 +287,7 @@ Ao clicar, abre um modal com:
 
 1. Abrir brief da copy aprovada
 2. Se post de data comemorativa: copiar prompt Gemini → gerar imagem de fundo em gemini.google.com
-3. Clicar **Abrir no Canva — Feed** → montar conforme brief → salvar
+3. Clicar **Abrir no Canva — Feed 1080×1350** → montar conforme brief → salvar
 4. Clicar **Abrir no Canva — Story** → adaptar para vertical → salvar
 5. Todo mês: duplicar o design anterior e editar título/imagem
 

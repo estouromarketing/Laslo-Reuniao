@@ -4,26 +4,27 @@ Documento de referência para a gestão dos webinars mensais da Laslo Indústria
 
 ---
 
-## Estratégia de Divulgação (atualizada jun/2026)
+## Estratégia de Divulgação (atualizada em 28/07/2026)
 
-Cada webinar recebe **campanha de 20 dias** com posts progressivos em duas fases:
+Cada webinar recebe campanha progressiva. Para evitar saturação do feed, apenas a abertura da
+campanha usa feed + story. Os lembretes seguintes usam stories.
 
-### Fase 1 — Aquecimento (D-20 a D-8): 2 stories por semana
+| Disparo | Formato | Conteúdo |
+|---|---|---|
+| **D-28 a D-25** | Feed + Story | Save the date, abertura das inscrições e benefício central |
+| **D-20** | Story | Problema que será resolvido |
+| **D-15** | Story | O que o participante aprenderá |
+| **D-10** | Story | Autoridade do speaker ou demonstração |
+| **D-7** | Story | FAQ, enquete ou objeção |
+| **D-3** | Story | Urgência e benefício |
+| **D-2** | Story | Sorteio e regras resumidas, quando aplicável |
+| **D-1** | Story | É amanhã e serviço completo |
+| **D0** | Stories | É hoje, 3 horas, 1 hora e estamos ao vivo |
+| **D+1** | Story | Agradecimento e gravação/próximo passo |
+| **D+1 a D+3** | Feed + Story opcional | Conversão comercial pós-live |
 
-| Disparo | Formato | Conteúdo | ADS |
-|---|---|---|---|
-| **D-20** | Story | Gancho do tema + "Webinar em 20 dias — Salve a data!" | Não |
-| **D-17** | Story | Data e horário + chamada para inscrição | Não |
-| **D-13** | Story | Pergunta provocativa sobre o tema | Não |
-| **D-10** | Story | "Faltam 10 dias — link na bio para se inscrever" | Não |
-
-### Fase 2 — Intensificação (última semana: D-7 a D-0)
-
-| Disparo | Formato | Conteúdo | ADS |
-|---|---|---|---|
-| **D-7** | Feed | "Salve a data! [data] às 20h — [tema]" | Sim |
-| **D-3** | Feed | "Inscrições abertas — faltam 3 dias. Link na bio." | Sim |
-| **D-0** | Feed + Story | "Hoje às 20h — ao vivo! Link na bio." | Sim |
+> A seção histórica “Datas dos Posts por Webinar” abaixo registra o plano anterior e precisa ser
+> migrada gradualmente no `agenda.json`. Em caso de conflito, prevalece a estratégia acima.
 
 > Posts de webinar aparecem em **azul** na tabela de posts da ferramenta de reunião (ícone 📡).
 

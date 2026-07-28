@@ -409,6 +409,45 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
+  /* ── PLANEJAMENTO MENSAL / PREVIEW DO CLIENTE ── */
+  .plan-wrap { max-width: 1120px; margin: 0 auto; padding: 28px 24px 80px; }
+  .plan-toolbar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
+  .plan-toolbar select { padding:8px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--surface); font:inherit; color:var(--text); }
+  .plan-cover { background:linear-gradient(135deg,#7d251a,#a94028); color:#fff; border-radius:18px; padding:34px 38px; margin-bottom:18px; position:relative; overflow:hidden; }
+  .plan-cover:after { content:""; position:absolute; width:260px; height:260px; border:46px solid rgba(251,171,72,.22); border-radius:50%; right:-80px; top:-105px; }
+  .plan-kicker { font-size:11px; text-transform:uppercase; letter-spacing:.16em; font-weight:700; color:#ffd5a1; }
+  .plan-cover h2 { margin:8px 0 6px; font-size:31px; line-height:1.1; }
+  .plan-cover p { margin:0; color:rgba(255,255,255,.82); font-size:13px; }
+  .plan-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:18px; }
+  .plan-stat { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
+  .plan-stat strong { display:block; font-size:24px; color:var(--orange-dark); }
+  .plan-stat span { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:.05em; }
+  .plan-section { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:16px; overflow:hidden; }
+  .plan-section-head { padding:14px 18px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .plan-section-head h3 { margin:0; font-size:15px; }
+  .plan-section-body { padding:16px 18px; }
+  .plan-priorities { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .plan-priority { border-left:4px solid var(--orange); padding:10px 12px; background:var(--surface2); border-radius:0 8px 8px 0; }
+  .plan-priority strong { display:block; font-size:13px; }
+  .plan-priority span { display:block; margin-top:3px; font-size:11px; color:var(--text3); }
+  .plan-table { width:100%; border-collapse:collapse; font-size:12px; }
+  .plan-table th { text-align:left; padding:9px 10px; background:var(--surface2); color:var(--text2); font-size:10px; text-transform:uppercase; letter-spacing:.04em; }
+  .plan-table td { padding:10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .plan-table tr:last-child td { border-bottom:0; }
+  .plan-tag { display:inline-block; padding:3px 7px; border-radius:12px; font-size:9px; font-weight:700; text-transform:uppercase; background:var(--orange-light); color:var(--orange-dark); }
+  .plan-internal-col { display:none; }
+  .show-internal .plan-internal-col { display:table-cell; }
+  .plan-pending { margin:0; padding-left:18px; font-size:12px; line-height:1.7; }
+  .plan-meeting { display:flex; gap:14px; align-items:center; }
+  .plan-meeting-date { min-width:82px; text-align:center; background:var(--orange-light); color:var(--orange-dark); border-radius:10px; padding:10px; font-weight:700; }
+  @media(max-width:760px) {
+    .plan-grid { grid-template-columns:1fr; }
+    .plan-priorities { grid-template-columns:1fr; }
+    .plan-wrap { padding:18px 12px 72px; }
+    .plan-cover { padding:26px 22px; }
+    .plan-table-wrap { overflow-x:auto; }
+  }
+
   /* ── ANÁLISE ── */
   .analise-wrap { max-width: 860px; margin: 0 auto; padding: 24px 24px 80px; }
   .analise-filters {
@@ -712,6 +751,12 @@
     .analise-table .cat-header { break-after: avoid; page-break-after: avoid; }
     .analise-table .var-pos, .analise-table .var-neg, .analise-table .var-neu,
     .analise-table .num-cell { font-size: inherit; }
+    .plan-wrap { max-width:100%; padding:0; }
+    .plan-cover { border-radius:0; padding:24px 28px; }
+    .plan-section, .plan-stat, .plan-priority { break-inside:avoid; page-break-inside:avoid; }
+    .plan-toolbar { display:none !important; }
+    .plan-table { font-size:10px; }
+    .plan-table th, .plan-table td { padding:7px 8px; }
   }
 </style>
 </head>
@@ -729,8 +774,8 @@
       
     </div>
     <div class="header-meta">
-      <strong>Toda 3ª feira às 15h00</strong>
-      Reunião online
+      <strong>Reunião quinzenal · terças às 15h</strong>
+      Próxima: sex. 31/07 às 09h
       <span id="last-save-info" style="display:block;font-size:11px;color:#6B6460;margin-top:3px;"></span>
     </div>
   </div>
@@ -739,6 +784,7 @@
 <div class="tab-nav">
   <div class="tab-nav-inner">
     <button class="tab-btn active" onclick="switchTab('pauta')">Pauta da Reunião</button>
+    <button class="tab-btn" onclick="switchTab('planejamento')">Planejamento Mensal</button>
     <button class="tab-btn" onclick="switchTab('calendario')">📅 Calendário</button>
     <button class="tab-btn" onclick="switchTab('copies')">✦ Copies <span id="copies-badge" style="display:none;background:var(--orange);color:#fff;border-radius:20px;font-size:10px;padding:1px 6px;margin-left:4px;font-weight:700"></span></button>
     <button class="tab-btn" onclick="switchTab('analise')">Análise de KPIs</button>
@@ -913,6 +959,26 @@
 
 </div><!-- /main -->
 </div><!-- /tab-pauta -->
+
+<!-- ══ PLANEJAMENTO MENSAL / PREVIEW DO CLIENTE ══ -->
+<div id="tab-planejamento" class="tab-panel">
+  <div class="plan-wrap" id="plan-preview">
+    <div class="plan-toolbar no-print">
+      <label for="plan-month-sel" style="font-size:12px;font-weight:600;color:var(--text2)">Mês do planejamento</label>
+      <select id="plan-month-sel" onchange="this.dataset.touched='1';renderMonthlyPlan()">
+        <option value="Jan 2026">Janeiro 2026</option><option value="Fev 2026">Fevereiro 2026</option>
+        <option value="Mar 2026">Março 2026</option><option value="Abr 2026">Abril 2026</option>
+        <option value="Mai 2026">Maio 2026</option><option value="Jun 2026">Junho 2026</option>
+        <option value="Jul 2026">Julho 2026</option><option value="Ago 2026">Agosto 2026</option>
+        <option value="Set 2026">Setembro 2026</option><option value="Out 2026">Outubro 2026</option>
+        <option value="Nov 2026">Novembro 2026</option><option value="Dez 2026">Dezembro 2026</option>
+      </select>
+      <label style="font-size:12px;color:var(--text2)"><input type="checkbox" id="plan-internal-toggle" onchange="togglePlanInternal()"> Mostrar prazos internos</label>
+      <button class="btn-save" onclick="window.print()">Exportar este planejamento em PDF</button>
+    </div>
+    <div id="plan-content"></div>
+  </div>
+</div>
 
 <!-- ══ CALENDÁRIO ══ -->
 <div id="tab-calendario" class="tab-panel">
@@ -1124,6 +1190,11 @@
 // ══════════════════════════════════════════
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwcdv-w0OXtUFx8TjgHW27pjfZ5Fh4jra066QUf9EKhlxNflsKpeucD4PN6nLlfzl4n/exec';
 const N8N_WEBHOOK_URL = 'https://automacao.estouro.com.br/webhook/laslo-copy';
+const REUNIOES_CONFIG = {
+  proxima: { data: '2026-07-31', hora: '09:00', tipo: 'Excepcional' },
+  recorrencia: 'Quinzenal, às terças-feiras, 15h',
+  observacao: 'Próxima terça da recorrência a confirmar após a reunião excepcional.'
+};
 
 // ══════════════════════════════════════════
 // DADOS PRÉ-CARREGADOS
@@ -1156,6 +1227,25 @@ function agendaForMonth(monthLabel) {
 }
 function weekOfMonth(dataISO) { return Math.min(Math.ceil(parseInt(dataISO.slice(8, 10)) / 7), 5); }
 function ddmm(dataISO) { return dataISO.slice(8, 10) + '/' + dataISO.slice(5, 7); }
+function formatDateBR(dataISO) {
+  if (!dataISO) return '';
+  const [y,m,d] = dataISO.split('-');
+  return `${d}/${m}/${y}`;
+}
+function shiftDate(dataISO, days) {
+  const [y,m,d] = dataISO.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  dt.setDate(dt.getDate() + days);
+  return dt.toISOString().slice(0,10);
+}
+function creationDateFor(it) {
+  if (it.data_criacao) return it.data_criacao;
+  const lead = it.formato === 'feed' ? 7 : (it.formato === 'reel' ? 7 : 5);
+  return shiftDate(it.data_publicacao || it.data, -lead);
+}
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 function getAgendaStatus(id) { return localStorage.getItem('laslo_ag_status_' + id) || '⬜ Pendente'; }
 function setAgendaStatus(id, val) { localStorage.setItem('laslo_ag_status_' + id, val); }
 const WEBINAR_COINCIDENCE_ALERT = {
@@ -1584,6 +1674,127 @@ function openCalPop(ev, id) {
 function closeCalPop() {
   const pop = document.getElementById('cal-pop');
   if (pop) { pop.style.display = 'none'; pop.innerHTML = ''; }
+}
+
+// ══════════════════════════════════════════
+// PLANEJAMENTO MENSAL / PREVIEW PARA PDF
+// ══════════════════════════════════════════
+function syncPlanMonth() {
+  const sel = document.getElementById('plan-month-sel');
+  const main = document.getElementById('month-sel').value;
+  if (sel && !sel.dataset.touched && sel.value !== main) sel.value = main;
+}
+
+function togglePlanInternal(shouldRender = true) {
+  const wrap = document.getElementById('plan-preview');
+  const checked = document.getElementById('plan-internal-toggle').checked;
+  wrap.classList.toggle('show-internal', checked);
+  if (shouldRender) renderMonthlyPlan();
+}
+
+function clientPlanItems(items) {
+  const grouped = new Map();
+  const result = [];
+  items.forEach(it => {
+    if (it.camada === 'live' && it.formato === 'story') {
+      const key = it.produto || it.titulo.split('—')[0].trim();
+      if (!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key).push(it);
+    } else {
+      result.push(it);
+    }
+  });
+  grouped.forEach((group, key) => {
+    group.sort((a,b) => a.data.localeCompare(b.data));
+    const first = group[0], last = group[group.length - 1];
+    result.push({
+      id: `preview-${key}-${first.data}`,
+      data: first.data,
+      data_label: first.data === last.data ? formatDateBR(first.data) : `${ddmm(first.data)} a ${ddmm(last.data)}`,
+      camada: 'live',
+      formato: 'sequência de stories',
+      titulo: `Campanha de stories — ${key} (${group.length} peças)`,
+      produto: key,
+      ads: group.some(x => x.ads)
+    });
+  });
+  return result.sort((a,b) => (a.data || '').localeCompare(b.data || '') || (a.hora || '').localeCompare(b.hora || ''));
+}
+
+function planPriorityItems(month, items) {
+  const priorities = [];
+  const hasPetVet = items.some(x => /pet.?vet/i.test(x.titulo + ' ' + (x.produto || '')));
+  const live = items.find(x => x.camada === 'live' || /live|webinar/i.test(x.titulo));
+  if (hasPetVet) priorities.push(['PET VET EXPO', 'Presença, visita ao estande, condições de feira e cobertura em tempo real.']);
+  if (live) priorities.push(['LIVE / WEBINAR', 'Inscrição, entrada no Grupo VIP e comparecimento ao vivo.']);
+  if (items.some(x => x.produto === 'clube')) priorities.push(['CLUBE LASLO', 'Modalidade de aquisição prioritária da comunicação.']);
+  if (items.some(x => x.camada === 'evento')) priorities.push(['DATAS E EVENTOS', 'Aproveitamento das datas relevantes sem perder a rotação do portfólio.']);
+  if (!priorities.length) priorities.push(['ROTAÇÃO DE PORTFÓLIO', 'Produtos, insumos, modalidades e conteúdo institucional em equilíbrio.']);
+  return priorities.slice(0,4);
+}
+
+function renderMonthlyPlan() {
+  const month = document.getElementById('plan-month-sel').value;
+  const content = document.getElementById('plan-content');
+  const items = agendaForMonth(month).slice().sort((a,b) => (a.data || '').localeCompare(b.data || '') || (a.hora || '').localeCompare(b.hora || ''));
+  const internal = document.getElementById('plan-internal-toggle').checked;
+  const displayItems = internal ? items : clientPlanItems(items);
+  const contract = items.filter(x => x.camada === 'contrato').length;
+  const stories = items.filter(x => x.formato === 'story').length;
+  const campaigns = new Set(items.filter(x => x.camada === 'live' || /pet.?vet/i.test(x.titulo)).map(x => x.produto || x.titulo.split(':')[0])).size;
+  const priorities = planPriorityItems(month, items);
+  const pendencias = month === 'Ago 2026' ? [
+    'Confirmar participação de estudantes no sorteio da BLVet.',
+    'Aprovar regulamento e campos finais do formulário.',
+    'Confirmar juros, bandeiras e produtos da condição de até 18 vezes.',
+    'Receber o mapa oficial do estande VC25.',
+    'Definir captação nos três dias da PET VET.'
+  ] : ['Validar temas, datas, mídia paga e materiais necessários antes do início da produção.'];
+  const monthLong = document.querySelector(`#plan-month-sel option[value="${month}"]`)?.textContent || month;
+  content.innerHTML = `
+    <section class="plan-cover">
+      <div class="plan-kicker">ESTOURO MARKETING × LASLO VET</div>
+      <h2>PLANEJAMENTO DE CONTEÚDO<br>${escapeHTML(monthLong.toUpperCase())}</h2>
+      <p>Preview mensal para alinhamento, aprovação e preparação das campanhas.</p>
+    </section>
+    <div class="plan-grid">
+      <div class="plan-stat"><strong>${contract}</strong><span>feeds de contrato</span></div>
+      <div class="plan-stat"><strong>${stories}</strong><span>stories de campanha</span></div>
+      <div class="plan-stat"><strong>${campaigns}</strong><span>campanhas prioritárias</span></div>
+    </div>
+    <section class="plan-section">
+      <div class="plan-section-head"><h3>Prioridades do mês</h3><span class="plan-tag">Estratégia</span></div>
+      <div class="plan-section-body"><div class="plan-priorities">
+        ${priorities.map(p => `<div class="plan-priority"><strong>${escapeHTML(p[0])}</strong><span>${escapeHTML(p[1])}</span></div>`).join('')}
+      </div></div>
+    </section>
+    <section class="plan-section">
+      <div class="plan-section-head"><h3>Calendário de atividades</h3><span class="plan-tag">${displayItems.length} itens${internal ? '' : ' resumidos'}</span></div>
+      <div class="plan-table-wrap"><table class="plan-table">
+        <thead><tr><th>Publicação</th><th>Frente</th><th>Formato</th><th>Atividade</th><th>ADS</th><th class="plan-internal-col">Criar até</th><th class="plan-internal-col">Status</th></tr></thead>
+        <tbody>${displayItems.map(it => `<tr>
+          <td><strong>${escapeHTML(it.data_label || formatDateBR(it.data_publicacao || it.data))}</strong>${it.hora ? `<br><small>${escapeHTML(it.hora)}</small>` : ''}</td>
+          <td>${escapeHTML((CAMADAS[it.camada] || {}).label || it.camada)}</td>
+          <td>${escapeHTML(it.formato)}</td>
+          <td><strong>${escapeHTML(it.titulo)}</strong>${it.produto ? `<br><small>${escapeHTML(it.produto)}</small>` : ''}</td>
+          <td>${it.ads ? 'Sim' : 'Não'}</td>
+          <td class="plan-internal-col">${formatDateBR(creationDateFor(it))}</td>
+          <td class="plan-internal-col">${escapeHTML(getAgendaStatus(it.id))}</td>
+        </tr>`).join('') || '<tr><td colspan="7">Nenhuma atividade cadastrada.</td></tr>'}</tbody>
+      </table></div>
+    </section>
+    <section class="plan-section">
+      <div class="plan-section-head"><h3>Próxima reunião</h3><span class="plan-tag">${escapeHTML(REUNIOES_CONFIG.proxima.tipo)}</span></div>
+      <div class="plan-section-body plan-meeting">
+        <div class="plan-meeting-date">${formatDateBR(REUNIOES_CONFIG.proxima.data).slice(0,5)}<br>${escapeHTML(REUNIOES_CONFIG.proxima.hora)}</div>
+        <div><strong>${escapeHTML(REUNIOES_CONFIG.recorrencia)}</strong><br><span style="font-size:12px;color:var(--text3)">${escapeHTML(REUNIOES_CONFIG.observacao)}</span></div>
+      </div>
+    </section>
+    <section class="plan-section">
+      <div class="plan-section-head"><h3>Pontos para aprovação da Laslo</h3><span class="plan-tag">Pendências</span></div>
+      <div class="plan-section-body"><ul class="plan-pending">${pendencias.map(x => `<li>${escapeHTML(x)}</li>`).join('')}</ul></div>
+    </section>`;
+  togglePlanInternal(false);
 }
 document.addEventListener('click', e => {
   const pop = document.getElementById('cal-pop');
@@ -2760,6 +2971,7 @@ function switchTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
   document.querySelectorAll('.tab-btn').forEach(b => {
     if ((tab === 'pauta' && b.textContent.toLowerCase().includes('pauta')) ||
+        (tab === 'planejamento' && b.textContent.toLowerCase().includes('planejamento')) ||
         (tab === 'calendario' && b.textContent.includes('Calendário')) ||
         (tab === 'analise' && b.textContent.toLowerCase().includes('análise')) ||
         (tab === 'diagnostico' && b.textContent.includes('Diagnóstico')) ||
@@ -2769,6 +2981,7 @@ function switchTab(tab) {
     }
   });
   if (tab === 'calendario') { syncCalMonth(); renderCalendar(); }
+  if (tab === 'planejamento') { syncPlanMonth(); renderMonthlyPlan(); }
   if (tab === 'analise') renderAnalise();
   if (tab === 'diagnostico') renderDiagnostico();
   if (tab === 'copies') {
@@ -2938,14 +3151,14 @@ function abrirBrief(postId) {
     `<div class="brief-copy-box">${_esc(post.conteudo || '')}</div>`);
 
   // Feed
-  html += secao('📐', 'Feed — 1080 × 1080 px',
+  html += secao('📐', 'Feed — 1080 × 1350 px (4:5)',
     rows('Fundo', `<strong>${layout.fundo}</strong>`) +
     rows('Logo', layout.logo) +
     rows('Headline', `<strong>"${_esc(headline)}"</strong><br><span style="font-size:11px;color:var(--text3)">→ Bold uppercase · Cor <strong style="color:#8b2a1c">#8b2a1c</strong> · ~64px · Centralizado</span>`) +
     rows('Subtítulo', `<em>Extrair 2ª frase de impacto da copy</em><br><span style="font-size:11px;color:var(--text3)">→ Cor <em>#fbab48</em> · ~36px</span>`) +
     rows('Imagem', layout.imagem.replace(/\n/g,'<br>')) +
     (layout.cta_feed !== '—' ? rows('CTA', layout.cta_feed) : '') +
-    `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)"><a href="https://www.canva.com/create/instagram-posts/" target="_blank" rel="noopener" class="btn-canva">🖌️ Abrir no Canva — Feed 1080×1080</a></div>`
+    `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)"><a href="https://www.canva.com/create/instagram-posts/" target="_blank" rel="noopener" class="btn-canva">🖌️ Abrir no Canva — Feed 1080×1350</a></div>`
   );
 
   // Story
@@ -3178,6 +3391,8 @@ async function salvarCorrecoes() {
 })();
 fetchAgenda().then(() => {
   loadMonth();
+  syncPlanMonth();
+  renderMonthlyPlan();
   const hash = location.hash.replace('#', '');
   if (hash && document.getElementById('tab-' + hash)) switchTab(hash);
 });

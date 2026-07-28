@@ -8,7 +8,7 @@ Status: **em planejamento — não iniciado**
 ## Objetivo
 
 Após aprovar a copy de um post, gerar automaticamente as artes no formato:
-- **Feed**: 1080 × 1080 px
+- **Feed**: 1080 × 1350 px (4:5)
 - **Story**: 1080 × 1920 px
 
 Seguindo a identidade visual do Laslo Vet, enviando para aprovação via Telegram e arquivando no Google Drive.
@@ -104,8 +104,8 @@ Drive/
 
 Antes de construir o workflow, precisamos criar os templates no Google Slides:
 
-### Template Feed (1080×1080)
-- [ ] Slide configurado para 1080×1080 (Arquivo → Configurar página → Personalizado)
+### Template Feed (1080×1350)
+- [ ] Slide configurado para 1080×1350 (Arquivo → Configurar página → Personalizado)
 - [ ] Logo Laslo posicionado
 - [ ] Paleta de cores da marca aplicada
 - [ ] Placeholder `{{titulo}}` — caixa de texto com fonte/tamanho definido
