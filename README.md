@@ -90,6 +90,38 @@ O controle de aprovação registra separadamente: `Não enviado`, `Aguardando Ve
 Na visualização do planejamento, títulos são apresentados sem emoticons e sem travessões.
 O valor literal no `agenda.json` é preservado para não quebrar o fluxo de copies.
 
+### Blocos de atividades
+
+O planejamento não depende apenas de uma tabela cronológica. A aba cria blocos automáticos:
+
+- PET VET Expo;
+- uma seção para cada Live e Webinar;
+- Produtos e soluções;
+- Institucional;
+- Datas e eventos;
+- Reels e vídeos.
+
+Cada bloco mostra período, volume de peças, próxima ação e conflitos. Na visão interna,
+também mostra atividades em aberto e itens com a Vera.
+
+Regras completas: ver `MODELO-BLOCOS-ATIVIDADES.md`.
+
+### Painel operacional
+
+Ao ativar **Mostrar prazos internos**, o planejamento passa a funcionar como painel de execução:
+
+- mostra até três conteúdos prioritários em **O que produzir agora**;
+- calcula atraso e prioridade pela data de criação;
+- oferece botões para começar, avançar a etapa ou marcar como agendado;
+- compara os posts de feed da camada contratual com o limite de 8 por mês;
+- sugere uma pauta não prioritária para o mês seguinte quando houver excesso;
+- identifica datas comemorativas que já possuem post editorial relacionado e evita duplicá-las;
+- alerta sobre picos de produção e recomenda produção em lote;
+- mantém o calendário completo recolhido como visão de detalhe.
+
+Os alertas desta versão aparecem dentro da ferramenta. Notificações externas por e-mail ou
+WhatsApp dependem de uma etapa posterior de automação e de status compartilhados no Supabase.
+
 ### Datas de produção
 
 Itens da agenda podem receber os campos opcionais:

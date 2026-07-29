@@ -413,6 +413,10 @@
   .plan-wrap { max-width: 1120px; margin: 0 auto; padding: 28px 24px 80px; }
   .plan-toolbar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
   .plan-toolbar select { padding:8px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--surface); font:inherit; color:var(--text); }
+  .plan-filter-details { width:100%; }
+  .plan-filter-details summary { cursor:pointer; color:var(--text2); font-size:11px; font-weight:700; }
+  .plan-filter-row { display:flex; gap:10px; margin-top:9px; }
+  .plan-filter-row select { flex:1; }
   .plan-cover { background:linear-gradient(135deg,#7d251a,#a94028); color:#fff; border-radius:18px; padding:34px 38px; margin-bottom:18px; position:relative; overflow:hidden; }
   .plan-cover:after { content:""; position:absolute; width:260px; height:260px; border:46px solid rgba(251,171,72,.22); border-radius:50%; right:-80px; top:-105px; }
   .plan-kicker { font-size:11px; text-transform:uppercase; letter-spacing:.16em; font-weight:700; color:#ffd5a1; }
@@ -430,6 +434,54 @@
   .plan-priority { border-left:4px solid var(--orange); padding:10px 12px; background:var(--surface2); border-radius:0 8px 8px 0; }
   .plan-priority strong { display:block; font-size:13px; }
   .plan-priority span { display:block; margin-top:3px; font-size:11px; color:var(--text3); }
+  .activity-blocks { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .activity-block { border:1px solid var(--border); border-radius:12px; background:#fff; overflow:hidden; }
+  .activity-block-head { padding:14px 15px 12px; border-top:5px solid var(--orange); border-bottom:1px solid var(--border); }
+  .activity-block-head strong { display:block; font-size:14px; }
+  .activity-block-head span { display:block; margin-top:3px; color:var(--text3); font-size:10px; text-transform:uppercase; letter-spacing:.05em; }
+  .activity-block-body { padding:13px 15px; }
+  .activity-block-metrics { display:flex; gap:16px; margin-bottom:12px; }
+  .activity-block-metrics div strong { font-size:16px; color:var(--orange-dark); }
+  .activity-block-metrics div span { display:block; font-size:9px; color:var(--text3); text-transform:uppercase; }
+  .activity-next { padding:9px 10px; border-radius:8px; background:var(--surface2); font-size:11px; line-height:1.45; }
+  .activity-next strong { display:block; margin-bottom:2px; font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:.05em; }
+  .activity-conflict { margin-top:8px; padding:8px 10px; border-radius:8px; background:#fff2df; color:#885114; font-size:10px; line-height:1.4; }
+  .activity-ok { margin-top:8px; color:var(--green); font-size:10px; }
+  .activity-milestones { margin:10px 0 0; padding:0; list-style:none; max-height:150px; overflow:auto; }
+  .activity-milestones li { display:grid; grid-template-columns:48px 1fr; gap:8px; padding:6px 0; border-top:1px solid var(--border); font-size:10px; }
+  .activity-milestones time { font-weight:700; color:var(--orange-dark); }
+  .activity-block.petvet .activity-block-head { border-top-color:#a94028; }
+  .activity-block.live .activity-block-head { border-top-color:#3e628b; }
+  .activity-block.produto .activity-block-head { border-top-color:#8b6a44; }
+  .activity-block.institucional .activity-block-head { border-top-color:#607d65; }
+  .activity-block.reels .activity-block-head { border-top-color:#755789; }
+  .activity-block.data .activity-block-head { border-top-color:#be7b2f; }
+  .ops-hero { background:linear-gradient(135deg,#202a38,#34465f); color:#fff; border-radius:16px; padding:22px; margin-bottom:16px; }
+  .ops-hero-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px; }
+  .ops-hero h3 { margin:3px 0 4px; font-size:22px; }
+  .ops-hero p { margin:0; color:#cbd5e1; font-size:12px; }
+  .ops-date { color:#f9c784; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+  .ops-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .ops-card { background:#fff; color:var(--text); border-radius:12px; padding:14px; min-height:135px; display:flex; flex-direction:column; }
+  .ops-card .ops-meta { color:var(--orange-dark); font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+  .ops-card strong { display:block; margin:6px 0 4px; font-size:13px; line-height:1.35; }
+  .ops-card small { color:var(--text3); line-height:1.4; }
+  .ops-actions { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-top:12px; }
+  .ops-btn { border:0; border-radius:8px; padding:7px 9px; font:inherit; font-size:10px; font-weight:700; cursor:pointer; background:var(--orange); color:#fff; }
+  .ops-btn.secondary { background:#edf1f5; color:#34465f; }
+  .ops-empty { grid-column:1/-1; padding:16px; border:1px dashed rgba(255,255,255,.35); border-radius:12px; color:#dbe5ef; font-size:12px; }
+  .insight-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .insight-card { padding:14px; border-radius:12px; border:1px solid var(--border); background:var(--surface2); }
+  .insight-card.warning { background:#fff5e8; border-color:#f1c98f; }
+  .insight-card.success { background:#eef8f1; border-color:#bddcc5; }
+  .insight-card strong { display:block; margin-bottom:5px; font-size:13px; }
+  .insight-card p { margin:0; color:var(--text2); font-size:11px; line-height:1.5; }
+  .capacity-bar { height:8px; border-radius:8px; background:#eadfd9; overflow:hidden; margin:9px 0 6px; }
+  .capacity-bar span { display:block; height:100%; background:var(--orange); border-radius:8px; }
+  .plan-details summary { cursor:pointer; padding:15px 18px; font-size:13px; font-weight:700; list-style:none; }
+  .plan-details summary::-webkit-details-marker { display:none; }
+  .plan-details summary:after { content:"Abrir"; float:right; color:var(--orange-dark); font-size:10px; text-transform:uppercase; }
+  .plan-details[open] summary:after { content:"Fechar"; }
   .plan-table { width:100%; border-collapse:collapse; font-size:12px; }
   .plan-table th { text-align:left; padding:9px 10px; background:var(--surface2); color:var(--text2); font-size:10px; text-transform:uppercase; letter-spacing:.04em; }
   .plan-table td { padding:10px; border-bottom:1px solid var(--border); vertical-align:top; }
@@ -442,6 +494,9 @@
   @media(max-width:760px) {
     .plan-grid { grid-template-columns:1fr; }
     .plan-priorities { grid-template-columns:1fr; }
+    .activity-blocks { grid-template-columns:1fr; }
+    .ops-cards, .insight-grid { grid-template-columns:1fr; }
+    .plan-filter-row { flex-direction:column; }
     .plan-wrap { padding:18px 12px 72px; }
     .plan-cover { padding:26px 22px; }
     .plan-table-wrap { overflow-x:auto; }
@@ -753,6 +808,8 @@
     .plan-wrap { max-width:100%; padding:0; }
     .plan-cover { border-radius:0; padding:24px 28px; }
     .plan-section, .plan-stat, .plan-priority { break-inside:avoid; page-break-inside:avoid; }
+    .activity-block { break-inside:avoid; page-break-inside:avoid; }
+    .activity-milestones { max-height:none; overflow:visible; }
     .plan-toolbar { display:none !important; }
     .plan-table { font-size:10px; }
     .plan-table th, .plan-table td { padding:7px 8px; }
@@ -974,26 +1031,31 @@
       </select>
       <label style="font-size:12px;color:var(--text2)"><input type="checkbox" id="plan-internal-toggle" onchange="togglePlanInternal()"> Mostrar prazos internos</label>
       <span id="plan-local-note" style="font-size:11px;color:var(--text3)">Andamento e aprovação ficam salvos neste navegador.</span>
-      <select id="plan-category-filter" onchange="renderMonthlyPlan()" aria-label="Filtrar categoria">
-        <option value="all">Todas as categorias</option>
-        <option value="petvet">PET VET</option>
-        <option value="live">Live e Webinar</option>
-        <option value="produto">Produtos e soluções</option>
-        <option value="institucional">Institucional</option>
-        <option value="data">Datas e eventos</option>
-        <option value="reels">Reels e vídeos</option>
-      </select>
-      <select id="plan-workflow-filter" onchange="renderMonthlyPlan()" aria-label="Filtrar andamento">
-        <option value="all">Todos os andamentos</option>
-        <option value="Não iniciado">Não iniciado</option>
-        <option value="Em criação">Em criação</option>
-        <option value="Revisão interna">Revisão interna</option>
-        <option value="Aguardando aprovação">Aguardando aprovação</option>
-        <option value="Ajustes solicitados">Ajustes solicitados</option>
-        <option value="Aprovado">Aprovado</option>
-        <option value="Agendado">Agendado</option>
-        <option value="Publicado">Publicado</option>
-      </select>
+      <details class="plan-filter-details">
+        <summary>Filtros avançados</summary>
+        <div class="plan-filter-row">
+          <select id="plan-category-filter" onchange="renderMonthlyPlan()" aria-label="Filtrar categoria">
+            <option value="all">Todas as categorias</option>
+            <option value="petvet">PET VET</option>
+            <option value="live">Live e Webinar</option>
+            <option value="produto">Produtos e soluções</option>
+            <option value="institucional">Institucional</option>
+            <option value="data">Datas e eventos</option>
+            <option value="reels">Reels e vídeos</option>
+          </select>
+          <select id="plan-workflow-filter" onchange="renderMonthlyPlan()" aria-label="Filtrar andamento">
+            <option value="all">Todos os andamentos</option>
+            <option value="Não iniciado">Não iniciado</option>
+            <option value="Em criação">Em criação</option>
+            <option value="Revisão interna">Revisão interna</option>
+            <option value="Aguardando aprovação">Aguardando aprovação</option>
+            <option value="Ajustes solicitados">Ajustes solicitados</option>
+            <option value="Aprovado">Aprovado</option>
+            <option value="Agendado">Agendado</option>
+            <option value="Publicado">Publicado</option>
+          </select>
+        </div>
+      </details>
       <button class="btn-save" onclick="window.print()">Exportar este planejamento em PDF</button>
     </div>
     <div id="plan-content"></div>
@@ -1293,6 +1355,99 @@ function categoryLabel(it) {
     institucional:'Institucional',
     produto:'Produtos e soluções'
   }[itemCategory(it)];
+}
+function blockKeyFor(it, monthItems) {
+  const category = itemCategory(it);
+  if (category === 'petvet') return 'petvet';
+  if (category === 'live') return `live:${it.produto || 'geral'}`;
+  if (it.produto && monthItems.some(x => itemCategory(x) === 'live' && x.produto === it.produto)) return `live:${it.produto}`;
+  return category;
+}
+function blockLabel(key) {
+  if (key === 'petvet') return 'PET VET Expo';
+  if (key.startsWith('live:')) return `Live ${key.split(':')[1].toUpperCase()}`;
+  return {
+    produto:'Produtos e soluções',
+    institucional:'Institucional',
+    data:'Datas e eventos',
+    reels:'Reels e vídeos'
+  }[key] || 'Outras atividades';
+}
+function blockClass(key) { return key.startsWith('live:') ? 'live' : key; }
+function dateRangeLabel(items) {
+  const dates = items.map(x => x.data_publicacao || x.data).filter(Boolean).sort();
+  if (!dates.length) return 'Período a definir';
+  if (dates[0] === dates[dates.length - 1]) return formatDateBR(dates[0]);
+  return `${ddmm(dates[0])} a ${ddmm(dates[dates.length - 1])}`;
+}
+function dateConflicts(allItems) {
+  const byPublication = {};
+  const byCreation = {};
+  allItems.forEach(it => {
+    const publication = it.data_publicacao || it.data;
+    (byPublication[publication] = byPublication[publication] || []).push(it);
+    const creation = creationDateFor(it);
+    (byCreation[creation] = byCreation[creation] || []).push(it);
+  });
+  return {
+    publication: Object.fromEntries(Object.entries(byPublication).filter(([,v]) => new Set(v.map(x => blockKeyFor(x, allItems))).size > 1)),
+    creation: Object.fromEntries(Object.entries(byCreation).filter(([,v]) => v.length >= 3))
+  };
+}
+function renderActivityBlocks(allItems, internal) {
+  const groups = new Map();
+  allItems.forEach(it => {
+    const key = blockKeyFor(it, allItems);
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(it);
+  });
+  const conflicts = dateConflicts(allItems);
+  const order = ['petvet','live','produto','institucional','data','reels'];
+  return [...groups.entries()]
+    .sort(([a],[b]) => {
+      const ai = a.startsWith('live:') ? 1 : order.indexOf(a);
+      const bi = b.startsWith('live:') ? 1 : order.indexOf(b);
+      return ai - bi || a.localeCompare(b);
+    })
+    .map(([key, items]) => {
+      items.sort((a,b) => (a.data || '').localeCompare(b.data || ''));
+      const feeds = items.filter(x => x.formato === 'feed').length;
+      const stories = items.filter(x => x.formato === 'story').length;
+      const pending = items.filter(x => !['Agendado','Publicado'].includes(getWorkflowStatus(x.id)));
+      const approval = items.filter(x => ['Aguardando aprovação'].includes(getWorkflowStatus(x.id)) || getApprovalStatus(x.id) === 'Aguardando Vera').length;
+      const next = pending[0];
+      const conflictDates = [...new Set(items.flatMap(it => {
+        const dates = [];
+        const pub = it.data_publicacao || it.data;
+        if (conflicts.publication[pub]) dates.push(`${ddmm(pub)} com ${conflicts.publication[pub].length} publicações`);
+        const creation = creationDateFor(it);
+        if (conflicts.creation[creation]) dates.push(`${ddmm(creation)} com ${conflicts.creation[creation].length} entregas internas`);
+        return dates;
+      }))];
+      const milestones = internal ? items.slice(0,8) : clientPlanItems(items).slice(0,6);
+      return `<article class="activity-block ${escapeHTML(blockClass(key))}">
+        <div class="activity-block-head">
+          <strong>${escapeHTML(cleanLasloText(blockLabel(key)))}</strong>
+          <span>${escapeHTML(dateRangeLabel(items))}</span>
+        </div>
+        <div class="activity-block-body">
+          <div class="activity-block-metrics">
+            <div><strong>${feeds}</strong><span>Feed</span></div>
+            <div><strong>${stories}</strong><span>Stories</span></div>
+            ${internal ? `<div><strong>${pending.length}</strong><span>Em aberto</span></div><div><strong>${approval}</strong><span>Com Vera</span></div>` : ''}
+          </div>
+          <div class="activity-next"><strong>Próxima ação</strong>${
+            next
+              ? `${internal ? `Criar até ${formatDateBR(creationDateFor(next))}: ` : ''}${escapeHTML(cleanLasloText(next.titulo))}`
+              : 'Bloco concluído'
+          }</div>
+          ${conflictDates.length
+            ? `<div class="activity-conflict"><strong>Atenção às datas:</strong> ${escapeHTML(conflictDates.join('; '))}</div>`
+            : '<div class="activity-ok">Sem sobreposição crítica identificada.</div>'}
+          <ul class="activity-milestones">${milestones.map(it => `<li><time>${escapeHTML(it.data_label || ddmm(it.data_publicacao || it.data))}</time><span>${escapeHTML(cleanLasloText(it.titulo))}</span></li>`).join('')}</ul>
+        </div>
+      </article>`;
+    }).join('');
 }
 const WEBINAR_COINCIDENCE_ALERT = {
   'Ago 2026': '⚠️ <strong>Agosto tem Webinar (BS680 — 25/08) e PET VET Expo (12–14/ago) no mesmo mês.</strong> O D-13 do webinar (12/08) coincide com o Dia 1 da feira — use stories nos intervalos do evento.',
@@ -1779,6 +1934,99 @@ function planPriorityItems(month, items) {
   return priorities.slice(0,4);
 }
 
+function localISODate() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+}
+function normalizedWords(value) {
+  return cleanLasloText(value).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\b(dia|mundial|nacional|internacional|de|da|do|dos|das|para|e|em)\b/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ').trim().split(/\s+/).filter(x => x.length > 2);
+}
+function relatedEditorialForEvent(event, items) {
+  const eventWords = normalizedWords(event.titulo);
+  return items.find(it => it.id !== event.id && it.formato === 'feed' && Math.abs(
+    new Date(`${it.data}T12:00:00`) - new Date(`${event.data}T12:00:00`)
+  ) <= 3 * 86400000 && eventWords.filter(w => normalizedWords(it.titulo).includes(w)).length >= Math.min(2, eventWords.length));
+}
+function productionInsights(items) {
+  const contractFeeds = items.filter(x => x.camada === 'contrato' && x.formato === 'feed');
+  const campaignFeeds = items.filter(x => x.camada !== 'contrato' && x.formato === 'feed');
+  const mergedEvents = items.filter(x => x.camada === 'evento' && relatedEditorialForEvent(x, items));
+  const moveCandidate = contractFeeds.filter(x =>
+    !items.some(event => event.camada === 'evento' && relatedEditorialForEvent(event, items)?.id === x.id) &&
+    !/pet.?vet|live|webinar/i.test(`${x.titulo} ${x.produto || ''}`)
+  ).sort((a,b) => b.data.localeCompare(a.data))[0] || contractFeeds[contractFeeds.length - 1];
+  const insights = [{
+    type: contractFeeds.length > 8 ? 'warning' : 'success',
+    title: `${contractFeeds.length} de 8 posts contratuais`,
+    text: contractFeeds.length > 8
+      ? `Há ${contractFeeds.length - 8} post${contractFeeds.length - 8 > 1 ? 's' : ''} acima do contratado. Sugestão: mover “${cleanLasloText(moveCandidate?.titulo)}” para o próximo mês, por estar no fim do calendário e fora das campanhas principais.`
+      : `Volume dentro do contrato. ${campaignFeeds.length ? `Existem ainda ${campaignFeeds.length} feeds extras de campanha.` : ''}`,
+    capacity: Math.min(100, contractFeeds.length / 8 * 100)
+  }];
+  if (mergedEvents.length) insights.push({
+    type:'success',
+    title:`${mergedEvents.length} data${mergedEvents.length > 1 ? 's' : ''} já aproveitada${mergedEvents.length > 1 ? 's' : ''}`,
+    text:`${mergedEvents.map(x => cleanLasloText(x.titulo)).join(' e ')} já possuem post relacionado. O sistema trata cada par como um único conteúdo, sem duplicar a produção.`
+  });
+  const sameCreation = {};
+  items.filter(x => x.formato !== 'evento').forEach(x => {
+    const d = creationDateFor(x);
+    (sameCreation[d] = sameCreation[d] || []).push(x);
+  });
+  const peak = Object.entries(sameCreation).sort((a,b) => b[1].length - a[1].length)[0];
+  if (peak && peak[1].length >= 3) insights.push({
+    type:'warning',
+    title:`Pico de produção em ${ddmm(peak[0])}`,
+    text:`${peak[1].length} peças vencem juntas. Produza primeiro os feeds e agrupe os stories da mesma campanha em um único lote.`
+  });
+  return insights;
+}
+function operationalTasks(items) {
+  const today = localISODate();
+  const active = items.filter(x =>
+    x.formato !== 'evento' &&
+    ((x.data_publicacao || x.data) >= today || getWorkflowStatus(x.id) !== 'Não iniciado') &&
+    !['Aprovado','Agendado','Publicado'].includes(getWorkflowStatus(x.id))
+  ).sort((a,b) =>
+    creationDateFor(a).localeCompare(creationDateFor(b)) ||
+    ({feed:0,reel:1,story:2}[a.formato] ?? 3) - ({feed:0,reel:1,story:2}[b.formato] ?? 3)
+  );
+  const due = active.filter(x => creationDateFor(x) <= today);
+  return (due.length ? due : active).slice(0,3);
+}
+function advanceTask(id) {
+  const current = getWorkflowStatus(id);
+  const next = current === 'Não iniciado' ? 'Em criação' :
+    current === 'Em criação' ? 'Revisão interna' :
+    current === 'Revisão interna' ? 'Aguardando aprovação' : 'Aprovado';
+  setWorkflowStatus(id, next);
+}
+function renderOperations(items) {
+  const today = localISODate();
+  const tasks = operationalTasks(items);
+  return `<section class="ops-hero no-print">
+    <div class="ops-hero-top">
+      <div><div class="ops-date">${formatDateBR(today)}</div><h3>O que produzir agora</h3><p>Prioridade calculada pelos prazos e pelo andamento de cada peça.</p></div>
+    </div>
+    <div class="ops-cards">${tasks.length ? tasks.map(it => {
+      const due = creationDateFor(it);
+      const late = due < today;
+      return `<article class="ops-card">
+        <span class="ops-meta">${late ? 'Prazo vencido' : due === today ? 'Para hoje' : `Próxima: ${ddmm(due)}`} · ${escapeHTML(it.formato)}</span>
+        <strong>${escapeHTML(cleanLasloText(it.titulo))}</strong>
+        <small>Publicação ${formatDateBR(it.data_publicacao || it.data)} · ${escapeHTML(getWorkflowStatus(it.id))}</small>
+        <div class="ops-actions">
+          <button class="ops-btn" onclick="advanceTask('${escapeHTML(it.id)}')">${getWorkflowStatus(it.id) === 'Não iniciado' ? 'Começar agora' : 'Avançar etapa'}</button>
+          <button class="ops-btn secondary" onclick="setWorkflowStatus('${escapeHTML(it.id)}','Agendado')">Marcar agendado</button>
+        </div>
+      </article>`;
+    }).join('') : '<div class="ops-empty">Nenhuma produção pendente para este mês.</div>'}</div>
+  </section>`;
+}
+
 function renderMonthlyPlan() {
   const month = document.getElementById('plan-month-sel').value;
   const content = document.getElementById('plan-content');
@@ -1790,14 +2038,20 @@ function renderMonthlyPlan() {
     (workflowFilter === 'all' || getWorkflowStatus(it.id) === workflowFilter)
   );
   const internal = document.getElementById('plan-internal-toggle').checked;
-  const displayItems = internal ? items : clientPlanItems(items);
-  const feedPosts = allItems.filter(x => x.formato === 'feed').length;
+  const consolidatedItems = items.filter(it => !(it.camada === 'evento' && relatedEditorialForEvent(it, allItems)));
+  const displayItems = internal ? consolidatedItems : clientPlanItems(consolidatedItems);
+  const feedPosts = allItems.filter(x => x.camada === 'contrato' && x.formato === 'feed').length;
   const stories = allItems.filter(x => x.formato === 'story').length;
   const campaigns = new Set(allItems.filter(x => x.camada === 'live' || /pet.?vet/i.test(x.titulo)).map(x => x.produto || x.titulo.split(':')[0])).size;
   const awaiting = allItems.filter(x => getWorkflowStatus(x.id) === 'Aguardando aprovação' || getApprovalStatus(x.id) === 'Aguardando Vera').length;
-  const open = allItems.filter(x => !['Aprovado','Agendado','Publicado'].includes(getWorkflowStatus(x.id))).length;
+  const today = localISODate();
+  const open = allItems.filter(x =>
+    ((x.data_publicacao || x.data) >= today || getWorkflowStatus(x.id) !== 'Não iniciado') &&
+    !['Aprovado','Agendado','Publicado'].includes(getWorkflowStatus(x.id))
+  ).length;
   const completed = allItems.filter(x => ['Agendado','Publicado'].includes(getWorkflowStatus(x.id))).length;
   const priorities = planPriorityItems(month, allItems);
+  const insights = productionInsights(allItems);
   const pendencias = month === 'Ago 2026' ? [
     'Confirmar participação de estudantes no sorteio da BLVet.',
     'Aprovar regulamento e campos finais do formulário.',
@@ -1823,14 +2077,27 @@ function renderMonthlyPlan() {
         <div class="plan-stat"><strong>${campaigns}</strong><span>campanhas prioritárias</span></div>
       `}
     </div>
+    ${internal ? renderOperations(allItems) : ''}
+    ${internal ? `<section class="plan-section">
+      <div class="plan-section-head"><h3>Inteligência de produção</h3><span class="plan-tag">Atenção agora</span></div>
+      <div class="plan-section-body"><div class="insight-grid">${insights.map(x => `<article class="insight-card ${x.type}">
+        <strong>${escapeHTML(x.title)}</strong>
+        ${x.capacity !== undefined ? `<div class="capacity-bar"><span style="width:${x.capacity}%"></span></div>` : ''}
+        <p>${escapeHTML(x.text)}</p>
+      </article>`).join('')}</div></div>
+    </section>` : ''}
+    <section class="plan-section">
+      <div class="plan-section-head"><h3>Blocos de atividades</h3><span class="plan-tag">Visão prática</span></div>
+      <div class="plan-section-body"><div class="activity-blocks">${renderActivityBlocks(allItems, internal)}</div></div>
+    </section>
     <section class="plan-section">
       <div class="plan-section-head"><h3>Prioridades do mês</h3><span class="plan-tag">Estratégia</span></div>
       <div class="plan-section-body"><div class="plan-priorities">
         ${priorities.map(p => `<div class="plan-priority"><strong>${escapeHTML(p[0])}</strong><span>${escapeHTML(p[1])}</span></div>`).join('')}
       </div></div>
     </section>
-    <section class="plan-section">
-      <div class="plan-section-head"><h3>Calendário de atividades</h3><span class="plan-tag">${displayItems.length} itens${internal ? '' : ' resumidos'}</span></div>
+    <details class="plan-section plan-details"${internal ? '' : ' open'}>
+      <summary>Calendário completo <span class="plan-tag">${displayItems.length} itens${internal ? '' : ' resumidos'}</span></summary>
       <div class="plan-table-wrap"><table class="plan-table">
         <thead><tr><th>Publicação</th><th>Categoria</th><th>Formato</th><th>Atividade</th><th>ADS</th><th class="plan-internal-col">Criar até</th><th class="plan-internal-col">Andamento</th><th class="plan-internal-col">Aprovação</th></tr></thead>
         <tbody>${displayItems.map(it => `<tr>
@@ -1844,7 +2111,7 @@ function renderMonthlyPlan() {
           <td class="plan-internal-col"><select onchange="setApprovalStatus('${escapeHTML(it.id)}',this.value)">${APPROVAL_STATES.map(x => `<option${getApprovalStatus(it.id) === x ? ' selected' : ''}>${x}</option>`).join('')}</select></td>
         </tr>`).join('') || '<tr><td colspan="8">Nenhuma atividade cadastrada para os filtros selecionados.</td></tr>'}</tbody>
       </table></div>
-    </section>
+    </details>
     <section class="plan-section">
       <div class="plan-section-head"><h3>Pontos para aprovação da Laslo</h3><span class="plan-tag">Pendências</span></div>
       <div class="plan-section-body"><ul class="plan-pending">${pendencias.map(x => `<li>${escapeHTML(x)}</li>`).join('')}</ul></div>
