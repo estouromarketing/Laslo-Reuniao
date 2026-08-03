@@ -1153,9 +1153,10 @@
     "data": "2026-08-06",
     "camada": "contrato",
     "formato": "feed",
-    "titulo": "Dia Mundial do Gato (08/08): precisão de infusão para felinos",
-    "produto": "insumos",
-    "ads": false
+    "titulo": "BS680 VET: TIVA de qualidade para mais clínicas",
+    "produto": "bs680",
+    "ads": true,
+    "obs": "Aquecimento da live de 25/08; pauta pendente do antigo Lote 3"
   },
   {
     "id": "2026-08-08-ev-1",
@@ -1164,6 +1165,15 @@
     "formato": "evento",
     "titulo": "Dia Mundial do Gato",
     "produto": "",
+    "ads": false
+  },
+  {
+    "id": "2026-08-08-ev-2",
+    "data": "2026-08-08",
+    "camada": "evento",
+    "formato": "story",
+    "titulo": "Dia Mundial do Gato: cuidado e precisão para pacientes felinos",
+    "produto": "institucional",
     "ads": false
   },
   {
