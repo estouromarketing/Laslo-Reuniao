@@ -224,6 +224,36 @@
     line-height: 1.5;
   }
 
+  /* PLANO MESTRE */
+  .ops-hero { background:#0e2d3d; color:#fff; border-radius:16px; padding:24px; margin-bottom:18px; }
+  .ops-hero h2 { font-size:22px; line-height:1.25; margin-bottom:6px; }
+  .ops-hero p { color:#c9d8df; max-width:720px; }
+  .ops-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:16px 0 20px; }
+  .ops-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; }
+  .ops-card strong { display:block; font-size:24px; line-height:1; color:#0e2d3d; margin-bottom:6px; }
+  .ops-card span { color:var(--text2); font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+  .ops-controls { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+  .ops-controls select { width:auto; min-width:180px; padding:8px 10px; border:1px solid var(--border); background:var(--surface); }
+  .ops-table-wrap { overflow:auto; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); }
+  .ops-table { width:100%; min-width:1180px; border-collapse:collapse; }
+  .ops-table th { background:#0e2d3d; color:#fff; padding:10px 12px; text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:.05em; }
+  .ops-table td { border-bottom:1px solid var(--border); padding:10px 12px; vertical-align:top; font-size:12px; }
+  .ops-table tr:last-child td { border-bottom:none; }
+  .ops-table .ops-id { font-family:'DM Mono',monospace; color:var(--text3); white-space:nowrap; }
+  .ops-table .ops-theme { font-weight:600; color:var(--text); min-width:180px; }
+  .ops-table .ops-next { min-width:260px; }
+  .ops-badge { display:inline-block; border-radius:20px; padding:3px 9px; font-size:10px; font-weight:600; white-space:nowrap; }
+  .ops-done { background:var(--green-bg); color:var(--green); }
+  .ops-progress { background:var(--blue-bg); color:var(--blue); }
+  .ops-wait { background:var(--amber-bg); color:var(--amber); }
+  .ops-plan { background:var(--surface2); color:var(--text2); }
+  .ops-date { font-family:'DM Mono',monospace; white-space:nowrap; }
+  .ops-meeting { display:grid; grid-template-columns:repeat(6,minmax(120px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:18px; }
+  .ops-meeting div { background:var(--surface); padding:12px; font-size:11px; color:var(--text2); }
+  .ops-meeting strong { display:block; color:#0e2d3d; font-size:12px; margin-bottom:3px; }
+  .ops-empty { padding:30px; text-align:center; color:var(--text3); }
+  @media (max-width:700px) { .ops-summary { grid-template-columns:repeat(2,minmax(0,1fr)); } .ops-meeting { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
   /* ── FORM ELEMENTS ── */
   input[type=text], select, textarea {
     width: 100%;
@@ -841,6 +871,7 @@
   <div class="tab-nav-inner">
     <button class="tab-btn active" onclick="switchTab('pauta')">Pauta da Reunião</button>
     <button class="tab-btn" onclick="switchTab('planejamento')">Planejamento Mensal</button>
+    <button class="tab-btn" onclick="switchTab('operacao')">Plano Mestre</button>
     <button class="tab-btn" onclick="switchTab('calendario')">📅 Calendário</button>
     <button class="tab-btn" onclick="switchTab('copies')">✦ Copies <span id="copies-badge" style="display:none;background:var(--orange);color:#fff;border-radius:20px;font-size:10px;padding:1px 6px;margin-left:4px;font-weight:700"></span></button>
     <button class="tab-btn" onclick="switchTab('analise')">Análise de KPIs</button>
@@ -1062,6 +1093,34 @@
   </div>
 </div>
 
+<div id="tab-operacao" class="tab-panel">
+  <div class="main" style="max-width:1240px">
+    <div class="ops-hero">
+      <h2>Plano Mestre Laslo 2026</h2>
+      <p>Uma visão única das ações, responsáveis, prazos, status e próximos passos. As datas atuais são propostas operacionais até validação na próxima reunião.</p>
+      <a href="https://app.estouro.com.br/cliente/75c7eef6-aec1-4392-9f97-f6ef06e28936/operacao" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:9px;padding:8px 12px;text-decoration:none;font-size:12px">Abrir visão no App Estouro</a>
+    </div>
+    <div class="ops-summary" id="ops-summary"></div>
+    <div class="section">
+      <div class="section-header"><div class="num">1</div><h2>Padrão obrigatório de reunião</h2><span class="sub">45 minutos</span></div>
+      <div class="section-body" style="padding:16px">
+        <div class="ops-meeting">
+          <div><strong>Tema ou ação</strong>O que será tratado</div><div><strong>Objetivo</strong>Qual resultado se busca</div><div><strong>Responsável</strong>Quem conduz</div><div><strong>Prazo</strong>Quando deve estar pronto</div><div><strong>Status</strong>Situação objetiva</div><div><strong>Próximo passo</strong>Primeira ação concreta</div>
+        </div>
+        <p style="font-size:12px;color:var(--text2)">Ordem: pendências críticas, entregas até a próxima reunião, decisões necessárias, resultados e próximos passos.</p>
+      </div>
+    </div>
+    <div class="ops-controls no-print">
+      <select id="ops-view" onchange="renderOperacao()"><option value="master">Plano completo</option><option value="execucao">Calendário de execução</option><option value="entrega">Calendário de entrega</option></select>
+      <select id="ops-front" onchange="renderOperacao()"><option value="all">Todas as frentes</option></select>
+      <select id="ops-status" onchange="renderOperacao()"><option value="all">Todos os status</option></select>
+      <button class="btn-copiar-brief" onclick="window.print()">Exportar visão</button>
+    </div>
+    <div class="ops-table-wrap"><table class="ops-table"><thead id="ops-head"></thead><tbody id="ops-body"></tbody></table></div>
+    <p id="ops-note" style="font-size:11px;color:var(--text3);margin-top:10px"></p>
+  </div>
+</div>
+
 <!-- ══ CALENDÁRIO ══ -->
 <div id="tab-calendario" class="tab-panel">
   <div class="main">
@@ -1280,6 +1339,7 @@ const N8N_WEBHOOK_URL = 'https://automacao.estouro.com.br/webhook/laslo-copy';
 // Editar o planejamento = editar agenda.json (ver AGENDA-EDITORIAL.md)
 // ══════════════════════════════════════════
 let AGENDA = [];
+let OPERACAO = { acoes: [] };
 const CAMADAS = {
   contrato: { label: 'Posts',   emoji: '🟢' },
   live:     { label: 'Lives',   emoji: '🔵' },
@@ -1296,6 +1356,55 @@ async function fetchAgenda() {
     AGENDA = [];
     if (typeof showToast === 'function') showToast('Erro ao carregar agenda.json — abra via servidor (GH Pages), não via file://', 'red');
   }
+}
+async function fetchOperacao() {
+  try {
+    const res = await fetch('operacao-laslo.json?v=' + Date.now());
+    if (!res.ok) throw new Error(res.status);
+    OPERACAO = await res.json();
+    prepareOperacaoFilters();
+  } catch (e) {
+    OPERACAO = { acoes: [] };
+  }
+}
+function opsStatusClass(status) {
+  const value = (status || '').toLowerCase();
+  if (value.includes('conclu')) return 'ops-done';
+  if (value.includes('andamento')) return 'ops-progress';
+  if (value.includes('aguard')) return 'ops-wait';
+  return 'ops-plan';
+}
+function opsDate(value) {
+  if (!value) return '';
+  const [y,m,d] = value.split('-');
+  return `${d}/${m}/${y}`;
+}
+function prepareOperacaoFilters() {
+  const fronts = [...new Set(OPERACAO.acoes.map(x => x.frente))].sort();
+  const statuses = [...new Set(OPERACAO.acoes.map(x => x.status))].sort();
+  const front = document.getElementById('ops-front');
+  const status = document.getElementById('ops-status');
+  if (front) front.innerHTML = '<option value="all">Todas as frentes</option>' + fronts.map(x => `<option>${x}</option>`).join('');
+  if (status) status.innerHTML = '<option value="all">Todos os status</option>' + statuses.map(x => `<option>${x}</option>`).join('');
+  renderOperacao();
+}
+function renderOperacao() {
+  const body = document.getElementById('ops-body');
+  if (!body) return;
+  const view = document.getElementById('ops-view').value;
+  const front = document.getElementById('ops-front').value;
+  const status = document.getElementById('ops-status').value;
+  const dateField = view === 'execucao' ? 'data_execucao' : 'data_entrega';
+  let rows = OPERACAO.acoes.filter(x => (front === 'all' || x.frente === front) && (status === 'all' || x.status === status));
+  if (view !== 'master') rows.sort((a,b) => (a[dateField] || '').localeCompare(b[dateField] || ''));
+  document.getElementById('ops-head').innerHTML = view === 'master' ? '<tr><th>ID</th><th>Frente e tema</th><th>Objetivo</th><th>Responsável</th><th>Execução</th><th>Entrega</th><th>Status</th><th>Próximo passo</th></tr>' : '<tr><th>Data</th><th>ID</th><th>Frente e tema</th><th>Responsável</th><th>Status</th><th>Próximo passo</th></tr>';
+  body.innerHTML = rows.length ? rows.map(x => view === 'master' ? `<tr><td class="ops-id">${x.id}</td><td class="ops-theme">${x.frente}<br><span style="font-weight:400;color:var(--text2)">${x.tema}</span></td><td>${x.objetivo}</td><td>${x.responsavel}<br><span style="color:var(--text3)">${x.apoio}</span></td><td class="ops-date">${opsDate(x.data_execucao)}</td><td class="ops-date">${opsDate(x.data_entrega)}</td><td><span class="ops-badge ${opsStatusClass(x.status)}">${x.status}</span></td><td class="ops-next">${x.proximo_passo}</td></tr>` : `<tr><td class="ops-date">${opsDate(x[dateField])}</td><td class="ops-id">${x.id}</td><td class="ops-theme">${x.frente}<br><span style="font-weight:400;color:var(--text2)">${x.tema}</span></td><td>${x.responsavel}</td><td><span class="ops-badge ${opsStatusClass(x.status)}">${x.status}</span></td><td class="ops-next">${x.proximo_passo}</td></tr>`).join('') : '<tr><td colspan="8" class="ops-empty">Nenhuma ação encontrada com estes filtros.</td></tr>';
+  const total = OPERACAO.acoes.length;
+  const done = OPERACAO.acoes.filter(x => x.status === 'Concluído').length;
+  const progress = OPERACAO.acoes.filter(x => x.status.includes('andamento')).length;
+  const waiting = OPERACAO.acoes.filter(x => x.status.includes('Aguardando')).length;
+  document.getElementById('ops-summary').innerHTML = `<div class="ops-card"><strong>${total}</strong><span>Ações mapeadas</span></div><div class="ops-card"><strong>${done}</strong><span>Concluídas</span></div><div class="ops-card"><strong>${progress}</strong><span>Em andamento</span></div><div class="ops-card"><strong>${waiting}</strong><span>Aguardando Laslo</span></div>`;
+  document.getElementById('ops-note').textContent = OPERACAO.observacao || '';
 }
 function agendaForMonth(monthLabel) {
   const key = monthKey(monthLabel);
@@ -3294,6 +3403,7 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => {
     if ((tab === 'pauta' && b.textContent.toLowerCase().includes('pauta')) ||
         (tab === 'planejamento' && b.textContent.toLowerCase().includes('planejamento')) ||
+        (tab === 'operacao' && b.textContent.toLowerCase().includes('plano mestre')) ||
         (tab === 'calendario' && b.textContent.includes('Calendário')) ||
         (tab === 'analise' && b.textContent.toLowerCase().includes('análise')) ||
         (tab === 'diagnostico' && b.textContent.includes('Diagnóstico')) ||
@@ -3304,6 +3414,7 @@ function switchTab(tab) {
   });
   if (tab === 'calendario') { syncCalMonth(); renderCalendar(); }
   if (tab === 'planejamento') { syncPlanMonth(); renderMonthlyPlan(); }
+  if (tab === 'operacao') renderOperacao();
   if (tab === 'analise') renderAnalise();
   if (tab === 'diagnostico') renderDiagnostico();
   if (tab === 'copies') {
@@ -3711,7 +3822,7 @@ async function salvarCorrecoes() {
     }
   });
 })();
-fetchAgenda().then(() => {
+Promise.all([fetchAgenda(), fetchOperacao()]).then(() => {
   loadMonth();
   syncPlanMonth();
   if (new URLSearchParams(location.search).get('modo') === 'interno') {

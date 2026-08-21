@@ -1,5 +1,13 @@
 # Plano de migração: Reunião Laslo (standalone) → estouro-app
 
+## Atualização de 21/08/2026
+
+A primeira visão autenticada do plano operacional foi implementada em:
+
+`https://app.estouro.com.br/cliente/75c7eef6-aec1-4392-9f97-f6ef06e28936/operacao`
+
+Ela já apresenta plano mestre, responsáveis, execução, entrega, status e próximos passos. Nesta etapa, a fonte ainda é o arquivo estruturado `operacao-laslo.json`. A próxima fase é persistir alterações no Supabase com histórico e permissões, fazendo o site público consumir apenas uma visão de leitura.
+
 **Objetivo:** levar a ferramenta de reunião do standalone público (GitHub Pages, com a chave Supabase exposta e sem login) para a versão autenticada dentro do estouro-app (`/cliente/[id]/reuniao`), aposentando o standalone. Resolve a segurança de raiz (auth real) e elimina a duplicação de dados.
 
 ## Situação atual (24/06/2026)

@@ -1,5 +1,14 @@
 # Laslo — Pauta de Reunião Mensal
 
+## Fonte operacional atual
+
+- `agenda.json`: calendário editorial anual.
+- `operacao-laslo.json`: plano mestre com responsáveis, execução, entrega, status e próximos passos.
+- Aba **Plano Mestre**: visão de gestão e pauta objetiva de reunião.
+- App Estouro: `/cliente/75c7eef6-aec1-4392-9f97-f6ef06e28936/operacao`.
+
+As planilhas e apresentações anteriores permanecem como histórico. Não devem substituir estas duas fontes estruturadas.
+
 Ferramenta de reunião mensal entre Estouro Marketing e Laslo Vet.
 
 **URL:** https://estouromarketing.github.io/Laslo-Reuniao/

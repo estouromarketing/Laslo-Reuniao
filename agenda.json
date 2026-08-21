@@ -648,6 +648,24 @@
     "ads": true
   },
   {
+    "id": "2026-07-08-lv-1",
+    "data": "2026-07-08",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live Descartáveis — Convite da live (D-13)",
+    "produto": "descartaveis",
+    "ads": false
+  },
+  {
+    "id": "2026-07-08-lv-2",
+    "data": "2026-07-08",
+    "camada": "live",
+    "formato": "feed",
+    "titulo": "Live Descartáveis — Convite no feed",
+    "produto": "descartaveis",
+    "ads": true
+  },
+  {
     "id": "2026-07-08-yt-1",
     "data": "2026-07-08",
     "camada": "reels",
@@ -668,30 +686,12 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-07-08-lv-1",
-    "data": "2026-07-08",
+    "id": "2026-07-10-lv-1",
+    "data": "2026-07-10",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live Descartáveis — Convite da live (D-13)",
+    "titulo": "Live Descartáveis — Salve a data",
     "produto": "descartaveis",
-    "ads": false
-  },
-  {
-    "id": "2026-07-08-lv-2",
-    "data": "2026-07-08",
-    "camada": "live",
-    "formato": "feed",
-    "titulo": "Live Descartáveis — Convite no feed",
-    "produto": "descartaveis",
-    "ads": true
-  },
-  {
-    "id": "2026-07-16-ct-1",
-    "data": "2026-07-16",
-    "camada": "contrato",
-    "formato": "feed",
-    "titulo": "Clube Laslo: Benefícios",
-    "produto": "clube",
     "ads": false
   },
   {
@@ -705,15 +705,6 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-07-10-lv-1",
-    "data": "2026-07-10",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Descartáveis — Salve a data",
-    "produto": "descartaveis",
-    "ads": false
-  },
-  {
     "id": "2026-07-12-lv-1",
     "data": "2026-07-12",
     "camada": "live",
@@ -721,16 +712,6 @@
     "titulo": "Live Descartáveis — Pergunta provocativa",
     "produto": "descartaveis",
     "ads": false
-  },
-  {
-    "id": "2026-07-14-yt-1",
-    "data": "2026-07-14",
-    "camada": "reels",
-    "formato": "youtube",
-    "titulo": "YouTube corte longo: Seringa errada, dose errada",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "19:00"
   },
   {
     "id": "2026-07-14-ct-1",
@@ -751,23 +732,14 @@
     "ads": false
   },
   {
-    "id": "2026-07-15-yt-1",
-    "data": "2026-07-15",
+    "id": "2026-07-14-yt-1",
+    "data": "2026-07-14",
     "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte: Sua bomba de infusão está descalibrada?",
+    "formato": "youtube",
+    "titulo": "YouTube corte longo: Seringa errada, dose errada",
     "produto": "youtube",
     "ads": false,
-    "hora": "12:00"
-  },
-  {
-    "id": "2026-07-23-ct-1",
-    "data": "2026-07-23",
-    "camada": "contrato",
-    "formato": "feed",
-    "titulo": "ELASTOvet: pós-operatório com controle de dor em casa",
-    "produto": "elastovet",
-    "ads": false
+    "hora": "19:00"
   },
   {
     "id": "2026-07-15-lv-1",
@@ -785,6 +757,25 @@
     "formato": "story",
     "titulo": "Live Descartáveis — Engajamento / gancho",
     "produto": "descartaveis",
+    "ads": false
+  },
+  {
+    "id": "2026-07-15-yt-1",
+    "data": "2026-07-15",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte: Sua bomba de infusão está descalibrada?",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
+  },
+  {
+    "id": "2026-07-16-ct-1",
+    "data": "2026-07-16",
+    "camada": "contrato",
+    "formato": "feed",
+    "titulo": "Clube Laslo: Benefícios",
+    "produto": "clube",
     "ads": false
   },
   {
@@ -815,25 +806,6 @@
     "ads": false
   },
   {
-    "id": "2026-07-17-yt-1",
-    "data": "2026-07-17",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte: 40 causas de erro numa só infusão",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
-  },
-  {
-    "id": "2026-07-30-ct-1",
-    "data": "2026-07-30",
-    "camada": "contrato",
-    "formato": "feed",
-    "titulo": "Soluções Laslo: equipamento sem investimento inicial",
-    "produto": "solucoes",
-    "ads": false
-  },
-  {
     "id": "2026-07-17-lv-1",
     "data": "2026-07-17",
     "camada": "live",
@@ -850,6 +822,16 @@
     "titulo": "Live Descartáveis — CTA grupo VIP",
     "produto": "descartaveis",
     "ads": false
+  },
+  {
+    "id": "2026-07-17-yt-1",
+    "data": "2026-07-17",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte: 40 causas de erro numa só infusão",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
   },
   {
     "id": "2026-07-18-lv-1",
@@ -996,16 +978,6 @@
     "ads": false
   },
   {
-    "id": "2026-07-22-yt-1",
-    "data": "2026-07-22",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte: O truque do papel amassado na bomba de seringa",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
-  },
-  {
     "id": "2026-07-22-lv-1",
     "data": "2026-07-22",
     "camada": "live",
@@ -1033,6 +1005,25 @@
     "ads": false
   },
   {
+    "id": "2026-07-22-yt-1",
+    "data": "2026-07-22",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte: O truque do papel amassado na bomba de seringa",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
+  },
+  {
+    "id": "2026-07-23-ct-1",
+    "data": "2026-07-23",
+    "camada": "contrato",
+    "formato": "feed",
+    "titulo": "ELASTOvet: pós-operatório com controle de dor em casa",
+    "produto": "elastovet",
+    "ads": false
+  },
+  {
     "id": "2026-07-24-ct-1",
     "data": "2026-07-24",
     "camada": "contrato",
@@ -1053,16 +1044,6 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-07-28-yt-1",
-    "data": "2026-07-28",
-    "camada": "reels",
-    "formato": "youtube",
-    "titulo": "YouTube corte longo: A bomba não sabe qual seringa você usou",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "19:00"
-  },
-  {
     "id": "2026-07-28-ct-1",
     "data": "2026-07-28",
     "camada": "contrato",
@@ -1072,14 +1053,14 @@
     "ads": true
   },
   {
-    "id": "2026-07-29-yt-1",
-    "data": "2026-07-29",
+    "id": "2026-07-28-yt-1",
+    "data": "2026-07-28",
     "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte: 1 em cada 4 pacientes tem hipotensão",
+    "formato": "youtube",
+    "titulo": "YouTube corte longo: A bomba não sabe qual seringa você usou",
     "produto": "youtube",
     "ads": false,
-    "hora": "12:00"
+    "hora": "19:00"
   },
   {
     "id": "2026-07-29-ct-1",
@@ -1092,14 +1073,23 @@
     "obs": "Aquecimento da live de 25/08"
   },
   {
-    "id": "2026-07-31-yt-1",
-    "data": "2026-07-31",
+    "id": "2026-07-29-yt-1",
+    "data": "2026-07-29",
     "camada": "reels",
     "formato": "reel",
-    "titulo": "Reel corte: Fentanil — 100x mais potente",
+    "titulo": "Reel corte: 1 em cada 4 pacientes tem hipotensão",
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
+  },
+  {
+    "id": "2026-07-30-ct-1",
+    "data": "2026-07-30",
+    "camada": "contrato",
+    "formato": "feed",
+    "titulo": "Soluções Laslo: equipamento sem investimento inicial",
+    "produto": "solucoes",
+    "ads": false
   },
   {
     "id": "2026-07-31-ct-1",
@@ -1120,11 +1110,11 @@
     "ads": false
   },
   {
-    "id": "2026-08-04-yt-1",
-    "data": "2026-08-04",
+    "id": "2026-07-31-yt-1",
+    "data": "2026-07-31",
     "camada": "reels",
     "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
+    "titulo": "Reel corte: Fentanil — 100x mais potente",
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
@@ -1139,8 +1129,8 @@
     "ads": true
   },
   {
-    "id": "2026-08-06-yt-1",
-    "data": "2026-08-06",
+    "id": "2026-08-04-yt-1",
+    "data": "2026-08-04",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live Descartáveis",
@@ -1157,6 +1147,16 @@
     "produto": "bs680",
     "ads": true,
     "obs": "Aquecimento da live de 25/08; pauta pendente do antigo Lote 3"
+  },
+  {
+    "id": "2026-08-06-yt-1",
+    "data": "2026-08-06",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live Descartáveis",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
   },
   {
     "id": "2026-08-08-ev-1",
@@ -1186,6 +1186,15 @@
     "ads": false
   },
   {
+    "id": "2026-08-11-ct-1",
+    "data": "2026-08-11",
+    "camada": "contrato",
+    "formato": "feed",
+    "titulo": "PET VET Expo: começa amanhã — nos vemos lá!",
+    "produto": "petvet-expo",
+    "ads": true
+  },
+  {
     "id": "2026-08-11-yt-1",
     "data": "2026-08-11",
     "camada": "reels",
@@ -1196,15 +1205,6 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-08-11-ct-1",
-    "data": "2026-08-11",
-    "camada": "contrato",
-    "formato": "feed",
-    "titulo": "PET VET Expo: começa amanhã — nos vemos lá!",
-    "produto": "petvet-expo",
-    "ads": true
-  },
-  {
     "id": "2026-08-12-ev-1",
     "data": "2026-08-12",
     "camada": "evento",
@@ -1212,34 +1212,6 @@
     "titulo": "PET VET Expo — Distrito Anhembi SP (dia 1)",
     "produto": "",
     "ads": false
-  },
-  {
-    "id": "2026-08-12-lv-1",
-    "data": "2026-08-12",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Convite da live (D-13)",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-12-lv-2",
-    "data": "2026-08-12",
-    "camada": "live",
-    "formato": "feed",
-    "titulo": "Live BS680 — Convite no feed",
-    "produto": "bs680",
-    "ads": true
-  },
-  {
-    "id": "2026-08-13-yt-1",
-    "data": "2026-08-13",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
   },
   {
     "id": "2026-08-13-ct-1",
@@ -1260,6 +1232,16 @@
     "ads": false
   },
   {
+    "id": "2026-08-13-yt-1",
+    "data": "2026-08-13",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live Descartáveis",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
+  },
+  {
     "id": "2026-08-14-ev-1",
     "data": "2026-08-14",
     "camada": "evento",
@@ -1267,34 +1249,6 @@
     "titulo": "PET VET Expo — Distrito Anhembi SP (dia 3)",
     "produto": "",
     "ads": false
-  },
-  {
-    "id": "2026-08-14-lv-1",
-    "data": "2026-08-14",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Salve a data",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-16-lv-1",
-    "data": "2026-08-16",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Pergunta provocativa",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-18-yt-1",
-    "data": "2026-08-18",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
   },
   {
     "id": "2026-08-18-ct-1",
@@ -1307,35 +1261,8 @@
     "obs": "Aquecimento da live de 25/08"
   },
   {
-    "id": "2026-08-18-lv-1",
+    "id": "2026-08-18-yt-1",
     "data": "2026-08-18",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Faltam 7 dias",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-19-lv-1",
-    "data": "2026-08-19",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Enquete (postar no celular + sticker)",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-19-lv-2",
-    "data": "2026-08-19",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Engajamento / gancho",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-20-yt-1",
-    "data": "2026-08-20",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live Descartáveis",
@@ -1353,139 +1280,74 @@
     "ads": false
   },
   {
-    "id": "2026-08-20-lv-1",
+    "id": "2026-08-20-yt-1",
     "data": "2026-08-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Faltam 5 dias",
-    "produto": "bs680",
-    "ads": false
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live Descartáveis",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
   },
   {
-    "id": "2026-08-20-lv-2",
-    "data": "2026-08-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Info da live (como participar)",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-20-lv-3",
-    "data": "2026-08-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — CTA grupo VIP",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-21-lv-1",
+    "id": "2026-08-21-lv-bs680-convite",
     "data": "2026-08-21",
     "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Teaser conteúdo #1",
+    "formato": "feed",
+    "titulo": "Live BS680: convite principal publicado",
     "produto": "bs680",
-    "ads": false
+    "ads": true,
+    "hora": "12:00",
+    "status": "Publicado"
   },
   {
-    "id": "2026-08-21-lv-2",
-    "data": "2026-08-21",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — CTA grupo VIP",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-22-lv-1",
+    "id": "2026-08-22-lv-bs680-d3",
     "data": "2026-08-22",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BS680 — Faltam 3 dias",
+    "titulo": "Live BS680: faltam 3 dias",
     "produto": "bs680",
-    "ads": false
+    "ads": false,
+    "hora": "10:00"
   },
   {
-    "id": "2026-08-22-lv-2",
-    "data": "2026-08-22",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Teaser conteúdo #2",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-22-lv-3",
-    "data": "2026-08-22",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Teaser conteúdo #3",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-22-lv-4",
-    "data": "2026-08-22",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — CTA grupo VIP",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-23-lv-1",
-    "data": "2026-08-23",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Speaker: foto do Dr. Renato",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-23-lv-2",
-    "data": "2026-08-23",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Speaker: credenciais",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-23-lv-3",
-    "data": "2026-08-23",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Faltam 2 dias",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-24-lv-1",
+    "id": "2026-08-24-lv-bs680-d1",
     "data": "2026-08-24",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BS680 — É amanhã!",
+    "titulo": "Live BS680: é amanhã",
+    "produto": "bs680",
+    "ads": false,
+    "hora": "10:00"
+  },
+  {
+    "id": "2026-08-24-lv-bs680-perguntas",
+    "data": "2026-08-24",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live BS680: caixa de perguntas",
+    "produto": "bs680",
+    "ads": false,
+    "hora": "18:00"
+  },
+  {
+    "id": "2026-08-25-ev-1",
+    "data": "2026-08-25",
+    "camada": "evento",
+    "formato": "evento",
+    "titulo": "📡 Live BS680 — TIVA para todos: anestesia de qualidade acessível (20h)",
     "produto": "bs680",
     "ads": false
   },
   {
-    "id": "2026-08-24-lv-2",
-    "data": "2026-08-24",
+    "id": "2026-08-25-lv-bs680-hoje",
+    "data": "2026-08-25",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BS680 — Info da live",
+    "titulo": "Live BS680: é hoje",
     "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-24-lv-3",
-    "data": "2026-08-24",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Diferencial / motivo pra assistir",
-    "produto": "bs680",
-    "ads": false
+    "ads": false,
+    "hora": "09:00"
   },
   {
     "id": "2026-08-25-yt-1",
@@ -1498,58 +1360,24 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-08-25-ev-1",
-    "data": "2026-08-25",
-    "camada": "evento",
-    "formato": "evento",
-    "titulo": "📡 Live BS680 — TIVA para todos: anestesia de qualidade acessível (20h)",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-25-lv-1",
+    "id": "2026-08-25-lv-bs680-1h",
     "data": "2026-08-25",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BS680 — HOJE é o dia",
+    "titulo": "Live BS680: falta 1 hora",
     "produto": "bs680",
-    "ads": false
+    "ads": false,
+    "hora": "19:00"
   },
   {
-    "id": "2026-08-25-lv-2",
+    "id": "2026-08-25-lv-bs680-aovivo",
     "data": "2026-08-25",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BS680 — Última chance grupo VIP",
+    "titulo": "Live BS680: estamos ao vivo",
     "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-25-lv-3",
-    "data": "2026-08-25",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Em 3 horas",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-25-lv-4",
-    "data": "2026-08-25",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Em 1 hora",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-25-lv-5",
-    "data": "2026-08-25",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — ESTAMOS AO VIVO — link no grupo VIP",
-    "produto": "bs680",
-    "ads": false
+    "ads": false,
+    "hora": "19:50"
   },
   {
     "id": "2026-08-26-ct-1",
@@ -1570,41 +1398,14 @@
     "ads": false
   },
   {
-    "id": "2026-08-26-lv-1",
+    "id": "2026-08-26-lv-bs680-pos",
     "data": "2026-08-26",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BS680 — Pós-live: agradecimento",
+    "titulo": "Live BS680: agradecimento e gravação",
     "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-26-lv-2",
-    "data": "2026-08-26",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Gravação disponível",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-26-lv-3",
-    "data": "2026-08-26",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BS680 — Obrigado",
-    "produto": "bs680",
-    "ads": false
-  },
-  {
-    "id": "2026-08-27-yt-1",
-    "data": "2026-08-27",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
     "ads": false,
-    "hora": "12:00"
+    "hora": "10:00"
   },
   {
     "id": "2026-08-27-ct-1",
@@ -1617,12 +1418,31 @@
     "obs": "Gancho comercial pós-live"
   },
   {
+    "id": "2026-08-27-yt-1",
+    "data": "2026-08-27",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live Descartáveis",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
+  },
+  {
     "id": "2026-08-31-ct-1",
     "data": "2026-08-31",
     "camada": "contrato",
     "formato": "feed",
     "titulo": "ELASTOvet: libere o leito da internação",
     "produto": "elastovet",
+    "ads": false
+  },
+  {
+    "id": "2026-09-01-ev-1",
+    "data": "2026-09-01",
+    "camada": "evento",
+    "formato": "evento",
+    "titulo": "CBAV XXXIII — Salvador/BA (data a confirmar)",
+    "produto": "",
     "ads": false
   },
   {
@@ -1634,15 +1454,6 @@
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
-  },
-  {
-    "id": "2026-09-01-ev-1",
-    "data": "2026-09-01",
-    "camada": "evento",
-    "formato": "evento",
-    "titulo": "CBAV XXXIII — Salvador/BA (data a confirmar)",
-    "produto": "",
-    "ads": false
   },
   {
     "id": "2026-09-02-ct-1",
@@ -1721,16 +1532,6 @@
     "obs": "Aquecimento da live de 20/10"
   },
   {
-    "id": "2026-09-15-yt-1",
-    "data": "2026-09-15",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live BS680",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
-  },
-  {
     "id": "2026-09-15-ct-1",
     "data": "2026-09-15",
     "camada": "contrato",
@@ -1749,32 +1550,24 @@
     "ads": false
   },
   {
-    "id": "2026-09-16-lv-1",
-    "data": "2026-09-16",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Convite da live (D-13)",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-16-lv-2",
-    "data": "2026-09-16",
-    "camada": "live",
-    "formato": "feed",
-    "titulo": "Live ELASTOvet — Convite no feed",
-    "produto": "elastovet",
-    "ads": true
-  },
-  {
-    "id": "2026-09-17-yt-1",
-    "data": "2026-09-17",
+    "id": "2026-09-15-yt-1",
+    "data": "2026-09-15",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live BS680",
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
+  },
+  {
+    "id": "2026-09-16-lv-elastovet-convite",
+    "data": "2026-09-16",
+    "camada": "live",
+    "formato": "feed",
+    "titulo": "Live ELASTOvet: convite principal",
+    "produto": "elastovet",
+    "ads": true,
+    "hora": "10:00"
   },
   {
     "id": "2026-09-17-ct-1",
@@ -1787,26 +1580,8 @@
     "obs": "Aquecimento da live de 29/09"
   },
   {
-    "id": "2026-09-18-lv-1",
-    "data": "2026-09-18",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Salve a data",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-20-lv-1",
-    "data": "2026-09-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Pergunta provocativa",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-22-yt-1",
-    "data": "2026-09-22",
+    "id": "2026-09-17-yt-1",
+    "data": "2026-09-17",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live BS680",
@@ -1824,35 +1599,8 @@
     "ads": false
   },
   {
-    "id": "2026-09-22-lv-1",
+    "id": "2026-09-22-yt-1",
     "data": "2026-09-22",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Faltam 7 dias",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-23-lv-1",
-    "data": "2026-09-23",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Enquete (postar no celular + sticker)",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-23-lv-2",
-    "data": "2026-09-23",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Engajamento / gancho",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-24-yt-1",
-    "data": "2026-09-24",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live BS680",
@@ -1870,139 +1618,63 @@
     "ads": false
   },
   {
-    "id": "2026-09-24-lv-1",
+    "id": "2026-09-24-yt-1",
     "data": "2026-09-24",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Faltam 5 dias",
-    "produto": "elastovet",
-    "ads": false
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live BS680",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
   },
   {
-    "id": "2026-09-24-lv-2",
-    "data": "2026-09-24",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Info da live (como participar)",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-24-lv-3",
-    "data": "2026-09-24",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — CTA grupo VIP",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-25-lv-1",
-    "data": "2026-09-25",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Teaser conteúdo #1",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-25-lv-2",
-    "data": "2026-09-25",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — CTA grupo VIP",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-26-lv-1",
+    "id": "2026-09-26-lv-elastovet-d3",
     "data": "2026-09-26",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet — Faltam 3 dias",
+    "titulo": "Live ELASTOvet: faltam 3 dias",
     "produto": "elastovet",
-    "ads": false
+    "ads": false,
+    "hora": "10:00"
   },
   {
-    "id": "2026-09-26-lv-2",
-    "data": "2026-09-26",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Teaser conteúdo #2",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-26-lv-3",
-    "data": "2026-09-26",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Teaser conteúdo #3",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-26-lv-4",
-    "data": "2026-09-26",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — CTA grupo VIP",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-27-lv-1",
-    "data": "2026-09-27",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Speaker: foto do Dr. Renato",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-27-lv-2",
-    "data": "2026-09-27",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Speaker: credenciais",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-27-lv-3",
-    "data": "2026-09-27",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Faltam 2 dias",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-28-lv-1",
+    "id": "2026-09-28-lv-elastovet-d1",
     "data": "2026-09-28",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet — É amanhã!",
+    "titulo": "Live ELASTOvet: é amanhã",
+    "produto": "elastovet",
+    "ads": false,
+    "hora": "10:00"
+  },
+  {
+    "id": "2026-09-28-lv-elastovet-perguntas",
+    "data": "2026-09-28",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live ELASTOvet: caixa de perguntas",
+    "produto": "elastovet",
+    "ads": false,
+    "hora": "18:00"
+  },
+  {
+    "id": "2026-09-29-ev-1",
+    "data": "2026-09-29",
+    "camada": "evento",
+    "formato": "evento",
+    "titulo": "📡 Live ELASTOvet — Pós-operatório domiciliar com infusão contínua (20h)",
     "produto": "elastovet",
     "ads": false
   },
   {
-    "id": "2026-09-28-lv-2",
-    "data": "2026-09-28",
+    "id": "2026-09-29-lv-elastovet-hoje",
+    "data": "2026-09-29",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet — Info da live",
+    "titulo": "Live ELASTOvet: é hoje",
     "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-28-lv-3",
-    "data": "2026-09-28",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Diferencial / motivo pra assistir",
-    "produto": "elastovet",
-    "ads": false
+    "ads": false,
+    "hora": "09:00"
   },
   {
     "id": "2026-09-29-yt-1",
@@ -2015,58 +1687,24 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-09-29-ev-1",
-    "data": "2026-09-29",
-    "camada": "evento",
-    "formato": "evento",
-    "titulo": "📡 Live ELASTOvet — Pós-operatório domiciliar com infusão contínua (20h)",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-29-lv-1",
+    "id": "2026-09-29-lv-elastovet-1h",
     "data": "2026-09-29",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet — HOJE é o dia",
+    "titulo": "Live ELASTOvet: falta 1 hora",
     "produto": "elastovet",
-    "ads": false
+    "ads": false,
+    "hora": "19:00"
   },
   {
-    "id": "2026-09-29-lv-2",
+    "id": "2026-09-29-lv-elastovet-aovivo",
     "data": "2026-09-29",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet — Última chance grupo VIP",
+    "titulo": "Live ELASTOvet: estamos ao vivo",
     "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-29-lv-3",
-    "data": "2026-09-29",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Em 3 horas",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-29-lv-4",
-    "data": "2026-09-29",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Em 1 hora",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-29-lv-5",
-    "data": "2026-09-29",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — ESTAMOS AO VIVO — link no grupo VIP",
-    "produto": "elastovet",
-    "ads": false
+    "ads": false,
+    "hora": "19:50"
   },
   {
     "id": "2026-09-30-ct-1",
@@ -2079,41 +1717,14 @@
     "obs": "Gancho comercial pós-live"
   },
   {
-    "id": "2026-09-30-lv-1",
+    "id": "2026-09-30-lv-elastovet-pos",
     "data": "2026-09-30",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet — Pós-live: agradecimento",
+    "titulo": "Live ELASTOvet: agradecimento e gravação",
     "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-30-lv-2",
-    "data": "2026-09-30",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Gravação disponível",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-09-30-lv-3",
-    "data": "2026-09-30",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live ELASTOvet — Obrigado",
-    "produto": "elastovet",
-    "ads": false
-  },
-  {
-    "id": "2026-10-01-yt-1",
-    "data": "2026-10-01",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live ELASTOvet",
-    "produto": "youtube",
     "ads": false,
-    "hora": "12:00"
+    "hora": "10:00"
   },
   {
     "id": "2026-10-01-ct-1",
@@ -2134,6 +1745,16 @@
     "ads": false
   },
   {
+    "id": "2026-10-01-yt-1",
+    "data": "2026-10-01",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live ELASTOvet",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
+  },
+  {
     "id": "2026-10-04-ev-1",
     "data": "2026-10-04",
     "camada": "evento",
@@ -2141,16 +1762,6 @@
     "titulo": "Dia Mundial dos Animais",
     "produto": "",
     "ads": false
-  },
-  {
-    "id": "2026-10-06-yt-1",
-    "data": "2026-10-06",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live ELASTOvet",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
   },
   {
     "id": "2026-10-06-ct-1",
@@ -2163,32 +1774,24 @@
     "obs": "Aquecimento da live de 20/10"
   },
   {
-    "id": "2026-10-07-lv-1",
-    "data": "2026-10-07",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Convite da live (D-13)",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-07-lv-2",
-    "data": "2026-10-07",
-    "camada": "live",
-    "formato": "feed",
-    "titulo": "Live BSVET TCI — Convite no feed",
-    "produto": "tci",
-    "ads": true
-  },
-  {
-    "id": "2026-10-08-yt-1",
-    "data": "2026-10-08",
+    "id": "2026-10-06-yt-1",
+    "data": "2026-10-06",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live ELASTOvet",
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
+  },
+  {
+    "id": "2026-10-07-lv-tci-convite",
+    "data": "2026-10-07",
+    "camada": "live",
+    "formato": "feed",
+    "titulo": "Live BSVET TCI: convite principal",
+    "produto": "tci",
+    "ads": true,
+    "hora": "10:00"
   },
   {
     "id": "2026-10-08-ct-1",
@@ -2200,26 +1803,8 @@
     "ads": false
   },
   {
-    "id": "2026-10-09-lv-1",
-    "data": "2026-10-09",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Salve a data",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-11-lv-1",
-    "data": "2026-10-11",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Pergunta provocativa",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-13-yt-1",
-    "data": "2026-10-13",
+    "id": "2026-10-08-yt-1",
+    "data": "2026-10-08",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live ELASTOvet",
@@ -2237,35 +1822,8 @@
     "ads": true
   },
   {
-    "id": "2026-10-13-lv-1",
+    "id": "2026-10-13-yt-1",
     "data": "2026-10-13",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Faltam 7 dias",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-14-lv-1",
-    "data": "2026-10-14",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Enquete (postar no celular + sticker)",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-14-lv-2",
-    "data": "2026-10-14",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Engajamento / gancho",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-15-yt-1",
-    "data": "2026-10-15",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live ELASTOvet",
@@ -2283,31 +1841,14 @@
     "ads": false
   },
   {
-    "id": "2026-10-15-lv-1",
+    "id": "2026-10-15-yt-1",
     "data": "2026-10-15",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Faltam 5 dias",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-15-lv-2",
-    "data": "2026-10-15",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Info da live (como participar)",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-15-lv-3",
-    "data": "2026-10-15",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — CTA grupo VIP",
-    "produto": "tci",
-    "ads": false
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live ELASTOvet",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
   },
   {
     "id": "2026-10-16-ct-1",
@@ -2328,112 +1869,53 @@
     "ads": false
   },
   {
-    "id": "2026-10-16-lv-1",
-    "data": "2026-10-16",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Teaser conteúdo #1",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-16-lv-2",
-    "data": "2026-10-16",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — CTA grupo VIP",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-17-lv-1",
+    "id": "2026-10-17-lv-tci-d3",
     "data": "2026-10-17",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BSVET TCI — Faltam 3 dias",
+    "titulo": "Live BSVET TCI: faltam 3 dias",
     "produto": "tci",
-    "ads": false
+    "ads": false,
+    "hora": "10:00"
   },
   {
-    "id": "2026-10-17-lv-2",
-    "data": "2026-10-17",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Teaser conteúdo #2",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-17-lv-3",
-    "data": "2026-10-17",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Teaser conteúdo #3",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-17-lv-4",
-    "data": "2026-10-17",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — CTA grupo VIP",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-18-lv-1",
-    "data": "2026-10-18",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Speaker: foto do Dr. Renato",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-18-lv-2",
-    "data": "2026-10-18",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Speaker: credenciais",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-18-lv-3",
-    "data": "2026-10-18",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Faltam 2 dias",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-19-lv-1",
+    "id": "2026-10-19-lv-tci-d1",
     "data": "2026-10-19",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BSVET TCI — É amanhã!",
+    "titulo": "Live BSVET TCI: é amanhã",
+    "produto": "tci",
+    "ads": false,
+    "hora": "10:00"
+  },
+  {
+    "id": "2026-10-19-lv-tci-perguntas",
+    "data": "2026-10-19",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live BSVET TCI: caixa de perguntas",
+    "produto": "tci",
+    "ads": false,
+    "hora": "18:00"
+  },
+  {
+    "id": "2026-10-20-ev-1",
+    "data": "2026-10-20",
+    "camada": "evento",
+    "formato": "evento",
+    "titulo": "📡 Live BSVET TCI — Anestesia alvo-controlada: o futuro da rotina cirúrgica (20h)",
     "produto": "tci",
     "ads": false
   },
   {
-    "id": "2026-10-19-lv-2",
-    "data": "2026-10-19",
+    "id": "2026-10-20-lv-tci-hoje",
+    "data": "2026-10-20",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BSVET TCI — Info da live",
+    "titulo": "Live BSVET TCI: é hoje",
     "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-19-lv-3",
-    "data": "2026-10-19",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Diferencial / motivo pra assistir",
-    "produto": "tci",
-    "ads": false
+    "ads": false,
+    "hora": "09:00"
   },
   {
     "id": "2026-10-20-yt-1",
@@ -2446,95 +1928,34 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-10-20-ev-1",
-    "data": "2026-10-20",
-    "camada": "evento",
-    "formato": "evento",
-    "titulo": "📡 Live BSVET TCI — Anestesia alvo-controlada: o futuro da rotina cirúrgica (20h)",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-20-lv-1",
+    "id": "2026-10-20-lv-tci-1h",
     "data": "2026-10-20",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BSVET TCI — HOJE é o dia",
+    "titulo": "Live BSVET TCI: falta 1 hora",
     "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-20-lv-2",
-    "data": "2026-10-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Última chance grupo VIP",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-20-lv-3",
-    "data": "2026-10-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Em 3 horas",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-20-lv-4",
-    "data": "2026-10-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Em 1 hora",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-20-lv-5",
-    "data": "2026-10-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — ESTAMOS AO VIVO — link no grupo VIP",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-21-lv-1",
-    "data": "2026-10-21",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Pós-live: agradecimento",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-21-lv-2",
-    "data": "2026-10-21",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Gravação disponível",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-21-lv-3",
-    "data": "2026-10-21",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI — Obrigado",
-    "produto": "tci",
-    "ads": false
-  },
-  {
-    "id": "2026-10-22-yt-1",
-    "data": "2026-10-22",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live ELASTOvet",
-    "produto": "youtube",
     "ads": false,
-    "hora": "12:00"
+    "hora": "19:00"
+  },
+  {
+    "id": "2026-10-20-lv-tci-aovivo",
+    "data": "2026-10-20",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live BSVET TCI: estamos ao vivo",
+    "produto": "tci",
+    "ads": false,
+    "hora": "19:50"
+  },
+  {
+    "id": "2026-10-21-lv-tci-pos",
+    "data": "2026-10-21",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live BSVET TCI: agradecimento e gravação",
+    "produto": "tci",
+    "ads": false,
+    "hora": "10:00"
   },
   {
     "id": "2026-10-22-ct-1",
@@ -2547,8 +1968,8 @@
     "obs": "Gancho comercial pós-live"
   },
   {
-    "id": "2026-10-27-yt-1",
-    "data": "2026-10-27",
+    "id": "2026-10-22-yt-1",
+    "data": "2026-10-22",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live ELASTOvet",
@@ -2564,6 +1985,16 @@
     "titulo": "Black Friday Laslo: prepare-se",
     "produto": "campanha",
     "ads": true
+  },
+  {
+    "id": "2026-10-27-yt-1",
+    "data": "2026-10-27",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live ELASTOvet",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
   },
   {
     "id": "2026-10-29-yt-1",
@@ -2633,6 +2064,15 @@
     "ads": true
   },
   {
+    "id": "2026-11-10-ct-1",
+    "data": "2026-11-10",
+    "camada": "contrato",
+    "formato": "feed",
+    "titulo": "PetNor começa dia 15: visite o estande Laslo",
+    "produto": "evento",
+    "ads": true
+  },
+  {
     "id": "2026-11-10-yt-1",
     "data": "2026-11-10",
     "camada": "reels",
@@ -2643,31 +2083,23 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-11-10-ct-1",
-    "data": "2026-11-10",
+    "id": "2026-11-11-lv-bvvet-convite",
+    "data": "2026-11-11",
+    "camada": "live",
+    "formato": "feed",
+    "titulo": "Live BVVET: convite principal",
+    "produto": "bvvet",
+    "ads": true,
+    "hora": "10:00"
+  },
+  {
+    "id": "2026-11-12-ct-1",
+    "data": "2026-11-12",
     "camada": "contrato",
     "formato": "feed",
-    "titulo": "PetNor começa dia 15: visite o estande Laslo",
-    "produto": "evento",
-    "ads": true
-  },
-  {
-    "id": "2026-11-11-lv-1",
-    "data": "2026-11-11",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Convite da live (D-13)",
-    "produto": "bvvet",
+    "titulo": "Seringas Serisam: o custo invisível da seringa genérica",
+    "produto": "insumos",
     "ads": false
-  },
-  {
-    "id": "2026-11-11-lv-2",
-    "data": "2026-11-11",
-    "camada": "live",
-    "formato": "feed",
-    "titulo": "Live BVVET — Convite no feed",
-    "produto": "bvvet",
-    "ads": true
   },
   {
     "id": "2026-11-12-yt-1",
@@ -2680,39 +2112,12 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-11-12-ct-1",
-    "data": "2026-11-12",
-    "camada": "contrato",
-    "formato": "feed",
-    "titulo": "Seringas Serisam: o custo invisível da seringa genérica",
-    "produto": "insumos",
-    "ads": false
-  },
-  {
-    "id": "2026-11-13-lv-1",
-    "data": "2026-11-13",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Salve a data",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
     "id": "2026-11-15-ev-1",
     "data": "2026-11-15",
     "camada": "evento",
     "formato": "evento",
     "titulo": "PETNOR 9ª edição — Olinda/PE (dia 1)",
     "produto": "",
-    "ads": false
-  },
-  {
-    "id": "2026-11-15-lv-1",
-    "data": "2026-11-15",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Pergunta provocativa",
-    "produto": "bvvet",
     "ads": false
   },
   {
@@ -2723,16 +2128,6 @@
     "titulo": "PETNOR 9ª edição — Olinda/PE (dia 2)",
     "produto": "",
     "ads": false
-  },
-  {
-    "id": "2026-11-17-yt-1",
-    "data": "2026-11-17",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live BSVET TCI",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
   },
   {
     "id": "2026-11-17-ct-1",
@@ -2753,35 +2148,8 @@
     "ads": false
   },
   {
-    "id": "2026-11-17-lv-1",
+    "id": "2026-11-17-yt-1",
     "data": "2026-11-17",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Faltam 7 dias",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-18-lv-1",
-    "data": "2026-11-18",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Enquete (postar no celular + sticker)",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-18-lv-2",
-    "data": "2026-11-18",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Engajamento / gancho",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-19-yt-1",
-    "data": "2026-11-19",
     "camada": "reels",
     "formato": "reel",
     "titulo": "Reel corte — live BSVET TCI",
@@ -2799,139 +2167,63 @@
     "ads": true
   },
   {
-    "id": "2026-11-19-lv-1",
+    "id": "2026-11-19-yt-1",
     "data": "2026-11-19",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Faltam 5 dias",
-    "produto": "bvvet",
-    "ads": false
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live BSVET TCI",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
   },
   {
-    "id": "2026-11-19-lv-2",
-    "data": "2026-11-19",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Info da live (como participar)",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-19-lv-3",
-    "data": "2026-11-19",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — CTA grupo VIP",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-20-lv-1",
-    "data": "2026-11-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Teaser conteúdo #1",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-20-lv-2",
-    "data": "2026-11-20",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — CTA grupo VIP",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-21-lv-1",
+    "id": "2026-11-21-lv-bvvet-d3",
     "data": "2026-11-21",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BVVET — Faltam 3 dias",
+    "titulo": "Live BVVET: faltam 3 dias",
     "produto": "bvvet",
-    "ads": false
+    "ads": false,
+    "hora": "10:00"
   },
   {
-    "id": "2026-11-21-lv-2",
-    "data": "2026-11-21",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Teaser conteúdo #2",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-21-lv-3",
-    "data": "2026-11-21",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Teaser conteúdo #3",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-21-lv-4",
-    "data": "2026-11-21",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — CTA grupo VIP",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-22-lv-1",
-    "data": "2026-11-22",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Speaker: foto do Dr. Renato",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-22-lv-2",
-    "data": "2026-11-22",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Speaker: credenciais",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-22-lv-3",
-    "data": "2026-11-22",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Faltam 2 dias",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-23-lv-1",
+    "id": "2026-11-23-lv-bvvet-d1",
     "data": "2026-11-23",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BVVET — É amanhã!",
+    "titulo": "Live BVVET: é amanhã",
+    "produto": "bvvet",
+    "ads": false,
+    "hora": "10:00"
+  },
+  {
+    "id": "2026-11-23-lv-bvvet-perguntas",
+    "data": "2026-11-23",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live BVVET: caixa de perguntas",
+    "produto": "bvvet",
+    "ads": false,
+    "hora": "18:00"
+  },
+  {
+    "id": "2026-11-24-ev-1",
+    "data": "2026-11-24",
+    "camada": "evento",
+    "formato": "evento",
+    "titulo": "📡 Live BVVET — Erros em bombas de infusão que colocam pacientes em risco (20h)",
     "produto": "bvvet",
     "ads": false
   },
   {
-    "id": "2026-11-23-lv-2",
-    "data": "2026-11-23",
+    "id": "2026-11-24-lv-bvvet-hoje",
+    "data": "2026-11-24",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BVVET — Info da live",
+    "titulo": "Live BVVET: é hoje",
     "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-23-lv-3",
-    "data": "2026-11-23",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Diferencial / motivo pra assistir",
-    "produto": "bvvet",
-    "ads": false
+    "ads": false,
+    "hora": "09:00"
   },
   {
     "id": "2026-11-24-yt-1",
@@ -2944,85 +2236,43 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-11-24-ev-1",
-    "data": "2026-11-24",
-    "camada": "evento",
-    "formato": "evento",
-    "titulo": "📡 Live BVVET — Erros em bombas de infusão que colocam pacientes em risco (20h)",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-24-lv-1",
+    "id": "2026-11-24-lv-bvvet-1h",
     "data": "2026-11-24",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BVVET — HOJE é o dia",
+    "titulo": "Live BVVET: falta 1 hora",
     "produto": "bvvet",
-    "ads": false
+    "ads": false,
+    "hora": "19:00"
   },
   {
-    "id": "2026-11-24-lv-2",
+    "id": "2026-11-24-lv-bvvet-aovivo",
     "data": "2026-11-24",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BVVET — Última chance grupo VIP",
+    "titulo": "Live BVVET: estamos ao vivo",
     "produto": "bvvet",
-    "ads": false
+    "ads": false,
+    "hora": "19:50"
   },
   {
-    "id": "2026-11-24-lv-3",
-    "data": "2026-11-24",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Em 3 horas",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-24-lv-4",
-    "data": "2026-11-24",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Em 1 hora",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-24-lv-5",
-    "data": "2026-11-24",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — ESTAMOS AO VIVO — link no grupo VIP",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-25-lv-1",
+    "id": "2026-11-25-lv-bvvet-pos",
     "data": "2026-11-25",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live BVVET — Pós-live: agradecimento",
+    "titulo": "Live BVVET: agradecimento e gravação",
     "produto": "bvvet",
-    "ads": false
+    "ads": false,
+    "hora": "10:00"
   },
   {
-    "id": "2026-11-25-lv-2",
-    "data": "2026-11-25",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Gravação disponível",
-    "produto": "bvvet",
-    "ads": false
-  },
-  {
-    "id": "2026-11-25-lv-3",
-    "data": "2026-11-25",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BVVET — Obrigado",
-    "produto": "bvvet",
-    "ads": false
+    "id": "2026-11-26-ct-1",
+    "data": "2026-11-26",
+    "camada": "contrato",
+    "formato": "feed",
+    "titulo": "Black Friday: pontuação em dobro no Clube",
+    "produto": "clube",
+    "ads": true
   },
   {
     "id": "2026-11-26-yt-1",
@@ -3033,15 +2283,6 @@
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
-  },
-  {
-    "id": "2026-11-26-ct-1",
-    "data": "2026-11-26",
-    "camada": "contrato",
-    "formato": "feed",
-    "titulo": "Black Friday: pontuação em dobro no Clube",
-    "produto": "clube",
-    "ads": true
   },
   {
     "id": "2026-11-27-ct-1",
@@ -3091,22 +2332,14 @@
     "obs": "Aquecimento da live de 15/12"
   },
   {
-    "id": "2026-12-02-lv-1",
-    "data": "2026-12-02",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Convite da live (D-13)",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-02-lv-2",
+    "id": "2026-12-02-lv-pedestal-convite",
     "data": "2026-12-02",
     "camada": "live",
     "formato": "feed",
-    "titulo": "Live Pedestal Roama — Convite no feed",
+    "titulo": "Live Pedestal Roama: convite principal",
     "produto": "pedestal",
-    "ads": true
+    "ads": true,
+    "hora": "10:00"
   },
   {
     "id": "2026-12-03-yt-1",
@@ -3128,24 +2361,6 @@
     "ads": true
   },
   {
-    "id": "2026-12-04-lv-1",
-    "data": "2026-12-04",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Salve a data",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-06-lv-1",
-    "data": "2026-12-06",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Pergunta provocativa",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
     "id": "2026-12-08-yt-1",
     "data": "2026-12-08",
     "camada": "reels",
@@ -3156,39 +2371,12 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-12-08-lv-1",
-    "data": "2026-12-08",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Faltam 7 dias",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
     "id": "2026-12-09-ct-1",
     "data": "2026-12-09",
     "camada": "contrato",
     "formato": "feed",
     "titulo": "Retrospectiva 2026: 7 lives, um ano de conteúdo VET",
     "produto": "institucional",
-    "ads": false
-  },
-  {
-    "id": "2026-12-09-lv-1",
-    "data": "2026-12-09",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Enquete (postar no celular + sticker)",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-09-lv-2",
-    "data": "2026-12-09",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Engajamento / gancho",
-    "produto": "pedestal",
     "ads": false
   },
   {
@@ -3202,33 +2390,6 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-12-10-lv-1",
-    "data": "2026-12-10",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Faltam 5 dias",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-10-lv-2",
-    "data": "2026-12-10",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Info da live (como participar)",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-10-lv-3",
-    "data": "2026-12-10",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — CTA grupo VIP",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
     "id": "2026-12-11-ct-1",
     "data": "2026-12-11",
     "camada": "contrato",
@@ -3238,112 +2399,53 @@
     "ads": false
   },
   {
-    "id": "2026-12-11-lv-1",
-    "data": "2026-12-11",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Teaser conteúdo #1",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-11-lv-2",
-    "data": "2026-12-11",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — CTA grupo VIP",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-12-lv-1",
+    "id": "2026-12-12-lv-pedestal-d3",
     "data": "2026-12-12",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live Pedestal Roama — Faltam 3 dias",
+    "titulo": "Live Pedestal Roama: faltam 3 dias",
     "produto": "pedestal",
-    "ads": false
+    "ads": false,
+    "hora": "10:00"
   },
   {
-    "id": "2026-12-12-lv-2",
-    "data": "2026-12-12",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Teaser conteúdo #2",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-12-lv-3",
-    "data": "2026-12-12",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Teaser conteúdo #3",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-12-lv-4",
-    "data": "2026-12-12",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — CTA grupo VIP",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-13-lv-1",
-    "data": "2026-12-13",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Speaker: foto do Dr. Renato",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-13-lv-2",
-    "data": "2026-12-13",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Speaker: credenciais",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-13-lv-3",
-    "data": "2026-12-13",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Faltam 2 dias",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-14-lv-1",
+    "id": "2026-12-14-lv-pedestal-d1",
     "data": "2026-12-14",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live Pedestal Roama — É amanhã!",
+    "titulo": "Live Pedestal Roama: é amanhã",
+    "produto": "pedestal",
+    "ads": false,
+    "hora": "10:00"
+  },
+  {
+    "id": "2026-12-14-lv-pedestal-perguntas",
+    "data": "2026-12-14",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live Pedestal Roama: caixa de perguntas",
+    "produto": "pedestal",
+    "ads": false,
+    "hora": "18:00"
+  },
+  {
+    "id": "2026-12-15-ev-1",
+    "data": "2026-12-15",
+    "camada": "evento",
+    "formato": "evento",
+    "titulo": "📡 Live Pedestal Roama — Centro cirúrgico organizado salva vidas (20h)",
     "produto": "pedestal",
     "ads": false
   },
   {
-    "id": "2026-12-14-lv-2",
-    "data": "2026-12-14",
+    "id": "2026-12-15-lv-pedestal-hoje",
+    "data": "2026-12-15",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live Pedestal Roama — Info da live",
+    "titulo": "Live Pedestal Roama: é hoje",
     "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-14-lv-3",
-    "data": "2026-12-14",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Diferencial / motivo pra assistir",
-    "produto": "pedestal",
-    "ads": false
+    "ads": false,
+    "hora": "09:00"
   },
   {
     "id": "2026-12-15-yt-1",
@@ -3356,95 +2458,34 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-12-15-ev-1",
-    "data": "2026-12-15",
-    "camada": "evento",
-    "formato": "evento",
-    "titulo": "📡 Live Pedestal Roama — Centro cirúrgico organizado salva vidas (20h)",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-15-lv-1",
+    "id": "2026-12-15-lv-pedestal-1h",
     "data": "2026-12-15",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live Pedestal Roama — HOJE é o dia",
+    "titulo": "Live Pedestal Roama: falta 1 hora",
     "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-15-lv-2",
-    "data": "2026-12-15",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Última chance grupo VIP",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-15-lv-3",
-    "data": "2026-12-15",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Em 3 horas",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-15-lv-4",
-    "data": "2026-12-15",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Em 1 hora",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-15-lv-5",
-    "data": "2026-12-15",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — ESTAMOS AO VIVO — link no grupo VIP",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-16-lv-1",
-    "data": "2026-12-16",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Pós-live: agradecimento",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-16-lv-2",
-    "data": "2026-12-16",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Gravação disponível",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-16-lv-3",
-    "data": "2026-12-16",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live Pedestal Roama — Obrigado",
-    "produto": "pedestal",
-    "ads": false
-  },
-  {
-    "id": "2026-12-17-yt-1",
-    "data": "2026-12-17",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live BVVET",
-    "produto": "youtube",
     "ads": false,
-    "hora": "12:00"
+    "hora": "19:00"
+  },
+  {
+    "id": "2026-12-15-lv-pedestal-aovivo",
+    "data": "2026-12-15",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live Pedestal Roama: estamos ao vivo",
+    "produto": "pedestal",
+    "ads": false,
+    "hora": "19:50"
+  },
+  {
+    "id": "2026-12-16-lv-pedestal-pos",
+    "data": "2026-12-16",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live Pedestal Roama: agradecimento e gravação",
+    "produto": "pedestal",
+    "ads": false,
+    "hora": "10:00"
   },
   {
     "id": "2026-12-17-ct-1",
@@ -3457,12 +2498,31 @@
     "obs": "Gancho comercial pós-live"
   },
   {
+    "id": "2026-12-17-yt-1",
+    "data": "2026-12-17",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte — live BVVET",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00"
+  },
+  {
     "id": "2026-12-18-ct-1",
     "data": "2026-12-18",
     "camada": "contrato",
     "formato": "feed",
     "titulo": "ELASTOvet: alta com controle de dor nas festas",
     "produto": "elastovet",
+    "ads": false
+  },
+  {
+    "id": "2026-12-22-ct-1",
+    "data": "2026-12-22",
+    "camada": "contrato",
+    "formato": "feed",
+    "titulo": "Metas 2027: o DNA continua VET",
+    "produto": "institucional",
     "ads": false
   },
   {
@@ -3474,15 +2534,6 @@
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
-  },
-  {
-    "id": "2026-12-22-ct-1",
-    "data": "2026-12-22",
-    "camada": "contrato",
-    "formato": "feed",
-    "titulo": "Metas 2027: o DNA continua VET",
-    "produto": "institucional",
-    "ads": false
   },
   {
     "id": "2026-12-23-ct-1",

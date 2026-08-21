@@ -4,27 +4,25 @@ Documento de referência para a gestão dos webinars mensais da Laslo Indústria
 
 ---
 
-## Estratégia de Divulgação (atualizada em 28/07/2026)
+## Estratégia de Divulgação (atualizada em 21/08/2026)
 
-Cada webinar recebe campanha progressiva. Para evitar saturação do feed, apenas a abertura da
-campanha usa feed + story. Os lembretes seguintes usam stories.
+Cada webinar recebe um convite principal no feed e sete stories essenciais. A sequência deixa de
+ser diária: stories adicionais só entram quando tiverem conteúdo ou objetivo próprio.
 
 | Disparo | Formato | Conteúdo |
 |---|---|---|
-| **D-28 a D-25** | Feed + Story | Save the date, abertura das inscrições e benefício central |
-| **D-20** | Story | Problema que será resolvido |
-| **D-15** | Story | O que o participante aprenderá |
-| **D-10** | Story | Autoridade do speaker ou demonstração |
-| **D-7** | Story | FAQ, enquete ou objeção |
-| **D-3** | Story | Urgência e benefício |
-| **D-2** | Story | Sorteio e regras resumidas, quando aplicável |
-| **D-1** | Story | É amanhã e serviço completo |
-| **D0** | Stories | É hoje, 3 horas, 1 hora e estamos ao vivo |
-| **D+1** | Story | Agradecimento e gravação/próximo passo |
-| **D+1 a D+3** | Feed + Story opcional | Conversão comercial pós-live |
+| **Abertura** | Feed | Convite principal, benefício central e acesso ao Grupo VIP |
+| **D-3, 10h** | Story | Contagem regressiva |
+| **D-1, 10h** | Story | É amanhã |
+| **D-1, 18h** | Story | Caixa de perguntas |
+| **D0, 09h** | Story | É hoje |
+| **D0, 19h** | Story | Falta 1 hora |
+| **D0, 19h50** | Story | Estamos ao vivo e acesso pelo Grupo VIP |
+| **D+1, 10h** | Story | Agradecimento e gravação, quando disponível |
+| **D+1 a D+3** | Feed opcional | Conversão comercial pós-live |
 
-> A seção histórica “Datas dos Posts por Webinar” abaixo registra o plano anterior e precisa ser
-> migrada gradualmente no `agenda.json`. Em caso de conflito, prevalece a estratégia acima.
+> A seção histórica “Datas dos Posts por Webinar” abaixo registra o plano anterior. O `agenda.json`
+> já foi reduzido para a nova cadência. Em caso de conflito, prevalece a estratégia acima.
 
 > Posts de webinar aparecem em **azul** na tabela de posts da ferramenta de reunião (ícone 📡).
 
@@ -49,7 +47,7 @@ campanha usa feed + story. Os lembretes seguintes usam stories.
 |---|---|---|---|---|
 | Junho | 30/06/2026 | 20h | ICAVET — Bomba de infusão | A "falsa" segurança da infusão: por que sua bomba atual pode estar falhando com pacientes críticos |
 | Julho | 21/07/2026 | 20h | Descartáveis | Alarme de oclusão: 5 causas que você ignora e que colocam seu paciente em risco |
-| Agosto | 25/08/2026 | 20h | BS680 — Bomba de seringa | TIVA para todos: como uma bomba de seringa barata democratizou a anestesia de qualidade na veterinária |
+| Agosto | 25/08/2026 | 20h | BS680 — Bomba de seringa | TIVA para todos: anestesia de qualidade acessível para mais clínicas |
 | Setembro | 29/09/2026 | 20h | Elastovet | Seu pós-operatório pode ser domiciliar: controle da dor 24 horas com infusão contínua, sem gotejamento manual e sem fios |
 | Outubro | 20/10/2026 | 20h | BSVET TCI — Bomba alvo controlado | Anestesia alvo-controlada: você está pronto para a revolução? Entenda porque esta anestesia é o futuro da sua rotina |
 | Novembro | 24/11/2026 | 20h | BVVET | Erros comuns em bombas de infusão: da proteção do seu paciente de falhas humanas à hidratação de pacientes nefropatas |

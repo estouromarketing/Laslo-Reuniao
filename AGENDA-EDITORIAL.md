@@ -45,7 +45,8 @@ Cada produto volta ao feed em ciclos, **sempre com um ângulo diferente** (nunca
 Regras:
 - O produto da live ganha **1 post de aquecimento** no feed (2-4 semanas antes) e **1 post comercial pós-live** (1-3 dias depois, com modalidade de aquisição)
 - **Não gastar o tema de uma live futura** em posts genéricos no mês anterior à campanha dela
-- Campanha de stories: modelo **D-13 → D+1** (30 itens: 28 stories + feed convite + evento), o mesmo validado na live Descartáveis — já vem pré-gerado no agenda.json
+- Campanha de live: **1 convite principal no feed + 7 stories essenciais**. Stories em D-3, D-1 pela manhã, D-1 com caixa de perguntas, D0 pela manhã, D0 falta 1 hora, D0 estamos ao vivo e D+1 agradecimento ou gravação.
+- Stories extras entram apenas quando houver conteúdo ou objetivo claro. Não existe mais obrigação de publicação diária.
 - Cortes de cada live viram **reels nas semanas seguintes** (~2/semana, ter e qui)
 
 ## Eventos e datas fixas (nunca perder)
@@ -62,7 +63,8 @@ Regras:
    - **ids são estáveis** (`YYYY-MM-DD-ct|lv|yt|ev-N`) — nunca renumerar (o status salvo no navegador usa o id)
 3. Roda `python3 check_agenda.py` (valida schema + avisa semana com ≠2 posts de contrato)
 4. Commit + push → GitHub Pages atualiza em ~1 min
-5. Status de cada item é marcado pela página (aba Calendário ou Pauta) e fica no navegador (localStorage)
+5. O status atual da agenda pública fica no navegador. A migração para o App Estouro substituirá esse controle por histórico centralizado e autenticado.
+6. A gestão de responsáveis, execução, entrega e próximos passos fica em `operacao-laslo.json`, exibido na aba Plano Mestre.
 
 ## O que NÃO mexer
 
