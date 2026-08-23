@@ -1359,12 +1359,25 @@ async function fetchAgenda() {
 }
 async function fetchOperacao() {
   try {
-    const res = await fetch('operacao-laslo.json?v=' + Date.now());
-    if (!res.ok) throw new Error(res.status);
-    OPERACAO = await res.json();
+    const query = `${SUPABASE_URL}/rest/v1/arquivo?entidade=eq.plano_operacional&entidade_id=eq.${LASLO_CLIENT_ID}&select=dados,arquivado_em&order=arquivado_em.desc&limit=1`;
+    const banco = await fetch(query, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
+    const snapshots = banco.ok ? await banco.json() : [];
+    if (snapshots.length) {
+      OPERACAO = snapshots[0].dados;
+    } else {
+      const local = await fetch('operacao-laslo.json?v=' + Date.now());
+      if (!local.ok) throw new Error(local.status);
+      OPERACAO = await local.json();
+    }
     prepareOperacaoFilters();
   } catch (e) {
-    OPERACAO = { acoes: [] };
+    try {
+      const local = await fetch('operacao-laslo.json?v=' + Date.now());
+      OPERACAO = local.ok ? await local.json() : { acoes: [] };
+      prepareOperacaoFilters();
+    } catch (_) {
+      OPERACAO = { acoes: [] };
+    }
   }
 }
 function opsStatusClass(status) {
