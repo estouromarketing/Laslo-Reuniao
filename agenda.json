@@ -1456,8 +1456,8 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-09-02-ct-1",
-    "data": "2026-09-02",
+    "id": "2026-09-01-ct-1",
+    "data": "2026-09-01",
     "camada": "contrato",
     "formato": "feed",
     "titulo": "Equipos fotoprotetores e cristal: quando usar cada um",
@@ -1560,12 +1560,12 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-09-16-lv-elastovet-convite",
+    "id": "2026-09-16-lv-desc2-convite",
     "data": "2026-09-16",
     "camada": "live",
     "formato": "feed",
-    "titulo": "Live ELASTOvet: convite principal",
-    "produto": "elastovet",
+    "titulo": "Live Descartáveis: convite principal",
+    "produto": "descartaveis",
     "ads": true,
     "hora": "10:00"
   },
@@ -1574,8 +1574,8 @@
     "data": "2026-09-17",
     "camada": "contrato",
     "formato": "feed",
-    "titulo": "ELASTOvet: pós-op domiciliar com infusão contínua",
-    "produto": "elastovet",
+    "titulo": "Descartáveis: o equipo errado pode comprometer sua infusão",
+    "produto": "descartaveis",
     "ads": true,
     "obs": "Aquecimento da live de 29/09"
   },
@@ -1594,8 +1594,8 @@
     "data": "2026-09-22",
     "camada": "contrato",
     "formato": "feed",
-    "titulo": "Mito ou verdade: bomba elastomérica não é precisa?",
-    "produto": "elastovet",
+    "titulo": "Mito ou verdade: equipo gravitacional serve em qualquer bomba de infusão?",
+    "produto": "descartaveis",
     "ads": false
   },
   {
@@ -1628,32 +1628,32 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-09-26-lv-elastovet-d3",
+    "id": "2026-09-26-lv-desc2-d3",
     "data": "2026-09-26",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet: faltam 3 dias",
-    "produto": "elastovet",
+    "titulo": "Live Descartáveis: faltam 3 dias",
+    "produto": "descartaveis",
     "ads": false,
     "hora": "10:00"
   },
   {
-    "id": "2026-09-28-lv-elastovet-d1",
+    "id": "2026-09-28-lv-desc2-d1",
     "data": "2026-09-28",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet: é amanhã",
-    "produto": "elastovet",
+    "titulo": "Live Descartáveis: é amanhã",
+    "produto": "descartaveis",
     "ads": false,
     "hora": "10:00"
   },
   {
-    "id": "2026-09-28-lv-elastovet-perguntas",
+    "id": "2026-09-28-lv-desc2-perguntas",
     "data": "2026-09-28",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet: caixa de perguntas",
-    "produto": "elastovet",
+    "titulo": "Live Descartáveis: caixa de perguntas",
+    "produto": "descartaveis",
     "ads": false,
     "hora": "18:00"
   },
@@ -1662,17 +1662,17 @@
     "data": "2026-09-29",
     "camada": "evento",
     "formato": "evento",
-    "titulo": "📡 Live ELASTOvet — Pós-operatório domiciliar com infusão contínua (20h)",
-    "produto": "elastovet",
+    "titulo": "📡 Live Descartáveis — Equipo trocado, bomba errada: o uso correto na sua infusão (20h)",
+    "produto": "descartaveis",
     "ads": false
   },
   {
-    "id": "2026-09-29-lv-elastovet-hoje",
+    "id": "2026-09-29-lv-desc2-hoje",
     "data": "2026-09-29",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet: é hoje",
-    "produto": "elastovet",
+    "titulo": "Live Descartáveis: é hoje",
+    "produto": "descartaveis",
     "ads": false,
     "hora": "09:00"
   },
@@ -1687,22 +1687,22 @@
     "hora": "12:00"
   },
   {
-    "id": "2026-09-29-lv-elastovet-1h",
+    "id": "2026-09-29-lv-desc2-1h",
     "data": "2026-09-29",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet: falta 1 hora",
-    "produto": "elastovet",
+    "titulo": "Live Descartáveis: falta 1 hora",
+    "produto": "descartaveis",
     "ads": false,
     "hora": "19:00"
   },
   {
-    "id": "2026-09-29-lv-elastovet-aovivo",
+    "id": "2026-09-29-lv-desc2-aovivo",
     "data": "2026-09-29",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet: estamos ao vivo",
-    "produto": "elastovet",
+    "titulo": "Live Descartáveis: estamos ao vivo",
+    "produto": "descartaveis",
     "ads": false,
     "hora": "19:50"
   },
@@ -1711,18 +1711,18 @@
     "data": "2026-09-30",
     "camada": "contrato",
     "formato": "feed",
-    "titulo": "Pós-live ELASTOvet: como levar pra sua clínica",
+    "titulo": "Pós-live Descartáveis: o uso correto na prática da sua clínica",
     "produto": "modalidades",
     "ads": false,
     "obs": "Gancho comercial pós-live"
   },
   {
-    "id": "2026-09-30-lv-elastovet-pos",
+    "id": "2026-09-30-lv-desc2-pos",
     "data": "2026-09-30",
     "camada": "live",
     "formato": "story",
-    "titulo": "Live ELASTOvet: agradecimento e gravação",
-    "produto": "elastovet",
+    "titulo": "Live Descartáveis: agradecimento e gravação",
+    "produto": "descartaveis",
     "ads": false,
     "hora": "10:00"
   },
