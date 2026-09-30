@@ -1730,7 +1730,7 @@
     "id": "2026-10-01-ct-1",
     "data": "2026-10-01",
     "camada": "contrato",
-    "formato": "feed",
+    "formato": "story",
     "titulo": "Dia do Vendedor: quem leva o DNA VET até você",
     "produto": "institucional",
     "ads": false
@@ -1817,9 +1817,9 @@
     "data": "2026-10-13",
     "camada": "contrato",
     "formato": "feed",
-    "titulo": "Antecipação PetNor (15–17/11): o Nordeste nos espera",
-    "produto": "evento",
-    "ads": true
+    "titulo": "Clube Laslo: envio programado de insumos",
+    "produto": "clube",
+    "ads": false
   },
   {
     "id": "2026-10-13-yt-1",
@@ -1836,8 +1836,8 @@
     "data": "2026-10-15",
     "camada": "contrato",
     "formato": "feed",
-    "titulo": "Clube Laslo: envio programado de insumos",
-    "produto": "clube",
+    "titulo": "Linha Serisam + Extensor Laslo Set: insumos para infusão",
+    "produto": "insumos",
     "ads": false
   },
   {
@@ -2010,7 +2010,7 @@
     "id": "2026-10-30-ct-1",
     "data": "2026-10-30",
     "camada": "contrato",
-    "formato": "feed",
+    "formato": "story",
     "titulo": "Dia do Balconista: parceiros de balcão",
     "produto": "institucional",
     "ads": false
