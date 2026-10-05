@@ -1745,16 +1745,6 @@
     "ads": false
   },
   {
-    "id": "2026-10-01-yt-1",
-    "data": "2026-10-01",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
-  },
-  {
     "id": "2026-10-04-ev-1",
     "data": "2026-10-04",
     "camada": "evento",
@@ -1762,6 +1752,17 @@
     "titulo": "Dia Mundial dos Animais",
     "produto": "",
     "ads": false
+  },
+  {
+    "id": "2026-10-05-yt-1",
+    "data": "2026-10-05",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "YouTube: corte 1 da live Descartáveis",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "19:00",
+    "obs": "Programado no canal: https://youtu.be/O8Vbkcp_Mcg (avisar o Grupo VIP)"
   },
   {
     "id": "2026-10-06-ct-1",
@@ -1774,16 +1775,6 @@
     "obs": "Feed = convite principal da live TCI (o post de 07/10 foi retirado por repetir este)"
   },
   {
-    "id": "2026-10-06-yt-1",
-    "data": "2026-10-06",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
-  },
-  {
     "id": "2026-10-08-ct-1",
     "data": "2026-10-08",
     "camada": "contrato",
@@ -1793,14 +1784,15 @@
     "ads": false
   },
   {
-    "id": "2026-10-08-yt-1",
-    "data": "2026-10-08",
+    "id": "2026-10-12-yt-1",
+    "data": "2026-10-12",
     "camada": "reels",
     "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
+    "titulo": "YouTube: corte 2 da live Descartáveis",
     "produto": "youtube",
     "ads": false,
-    "hora": "12:00"
+    "hora": "19:00",
+    "obs": "Programado no canal: https://youtu.be/bGmBAsr5wL4 (avisar o Grupo VIP)"
   },
   {
     "id": "2026-10-13-ct-1",
@@ -1812,16 +1804,6 @@
     "ads": false
   },
   {
-    "id": "2026-10-13-yt-1",
-    "data": "2026-10-13",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
-  },
-  {
     "id": "2026-10-15-ct-1",
     "data": "2026-10-15",
     "camada": "contrato",
@@ -1829,16 +1811,6 @@
     "titulo": "Linha Serisam + Extensor Laslo Set: insumos para infusão",
     "produto": "insumos",
     "ads": false
-  },
-  {
-    "id": "2026-10-15-yt-1",
-    "data": "2026-10-15",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
   },
   {
     "id": "2026-10-16-ct-1",
@@ -1889,6 +1861,17 @@
     "hora": "18:00"
   },
   {
+    "id": "2026-10-19-yt-1",
+    "data": "2026-10-19",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "YouTube: corte 3 da live Descartáveis",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "19:00",
+    "obs": "Programado no canal: https://youtu.be/HFhcw7tFkPY (avisar o Grupo VIP)"
+  },
+  {
     "id": "2026-10-20-ev-1",
     "data": "2026-10-20",
     "camada": "evento",
@@ -1906,16 +1889,6 @@
     "produto": "tci",
     "ads": false,
     "hora": "09:00"
-  },
-  {
-    "id": "2026-10-20-yt-1",
-    "data": "2026-10-20",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
   },
   {
     "id": "2026-10-20-lv-tci-1h",
@@ -1958,14 +1931,15 @@
     "obs": "Gancho comercial pós-live"
   },
   {
-    "id": "2026-10-22-yt-1",
-    "data": "2026-10-22",
+    "id": "2026-10-26-yt-1",
+    "data": "2026-10-26",
     "camada": "reels",
     "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
+    "titulo": "YouTube: corte 4 da live Descartáveis",
     "produto": "youtube",
     "ads": false,
-    "hora": "12:00"
+    "hora": "19:00",
+    "obs": "Programado no canal: https://youtu.be/CzoLbxhFSFE (avisar o Grupo VIP)"
   },
   {
     "id": "2026-10-27-ct-1",
@@ -1975,26 +1949,6 @@
     "titulo": "Black Friday Laslo: prepare-se",
     "produto": "campanha",
     "ads": true
-  },
-  {
-    "id": "2026-10-27-yt-1",
-    "data": "2026-10-27",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
-  },
-  {
-    "id": "2026-10-29-yt-1",
-    "data": "2026-10-29",
-    "camada": "reels",
-    "formato": "reel",
-    "titulo": "Reel corte — live Descartáveis",
-    "produto": "youtube",
-    "ads": false,
-    "hora": "12:00"
   },
   {
     "id": "2026-10-30-ct-1",
