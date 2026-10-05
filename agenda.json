@@ -1768,10 +1768,10 @@
     "data": "2026-10-06",
     "camada": "contrato",
     "formato": "feed",
-    "titulo": "BSVET TCI: da TIVA à TCI, o que muda na prática",
+    "titulo": "BSVET TCI: da TIVA à TCI + convite da live de 20/10",
     "produto": "tci",
     "ads": true,
-    "obs": "Aquecimento da live de 20/10"
+    "obs": "Feed = convite principal da live TCI (o post de 07/10 foi retirado por repetir este)"
   },
   {
     "id": "2026-10-06-yt-1",
@@ -1782,16 +1782,6 @@
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
-  },
-  {
-    "id": "2026-10-07-lv-tci-convite",
-    "data": "2026-10-07",
-    "camada": "live",
-    "formato": "feed",
-    "titulo": "Live BSVET TCI: convite principal",
-    "produto": "tci",
-    "ads": true,
-    "hora": "10:00"
   },
   {
     "id": "2026-10-08-ct-1",
