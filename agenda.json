@@ -1831,6 +1831,16 @@
     "ads": false
   },
   {
+    "id": "2026-10-13-lv-tci-d7",
+    "data": "2026-10-13",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live BSVET TCI: falta 1 semana",
+    "produto": "tci",
+    "ads": false,
+    "hora": "10:00"
+  },
+  {
     "id": "2026-10-17-lv-tci-d3",
     "data": "2026-10-17",
     "camada": "live",
