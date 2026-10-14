@@ -1446,6 +1446,15 @@
     "ads": false
   },
   {
+    "id": "2026-09-01-ct-1",
+    "data": "2026-09-01",
+    "camada": "contrato",
+    "formato": "feed",
+    "titulo": "Equipos fotoprotetores e cristal: quando usar cada um",
+    "produto": "insumos",
+    "ads": false
+  },
+  {
     "id": "2026-09-01-yt-1",
     "data": "2026-09-01",
     "camada": "reels",
@@ -1454,15 +1463,6 @@
     "produto": "youtube",
     "ads": false,
     "hora": "12:00"
-  },
-  {
-    "id": "2026-09-01-ct-1",
-    "data": "2026-09-01",
-    "camada": "contrato",
-    "formato": "feed",
-    "titulo": "Equipos fotoprotetores e cristal: quando usar cada um",
-    "produto": "insumos",
-    "ads": false
   },
   {
     "id": "2026-09-03-yt-1",
@@ -1804,6 +1804,27 @@
     "ads": false
   },
   {
+    "id": "2026-10-13-lv-tci-d7",
+    "data": "2026-10-13",
+    "camada": "live",
+    "formato": "story",
+    "titulo": "Live BSVET TCI: falta 1 semana",
+    "produto": "tci",
+    "ads": false,
+    "hora": "10:00"
+  },
+  {
+    "id": "2026-10-14-rc-1",
+    "data": "2026-10-14",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte: A bomba não mede o que passa",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00",
+    "obs": "Reels + YouTube Shorts. Arquivo: webinar/descartaveis-uso-correto-live/edit/reels-curtos/reel01_bomba-nao-mede.mp4; legenda em PUBLICACAO-REELS-SHORTS.txt"
+  },
+  {
     "id": "2026-10-15-ct-1",
     "data": "2026-10-15",
     "camada": "contrato",
@@ -1811,6 +1832,17 @@
     "titulo": "Linha Serisam + Extensor Laslo Set: insumos para infusão",
     "produto": "insumos",
     "ads": false
+  },
+  {
+    "id": "2026-10-15-rc-1",
+    "data": "2026-10-15",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte: 47 ml a menos em uma hora",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00",
+    "obs": "Reels + YouTube Shorts. Arquivo: webinar/descartaveis-uso-correto-live/edit/reels-curtos/reel02_47ml-a-menos.mp4; legenda em PUBLICACAO-REELS-SHORTS.txt"
   },
   {
     "id": "2026-10-16-ct-1",
@@ -1831,16 +1863,6 @@
     "ads": false
   },
   {
-    "id": "2026-10-13-lv-tci-d7",
-    "data": "2026-10-13",
-    "camada": "live",
-    "formato": "story",
-    "titulo": "Live BSVET TCI: falta 1 semana",
-    "produto": "tci",
-    "ads": false,
-    "hora": "10:00"
-  },
-  {
     "id": "2026-10-17-lv-tci-d3",
     "data": "2026-10-17",
     "camada": "live",
@@ -1851,6 +1873,17 @@
     "hora": "10:00"
   },
   {
+    "id": "2026-10-17-rc-1",
+    "data": "2026-10-17",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte: Troque o equipo a cada 7 dias",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00",
+    "obs": "Reels + YouTube Shorts. Arquivo: webinar/descartaveis-uso-correto-live/edit/reels-curtos/reel03_troca-7-dias.mp4; legenda em PUBLICACAO-REELS-SHORTS.txt"
+  },
+  {
     "id": "2026-10-19-lv-tci-d1",
     "data": "2026-10-19",
     "camada": "live",
@@ -1859,6 +1892,17 @@
     "produto": "tci",
     "ads": false,
     "hora": "10:00"
+  },
+  {
+    "id": "2026-10-19-rc-1",
+    "data": "2026-10-19",
+    "camada": "reels",
+    "formato": "reel",
+    "titulo": "Reel corte: Esticar o equipo muda a dose",
+    "produto": "youtube",
+    "ads": false,
+    "hora": "12:00",
+    "obs": "Reels + YouTube Shorts. Arquivo: webinar/descartaveis-uso-correto-live/edit/reels-curtos/reel04_esticar-equipo.mp4; legenda em PUBLICACAO-REELS-SHORTS.txt"
   },
   {
     "id": "2026-10-19-lv-tci-perguntas",
